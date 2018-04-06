@@ -1,0 +1,844 @@
+{
+    "date": "Tue Feb 28 14:31:52 2017\n",
+    "format": 2,
+    "namespaces": {
+        "/": {
+            "id": "/",
+            "interfaces": {
+                "//eth0": {
+                    "addresses": [
+                        {
+                            "address": "192.168.168.9/24",
+                            "family": "INET"
+                        },
+                        {
+                            "address": "fe80::426e:88fc:ea10:9138/64",
+                            "family": "INET6"
+                        }
+                    ],
+                    "driver": "virtio_net",
+                    "id": "//eth0",
+                    "info": {
+
+                    },
+                    "mac": "12:be:2c:2e:a6:3d",
+                    "mtu": 1500,
+                    "name": "eth0",
+                    "namespace": "/",
+                    "parents": {
+                        "/ovs:ovsbr0/vxlan0": {
+                            "info": [
+
+                            ],
+                            "target": "/ovs:ovsbr0/vxlan0"
+                        }
+                    },
+                    "state": "up",
+                    "type": "device"
+                },
+                "//i0": {
+                    "addresses": [
+                        {
+                            "address": "fe80::3815:93ff:fe5d:abff/64",
+                            "family": "INET6"
+                        }
+                    ],
+                    "driver": "openvswitch",
+                    "id": "//i0",
+                    "info": {
+                        "type": "internal"
+                    },
+                    "mac": "3a:15:93:5d:ab:ff",
+                    "mtu": 1450,
+                    "name": "i0",
+                    "namespace": "/",
+                    "parents": {
+                        "//ovsbr0": {
+                            "info": [
+                                "tag 3"
+                            ],
+                            "target": "//ovsbr0"
+                        }
+                    },
+                    "state": "up",
+                    "type": "device"
+                },
+                "//lo": {
+                    "addresses": [
+                        {
+                            "address": "127.0.0.1/8",
+                            "family": "INET"
+                        },
+                        {
+                            "address": "::1/128",
+                            "family": "INET6"
+                        }
+                    ],
+                    "driver": "loopback",
+                    "id": "//lo",
+                    "info": {
+
+                    },
+                    "mtu": 65536,
+                    "name": "lo",
+                    "namespace": "/",
+                    "state": "up",
+                    "type": "device"
+                },
+                "//ovs-system": {
+                    "addresses": [
+
+                    ],
+                    "children": {
+                        "//vxlan_sys_4789": {
+                            "info": [
+
+                            ],
+                            "target": "//vxlan_sys_4789"
+                        }
+                    },
+                    "driver": "openvswitch",
+                    "id": "//ovs-system",
+                    "info": {
+
+                    },
+                    "mac": "c2:d5:9b:19:b9:91",
+                    "mtu": 1500,
+                    "name": "ovs-system",
+                    "namespace": "/",
+                    "state": "down",
+                    "type": "device"
+                },
+                "//ovsbr0": {
+                    "addresses": [
+
+                    ],
+                    "children": {
+                        "//i0": {
+                            "info": [
+                                "tag 3"
+                            ],
+                            "target": "//i0"
+                        },
+                        "//veth0": {
+                            "info": [
+
+                            ],
+                            "target": "//veth0"
+                        },
+                        "/ovs:ovsbr0/vxlan0": {
+                            "info": [
+
+                            ],
+                            "target": "/ovs:ovsbr0/vxlan0"
+                        },
+                        "third_ns//i1": {
+                            "info": [
+
+                            ],
+                            "target": "third_ns//i1"
+                        }
+                    },
+                    "driver": "openvswitch",
+                    "id": "//ovsbr0",
+                    "info": {
+
+                    },
+                    "mac": "b6:72:90:11:97:4a",
+                    "mtu": 1500,
+                    "name": "ovsbr0",
+                    "namespace": "/",
+                    "state": "down",
+                    "type": "device"
+                },
+                "//veth0": {
+                    "addresses": [
+                        {
+                            "address": "fe80::8cea:a6ff:fe43:1368/64",
+                            "family": "INET6"
+                        }
+                    ],
+                    "driver": "veth",
+                    "id": "//veth0",
+                    "info": {
+
+                    },
+                    "mac": "8e:ea:a6:43:13:68",
+                    "mtu": 1500,
+                    "name": "veth0",
+                    "namespace": "/",
+                    "parents": {
+                        "//ovsbr0": {
+                            "info": [
+
+                            ],
+                            "target": "//ovsbr0"
+                        }
+                    },
+                    "peer": {
+                        "info": [
+
+                        ],
+                        "target": "my_ns1//veth1"
+                    },
+                    "state": "up",
+                    "type": "device"
+                },
+                "//vxlan_sys_4789": {
+                    "addresses": [
+
+                    ],
+                    "driver": "vxlan",
+                    "id": "//vxlan_sys_4789",
+                    "info": {
+                        "VNI": "0",
+                        "mode": "external"
+                    },
+                    "mac": "0a:84:15:37:4a:a2",
+                    "mtu": 65470,
+                    "name": "vxlan_sys_4789",
+                    "namespace": "/",
+                    "parents": {
+                        "//ovs-system": {
+                            "info": [
+
+                            ],
+                            "target": "//ovs-system"
+                        }
+                    },
+                    "state": "up",
+                    "type": "device"
+                },
+                "/ovs:ovsbr0/vxlan0": {
+                    "addresses": [
+
+                    ],
+                    "children": {
+                        "//eth0": {
+                            "info": [
+
+                            ],
+                            "target": "//eth0"
+                        }
+                    },
+                    "driver": "",
+                    "id": "/ovs:ovsbr0/vxlan0",
+                    "info": {
+                        "from": "192.168.168.9",
+                        "to": "192.168.168.10",
+                        "type": "vxlan"
+                    },
+                    "mtu": 0,
+                    "name": "vxlan0",
+                    "namespace": "/",
+                    "parents": {
+                        "//ovsbr0": {
+                            "info": [
+
+                            ],
+                            "target": "//ovsbr0"
+                        }
+                    },
+                    "state": "none",
+                    "type": "internal"
+                }
+            },
+            "name": "",
+            "routes": {
+                "0": {
+                    "name": "unspec",
+                    "routes": [
+                        {
+                            "family": "INET6",
+                            "oif": "//lo",
+                            "priority": 4294967295,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unreachable"
+                        },
+                        {
+                            "family": "INET6",
+                            "oif": "//lo",
+                            "priority": 4294967295,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unreachable"
+                        }
+                    ]
+                },
+                "254": {
+                    "name": "main",
+                    "routes": [
+                        {
+                            "family": "INET",
+                            "gateway": "192.168.168.1",
+                            "oif": "//eth0",
+                            "priority": 100,
+                            "protocol": "static",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        },
+                        {
+                            "destination": "192.168.168.0/24",
+                            "family": "INET",
+                            "oif": "//eth0",
+                            "preferred-source": "192.168.168.9",
+                            "priority": 100,
+                            "protocol": "kernel",
+                            "scope": "link",
+                            "tos": 0,
+                            "type": "unicast"
+                        },
+                        {
+                            "destination": "fe80::/64",
+                            "family": "INET6",
+                            "oif": "//eth0",
+                            "priority": 256,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        },
+                        {
+                            "destination": "fe80::/64",
+                            "family": "INET6",
+                            "oif": "//veth0",
+                            "priority": 256,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        },
+                        {
+                            "destination": "fe80::/64",
+                            "family": "INET6",
+                            "oif": "//i0",
+                            "priority": 256,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        }
+                    ]
+                },
+                "255": {
+                    "name": "local",
+                    "routes": [
+                        {
+                            "destination": "127.0.0.0/32",
+                            "family": "INET",
+                            "oif": "//lo",
+                            "preferred-source": "127.0.0.1",
+                            "priority": 0,
+                            "protocol": "kernel",
+                            "scope": "link",
+                            "tos": 0,
+                            "type": "broadcast"
+                        },
+                        {
+                            "destination": "127.0.0.0/8",
+                            "family": "INET",
+                            "oif": "//lo",
+                            "preferred-source": "127.0.0.1",
+                            "priority": 0,
+                            "protocol": "kernel",
+                            "scope": "host",
+                            "tos": 0,
+                            "type": "local"
+                        },
+                        {
+                            "destination": "127.0.0.1/32",
+                            "family": "INET",
+                            "oif": "//lo",
+                            "preferred-source": "127.0.0.1",
+                            "priority": 0,
+                            "protocol": "kernel",
+                            "scope": "host",
+                            "tos": 0,
+                            "type": "local"
+                        },
+                        {
+                            "destination": "127.255.255.255/32",
+                            "family": "INET",
+                            "oif": "//lo",
+                            "preferred-source": "127.0.0.1",
+                            "priority": 0,
+                            "protocol": "kernel",
+                            "scope": "link",
+                            "tos": 0,
+                            "type": "broadcast"
+                        },
+                        {
+                            "destination": "192.168.168.0/32",
+                            "family": "INET",
+                            "oif": "//eth0",
+                            "preferred-source": "192.168.168.9",
+                            "priority": 0,
+                            "protocol": "kernel",
+                            "scope": "link",
+                            "tos": 0,
+                            "type": "broadcast"
+                        },
+                        {
+                            "destination": "192.168.168.9/32",
+                            "family": "INET",
+                            "oif": "//eth0",
+                            "preferred-source": "192.168.168.9",
+                            "priority": 0,
+                            "protocol": "kernel",
+                            "scope": "host",
+                            "tos": 0,
+                            "type": "local"
+                        },
+                        {
+                            "destination": "192.168.168.255/32",
+                            "family": "INET",
+                            "oif": "//eth0",
+                            "preferred-source": "192.168.168.9",
+                            "priority": 0,
+                            "protocol": "kernel",
+                            "scope": "link",
+                            "tos": 0,
+                            "type": "broadcast"
+                        },
+                        {
+                            "destination": "::1/128",
+                            "family": "INET6",
+                            "oif": "//lo",
+                            "priority": 0,
+                            "protocol": "unspec",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "local"
+                        },
+                        {
+                            "destination": "fe80::3815:93ff:fe5d:abff/128",
+                            "family": "INET6",
+                            "oif": "//lo",
+                            "priority": 0,
+                            "protocol": "unspec",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "local"
+                        },
+                        {
+                            "destination": "fe80::426e:88fc:ea10:9138/128",
+                            "family": "INET6",
+                            "oif": "//lo",
+                            "priority": 0,
+                            "protocol": "unspec",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "local"
+                        },
+                        {
+                            "destination": "fe80::8cea:a6ff:fe43:1368/128",
+                            "family": "INET6",
+                            "oif": "//lo",
+                            "priority": 0,
+                            "protocol": "unspec",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "local"
+                        },
+                        {
+                            "destination": "ff00::/8",
+                            "family": "INET6",
+                            "oif": "//eth0",
+                            "priority": 256,
+                            "protocol": "boot",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        },
+                        {
+                            "destination": "ff00::/8",
+                            "family": "INET6",
+                            "oif": "//vxlan_sys_4789",
+                            "priority": 256,
+                            "protocol": "boot",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        },
+                        {
+                            "destination": "ff00::/8",
+                            "family": "INET6",
+                            "oif": "//veth0",
+                            "priority": 256,
+                            "protocol": "boot",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        },
+                        {
+                            "destination": "ff00::/8",
+                            "family": "INET6",
+                            "oif": "//i0",
+                            "priority": 256,
+                            "protocol": "boot",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        }
+                    ]
+                }
+            }
+        },
+        "my_ns1/": {
+            "id": "my_ns1/",
+            "interfaces": {
+                "my_ns1//br0": {
+                    "addresses": [
+                        {
+                            "address": "fe80::3c0a:a4ff:feca:8b6b/64",
+                            "family": "INET6"
+                        }
+                    ],
+                    "children": {
+                        "my_ns1//mylink1": {
+                            "info": [
+
+                            ],
+                            "target": "my_ns1//mylink1"
+                        },
+                        "my_ns1//veth1": {
+                            "info": [
+
+                            ],
+                            "target": "my_ns1//veth1"
+                        }
+                    },
+                    "driver": "bridge",
+                    "id": "my_ns1//br0",
+                    "info": {
+
+                    },
+                    "mac": "3e:0a:a4:ca:8b:6b",
+                    "mtu": 1500,
+                    "name": "br0",
+                    "namespace": "my_ns1/",
+                    "state": "up",
+                    "type": "device"
+                },
+                "my_ns1//lo": {
+                    "addresses": [
+
+                    ],
+                    "driver": "loopback",
+                    "id": "my_ns1//lo",
+                    "info": {
+
+                    },
+                    "mtu": 65536,
+                    "name": "lo",
+                    "namespace": "my_ns1/",
+                    "state": "down",
+                    "type": "device"
+                },
+                "my_ns1//mylink1": {
+                    "addresses": [
+
+                    ],
+                    "driver": "veth",
+                    "id": "my_ns1//mylink1",
+                    "info": {
+
+                    },
+                    "mac": "3e:0a:a4:ca:8b:6b",
+                    "mtu": 1500,
+                    "name": "mylink1",
+                    "namespace": "my_ns1/",
+                    "parents": {
+                        "my_ns1//br0": {
+                            "info": [
+
+                            ],
+                            "target": "my_ns1//br0"
+                        }
+                    },
+                    "peer": {
+                        "info": [
+
+                        ],
+                        "target": "some_ns2//mylink2"
+                    },
+                    "state": "up_no_link",
+                    "type": "device"
+                },
+                "my_ns1//veth1": {
+                    "addresses": [
+                        {
+                            "address": "fe80::b401:58ff:fe08:59b5/64",
+                            "family": "INET6"
+                        }
+                    ],
+                    "driver": "veth",
+                    "id": "my_ns1//veth1",
+                    "info": {
+
+                    },
+                    "mac": "b6:01:58:08:59:b5",
+                    "mtu": 1500,
+                    "name": "veth1",
+                    "namespace": "my_ns1/",
+                    "parents": {
+                        "my_ns1//br0": {
+                            "info": [
+
+                            ],
+                            "target": "my_ns1//br0"
+                        }
+                    },
+                    "peer": {
+                        "info": [
+
+                        ],
+                        "target": "//veth0"
+                    },
+                    "state": "up",
+                    "type": "device"
+                }
+            },
+            "name": "my_ns1",
+            "routes": {
+                "0": {
+                    "name": "unspec",
+                    "routes": [
+                        {
+                            "family": "INET6",
+                            "oif": "my_ns1//lo",
+                            "priority": 4294967295,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unreachable"
+                        },
+                        {
+                            "family": "INET6",
+                            "oif": "my_ns1//lo",
+                            "priority": 4294967295,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unreachable"
+                        }
+                    ]
+                },
+                "254": {
+                    "name": "main",
+                    "routes": [
+                        {
+                            "destination": "fe80::/64",
+                            "family": "INET6",
+                            "oif": "my_ns1//veth1",
+                            "priority": 256,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        },
+                        {
+                            "destination": "fe80::/64",
+                            "family": "INET6",
+                            "oif": "my_ns1//br0",
+                            "priority": 256,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        }
+                    ]
+                },
+                "255": {
+                    "name": "local",
+                    "routes": [
+                        {
+                            "destination": "fe80::3c0a:a4ff:feca:8b6b/128",
+                            "family": "INET6",
+                            "oif": "my_ns1//lo",
+                            "priority": 0,
+                            "protocol": "unspec",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "local"
+                        },
+                        {
+                            "destination": "fe80::b401:58ff:fe08:59b5/128",
+                            "family": "INET6",
+                            "oif": "my_ns1//lo",
+                            "priority": 0,
+                            "protocol": "unspec",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "local"
+                        },
+                        {
+                            "destination": "ff00::/8",
+                            "family": "INET6",
+                            "oif": "my_ns1//veth1",
+                            "priority": 256,
+                            "protocol": "boot",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        },
+                        {
+                            "destination": "ff00::/8",
+                            "family": "INET6",
+                            "oif": "my_ns1//br0",
+                            "priority": 256,
+                            "protocol": "boot",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unicast"
+                        }
+                    ]
+                }
+            }
+        },
+        "some_ns2/": {
+            "id": "some_ns2/",
+            "interfaces": {
+                "some_ns2//lo": {
+                    "addresses": [
+
+                    ],
+                    "driver": "loopback",
+                    "id": "some_ns2//lo",
+                    "info": {
+
+                    },
+                    "mtu": 65536,
+                    "name": "lo",
+                    "namespace": "some_ns2/",
+                    "state": "down",
+                    "type": "device"
+                },
+                "some_ns2//mylink2": {
+                    "addresses": [
+
+                    ],
+                    "driver": "veth",
+                    "id": "some_ns2//mylink2",
+                    "info": {
+
+                    },
+                    "mac": "92:8e:f0:a0:08:a9",
+                    "mtu": 1500,
+                    "name": "mylink2",
+                    "namespace": "some_ns2/",
+                    "peer": {
+                        "info": [
+
+                        ],
+                        "target": "my_ns1//mylink1"
+                    },
+                    "state": "down",
+                    "type": "device"
+                }
+            },
+            "name": "some_ns2",
+            "routes": {
+                "0": {
+                    "name": "unspec",
+                    "routes": [
+                        {
+                            "family": "INET6",
+                            "oif": "some_ns2//lo",
+                            "priority": 4294967295,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unreachable"
+                        },
+                        {
+                            "family": "INET6",
+                            "oif": "some_ns2//lo",
+                            "priority": 4294967295,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unreachable"
+                        }
+                    ]
+                }
+            }
+        },
+        "third_ns/": {
+            "id": "third_ns/",
+            "interfaces": {
+                "third_ns//i1": {
+                    "addresses": [
+
+                    ],
+                    "driver": "openvswitch",
+                    "id": "third_ns//i1",
+                    "info": {
+                        "type": "internal"
+                    },
+                    "mac": "36:76:a9:26:01:08",
+                    "mtu": 1500,
+                    "name": "i1",
+                    "namespace": "third_ns/",
+                    "parents": {
+                        "//ovsbr0": {
+                            "info": [
+
+                            ],
+                            "target": "//ovsbr0"
+                        }
+                    },
+                    "state": "down",
+                    "type": "device"
+                },
+                "third_ns//lo": {
+                    "addresses": [
+
+                    ],
+                    "driver": "loopback",
+                    "id": "third_ns//lo",
+                    "info": {
+
+                    },
+                    "mtu": 65536,
+                    "name": "lo",
+                    "namespace": "third_ns/",
+                    "state": "down",
+                    "type": "device"
+                }
+            },
+            "name": "third_ns",
+            "routes": {
+                "0": {
+                    "name": "unspec",
+                    "routes": [
+                        {
+                            "family": "INET6",
+                            "oif": "third_ns//lo",
+                            "priority": 4294967295,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unreachable"
+                        },
+                        {
+                            "family": "INET6",
+                            "oif": "third_ns//lo",
+                            "priority": 4294967295,
+                            "protocol": "kernel",
+                            "scope": "universe",
+                            "tos": 0,
+                            "type": "unreachable"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "root": "/",
+    "version": "v0.4.1-53-gf580578f190e"
+}
