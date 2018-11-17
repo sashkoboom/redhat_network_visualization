@@ -16,16 +16,15 @@ const SVGBuilder = class{
             .attr("width", WIDTH)
             .attr("height", HEIGHT);
 
+
         //create zoomable/pannable pane to put all the visuals in it
+        const zoom_actions = () => this.pane.attr("transform", d3.event.transform);
+
         this.pane = svg.append("g")
             .attr("class", "everything");
         this.zoom_handler = d3.zoom()
             .on("zoom", zoom_actions.bind(this));
         this.zoom_handler(svg);
-        function zoom_actions(){
-            this.pane.attr("transform", d3.event.transform)
-        }
-
 
     }
 
@@ -165,7 +164,7 @@ const SVGBuilder = class{
             if (!d3.event.active) simulation.alphaTarget(0.3).restart();
             d.fx = d.x;
             d.fy = d.y;
-        }
+        };
 
         const dragdrag = function(d){
             if(d.ns){
@@ -181,13 +180,13 @@ const SVGBuilder = class{
                 d.fx = Math.max(50, Math.min(WIDTH - 50, d3.event.x));
                 d.fy = Math.max(50, Math.min(HEIGHT - 50, d3.event.y));
             }
-        }
+        };
 
         const dragend = function(d){
             if (!d3.event.active) simulation.alphaTarget(0);
             d.fx = null;
             d.fy = null;
-        }
+        };
 
         const drag_handler = d3.drag()
             .on("start", dragstart)
@@ -204,7 +203,7 @@ const SVGBuilder = class{
             this.pane.selectAll("rect." + NS_CLASS_PADDING)
             .data(this.namespaces.data)
             .enter()
-            .append("svg:rect")
+            .append("render:rect")
             .attr("class", NS_CLASS_PADDING)
             .attr("x", function(d){
                 return d.x;
@@ -224,7 +223,7 @@ const SVGBuilder = class{
             .selectAll("text .text_" + NS_CLASS_PADDING)
             .data(this.namespaces.data)
             .enter()
-            .append("svg:text")
+            .append("render:text")
             .attr("class", "text")
             .attr("x", function(d){
                 return d.x + NS_TEXT_PADDING_LEFT;
@@ -253,7 +252,7 @@ const SVGBuilder = class{
         return graph.selectAll("rect ." + classname)
             .data(nodes)
             .enter()
-            .append("svg:rect")
+            .append("render:rect")
             .attr("class", classname)
             .attr("x", function(d){
                 return d.x + shiftX;
@@ -265,7 +264,6 @@ const SVGBuilder = class{
             .attr("height", height)
             .attr("stroke", "black")
             .attr("fill", fill );
-
 
     }
 

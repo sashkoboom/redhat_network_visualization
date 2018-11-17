@@ -812,7 +812,7 @@ function set(type, name, callback) {
 var xhtml = "http://www.w3.org/1999/xhtml";
 
 var namespaces = {
-  svg: "http://www.w3.org/2000/svg",
+  svg: "http://www.w3.org/2000/render",
   xhtml: xhtml,
   xlink: "http://www.w3.org/1999/xlink",
   xml: "http://www.w3.org/XML/1998/namespace",
@@ -2766,7 +2766,7 @@ function parseCss(value) {
 
 function parseSvg(value) {
   if (value == null) return identity$2;
-  if (!svgNode) svgNode = document.createElementNS("http://www.w3.org/2000/svg", "g");
+  if (!svgNode) svgNode = document.createElementNS("http://www.w3.org/2000/render", "g");
   svgNode.setAttribute("transform", value);
   if (!(value = svgNode.transform.baseVal.consolidate())) return identity$2;
   value = value.matrix;

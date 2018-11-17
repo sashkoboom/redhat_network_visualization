@@ -2,9 +2,9 @@
  * Created by sashkoboom on 12. 3. 2018.
  */
 
-//w h of svg plane
-const WIDTH = 1800;
-const HEIGHT = 800;
+//w h of render plane
+const WIDTH = window.innerWidth * 0.9;
+const HEIGHT = window.innerHeight * 0.8;
 
 
 //namespace box

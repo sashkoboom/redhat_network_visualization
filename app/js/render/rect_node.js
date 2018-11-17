@@ -1,8 +1,4 @@
-/**
- * Created by sashkoboom on 12. 3. 2018.
- */
-
-const RectNode = class{
+ class RectNode {
     constructor (x=0, y=0, width=0, height=0) {
         this.x = x;
         this.y = y;
@@ -23,7 +19,7 @@ const RectNode = class{
     }
 }
 
- class NamespaceNode extends RectNode {
+export default class NamespaceNode extends RectNode {
 
     constructor(json = null){
         super();

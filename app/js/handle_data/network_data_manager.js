@@ -6,7 +6,7 @@ const NetworkDataManager = class {
 
     constructor(input = {}){
         /*
-        Handle namespaces, make each one an object and calculate its svg's XYWH etc.
+        Handle namespaces, make each one an object and calculate its render's XYWH etc.
          */
         this.namespaces = Object.values(input.namespaces)
             //make each val into an obj

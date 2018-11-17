@@ -1,0 +1,33 @@
+{
+  "name": "redhat_network_visualization",
+  "version": "1.0.0",
+  "description": "Visualizing tool",
+  "main": "main.js",
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0",
+    "babel-core": "^6.26.3",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "browser-sync": "^2.26.3",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^8.0.0",
+    "gulp-useref": "^3.1.5",
+    "run-sequence": "^2.2.1"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --config webpack.config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sashkoboom/redhat_network_visualization.git"
+  },
+  "author": "Oleksandra Koshchii",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sashkoboom/redhat_network_visualization/issues"
+  },
+  "homepage": "https://github.com/sashkoboom/redhat_network_visualization#readme"
+}
