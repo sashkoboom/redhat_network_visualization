@@ -3,12 +3,21 @@
  */
 /*Tool to generate color scheme for future graph*/
 
+//import shuffleArray from "../utils/helpers";
+
+const shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+};
+
 const ColorManager = class{
     constructor(namespaces = []){
         //generate colors for each namespace
         this.colors = {};
         //make new arr, fill it with indexes 0...namespace.length a than with interpolated indexes, mix it randomly
-        let arr = [...Array(namespaces.length).keys()]
+        let arr = [... new Array(namespaces.length).keys()]
             .map(x => x * 360 / namespaces.length)
             .map(x => `hsl(${x}, 60%, 89%)`);
         shuffleArray(arr);
@@ -41,3 +50,4 @@ const ColorManager = class{
     getClassName (str){return this.classNames[str];}
 };
 
+export default ColorManager;

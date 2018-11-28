@@ -3,21 +3,21 @@
  */
 
 
-export default renderInputToTable = (json, colorManager) => {
+const renderInputToTable = (json, colorManager) => {
     const namespaces = json.namespaces;
     if(!namespaces) throw new Error("Bad JSON input!");
 
     for(const namespace of Object.values(namespaces)) {
         //draw every interface to column
         for(const interf of Object.values(namespace.interfaces)){
-            let table = document.querySelector("#table");
-            let tr = document.createElement("tr");
+            const table = document.querySelector("table");
+            const tr = document.createElement("tr");
             tr.classList.add(colorManager.getClassName(interf.namespace));
-            let td = document.createElement("td");
-            let td1 = document.createElement("td");
-            let td2 = document.createElement("td");
-            let td3 = document.createElement("td");
-            let td4 = document.createElement("td");
+            const td = document.createElement("td");
+            const td1 = document.createElement("td");
+            const td2 = document.createElement("td");
+            const td3 = document.createElement("td");
+            const td4 = document.createElement("td");
             td.innerHTML = interf.id;
 
             if (interf.children) {
@@ -43,8 +43,10 @@ export default renderInputToTable = (json, colorManager) => {
             tr.appendChild(td2);
             tr.appendChild(td3);
             tr.appendChild(td4);
-
             table.appendChild(tr);
+
         }
     }
 };
+
+export default renderInputToTable;

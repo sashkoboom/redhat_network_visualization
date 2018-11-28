@@ -2,6 +2,9 @@
  * Created by sashkoboom on 26. 3. 2018.
  */
 
+import * as d3 from "d3";
+import NamespaceNode from "../render/rect_node";
+
 const NetworkDataManager = class {
 
     constructor(input = {}){
@@ -105,7 +108,9 @@ const NetworkDataManager = class {
 
                 }
             }
-        }   while   ( hierarchies.length !== roots_count)
+        }
+        //while   ( i !== 10 )
+        while   ( hierarchies.length !== roots_count)
 
     }
 
@@ -155,3 +160,5 @@ const NetworkDataManager = class {
     }
 
 };
+
+export default NetworkDataManager;

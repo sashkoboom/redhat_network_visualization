@@ -1,6 +1,8 @@
 /**
  * Created by sashkoboom on 12. 3. 2018.
  */
+import * as d3 from "d3";
+import * as constants from "../utils/constants";
 
 const SVGBuilder = class{
 
@@ -13,8 +15,8 @@ const SVGBuilder = class{
 
         const svg =  d3.select("main")
             .append("svg")
-            .attr("width", WIDTH)
-            .attr("height", HEIGHT);
+            .attr("width", constants.WIDTH)
+            .attr("height", constants.HEIGHT);
 
 
         //create zoomable/pannable pane to put all the visuals in it
@@ -49,8 +51,8 @@ const SVGBuilder = class{
         //custom force to stop nodes from leaving the visible part of the plane
         function box_force() {
             for (let n of nodes){
-                n.x = Math.max(50, Math.min(WIDTH - 50, n.x));
-                n.y = Math.max(50, Math.min(HEIGHT - 50, n.y));
+                n.x = Math.max(50, Math.min(constants.WIDTH - 50, n.x));
+                n.y = Math.max(50, Math.min(constants.HEIGHT - 50, n.y));
             }
         }
 
@@ -177,8 +179,8 @@ const SVGBuilder = class{
                     }
                 }
             }else{
-                d.fx = Math.max(50, Math.min(WIDTH - 50, d3.event.x));
-                d.fy = Math.max(50, Math.min(HEIGHT - 50, d3.event.y));
+                d.fx = Math.max(50, Math.min(constants.WIDTH - 50, d3.event.x));
+                d.fy = Math.max(50, Math.min(constants.HEIGHT - 50, d3.event.y));
             }
         };
 
@@ -200,11 +202,11 @@ const SVGBuilder = class{
 
     drawNameSpaces() {
         this.namespaces.rect =
-            this.pane.selectAll("rect." + NS_CLASS_PADDING)
+            this.pane.selectAll("rect." + constants.NS_CLASS_PADDING)
             .data(this.namespaces.data)
             .enter()
             .append("render:rect")
-            .attr("class", NS_CLASS_PADDING)
+            .attr("class", constants.NS_CLASS_PADDING)
             .attr("x", function(d){
                 return d.x;
             })
@@ -213,23 +215,23 @@ const SVGBuilder = class{
             } )
             .attr("width", NS_WIDTH)
             .attr("height", function (d) {
-                return d.size* NS_HEIGHT_FACTOR;
+                return d.size* constants.NS_HEIGHT_FACTOR;
             })
                 .attr("fill", function (d) {
                     return d.color
                 });
 
         this.namespaces.text = this.pane
-            .selectAll("text .text_" + NS_CLASS_PADDING)
+            .selectAll("text .text_" + constants.NS_CLASS_PADDING)
             .data(this.namespaces.data)
             .enter()
             .append("render:text")
             .attr("class", "text")
             .attr("x", function(d){
-                return d.x + NS_TEXT_PADDING_LEFT;
+                return d.x + constants.NS_TEXT_PADDING_LEFT;
             })
             .attr("y",function(d){
-               return d.y + NS_TEXT_PADDING_TOP
+               return d.y + constants.NS_TEXT_PADDING_TOP
             } )
             .attr("width", 90)
             .attr("height", this.INTERFACE_HEIGHT)
@@ -247,7 +249,7 @@ const SVGBuilder = class{
         (graph, nodes, width, height, fill, classPadding = '', shiftX = 0)
     {
 
-        var classname = nodes[0].classname + classPadding;
+        const classname = nodes[0].classname + classPadding;
 
         return graph.selectAll("rect ." + classname)
             .data(nodes)
@@ -269,3 +271,4 @@ const SVGBuilder = class{
 
 }
 
+export default SVGBuilder;

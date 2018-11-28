@@ -1,3 +1,5 @@
+import * as constants from "../utils/constants";
+
  class RectNode {
     constructor (x=0, y=0, width=0, height=0) {
         this.x = x;
@@ -33,12 +35,12 @@ export default class NamespaceNode extends RectNode {
 
     calculateGraphics(index = 0, prevY = 0){
 
-        this.x = NS_BOX.padding.left;
+        this.x = constants.NS_BOX.padding.left;
         if(index === 0){
-            this.y = NS_BOX.padding.top
-        } else this.y = NS_BOX.padding.between + prevY;
-        this.width = NS_BOX.width;
-        this.height = this.interfaces.length * NS_BOX.height_factor;
+            this.y = constants.NS_BOX.padding.top
+        } else this.y = constants.NS_BOX.padding.between + prevY;
+        this.width = constants.NS_BOX.width;
+        this.height = this.interfaces.length * constants.NS_BOX.height_factor;
 
         return this;
      }

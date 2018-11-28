@@ -3,12 +3,12 @@
  */
 
 //w h of render plane
-const WIDTH = window.innerWidth * 0.9;
-const HEIGHT = window.innerHeight * 0.8;
+export const WIDTH = window.innerWidth * 0.9;
+export const HEIGHT = window.innerHeight * 0.8;
 
 
 //namespace box
-const NS_BOX = {
+export const NS_BOX = {
     "padding" : {
         "left" : 30,
         "right" : 0,
@@ -29,8 +29,7 @@ const NS_BOX = {
 
 NS_BOX.width = WIDTH - 2 * NS_BOX.padding.left;
 
-const NS_CLASS_PADDING = "namespace";
+export const NS_CLASS_PADDING = "namespace";
 
-
-const NS_TEXT_PADDING_TOP = 15;
-const NS_TEXT_PADDING_LEFT = 30;
+export const NS_TEXT_PADDING_TOP = 15;
+export const NS_TEXT_PADDING_LEFT = 30;
