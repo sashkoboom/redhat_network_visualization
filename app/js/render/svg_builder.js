@@ -8,6 +8,13 @@ import * as constants from '../utils/constants';
 
 const SVGBuilder = class {
   constructor(ns_data = [], inteface_data = [], links_data = [], colorManager = null) {
+
+    console.log("tak");
+    console.log(ns_data);
+    console.log(inteface_data);
+    console.log(links_data);
+    console.log(colorManager);
+
     this.namespaces = ns_data;
     this.interfaces = inteface_data;
     this.links = links_data;
@@ -31,7 +38,7 @@ const SVGBuilder = class {
 
   start(NSdata = []) {
     this.namespaces.data = NSdata;
-    // this.draw();
+   // this.draw();
   }
 
 
@@ -43,7 +50,10 @@ const SVGBuilder = class {
     * each node must contain id of its namespace
     *
     * */
-  draw(ns_arr, nodes, links) {
+  draw(ns_arr = this.namespaces, nodes = this.interfaces, links = this.links) {
+
+
+
     // custom force to stop nodes from leaving the visible part of the plane
     function box_force() {
       for (const n of nodes) {
@@ -61,27 +71,36 @@ const SVGBuilder = class {
       }
     }
 
+    console.log("Making force simulation of nodes");
+    console.log(nodes);
     const simulation = d3.forceSimulation()
       .nodes(nodes)
       .force('collide', d3.forceCollide(50))
-      .force('forceX', d3.forceX(d => d.level))
-      .force('border_box', box_force);
+      .force('forceX', d3.forceX(d => d.level));
+      //.force('border_box', box_force);
 
     // Manage the namespace nodes
-    for (const ns of ns_arr) {
+   ns_arr.forEach((ns) => {
       const x_r = ns.x; const y_r = ns.y; const w_r = ns.width; const
         h_r = ns.height;
-      const fill_r = this.colorManager === null ? 'lavender' : this.colorManager.getColor(ns.id);
-      const ns_name = ns.id;
+      console.log(ns);
+      const id = ns.id ? ns.id : ns.json.id;
+      const fill_r = this.colorManager === null ? 'lavender' : this.colorManager.getColor(id);
+
       // Create constraint force for each namespace
-      simulation.force(`ns_box_${ns_name}`, () => {
-        for (const n of nodes) {
-          if (n.ns == ns_name) {
+
+       alert();
+       simulation.force(`ns_box_${id}`, () => {
+        nodes.forEach((n) => {
+          if (n.ns == id) {
+
             n.x = Math.max(50 + x_r, Math.min(x_r + w_r - 50, n.x));
             n.y = Math.max(50 + y_r, Math.min(y_r + h_r - 50, n.y));
           }
-        }
+        });
       });
+
+
       // Draw namespace rectangles
       const ns_rect = this.pane
         .append('rect')
@@ -90,7 +109,7 @@ const SVGBuilder = class {
         .attr('width', w_r)
         .attr('height', h_r)
         .attr('fill', fill_r);
-    }
+    });
 
 
     const node = this.pane.append('g')
@@ -102,14 +121,17 @@ const SVGBuilder = class {
       .attr('r', 50)
       .attr('cx', d => d.x)
       .attr('cy', d => d.y)
-      .attr('fill', 'red');
+      .attr('fill', d => this.colorManager ? this.colorManager.getColorForNode(d) : "red")
+        .attr("stroke", "black");
 
+    console.log("mades some circles i guess", node);
+
+    console.log("links the fuck", links);
 
     const link_force = d3.forceLink(links)
-      .id(d => nodes.indexOf(d))
+      .id(d => d.id)
       .distance(d => 10)
       .strength(0);
-
 
     simulation.force('links', link_force);
 
@@ -121,6 +143,8 @@ const SVGBuilder = class {
       .append('line')
       .attr('stroke', 'black')
       .attr('stroke-width', 2);
+
+    console.log("made some LINKS i guess", link);
 
     function tickActions() {
       // update circle positions each tick of the simulation
@@ -148,10 +172,11 @@ const SVGBuilder = class {
          * that the graph gets “stuck” and the nodes don’t update further. Not ideal.
         * */
 
-    const dragstart = function (d) {
+    const dragstart = (d) => {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
+
     };
 
     const dragdrag = function (d) {
@@ -169,6 +194,12 @@ const SVGBuilder = class {
         d.fx = Math.max(50, Math.min(constants.WIDTH - 50, d3.event.x));
         d.fy = Math.max(50, Math.min(constants.HEIGHT - 50, d3.event.y));
       }
+
+
+        // d.fx = d3.event.x;
+        // d.fy = d3.event.y;
+
+
     };
 
     const dragend = function (d) {

@@ -4,19 +4,20 @@
 
 // w h of render plane
 export const WIDTH = window.innerWidth * 0.9;
+// export const HEIGHT = 3000;
 export const HEIGHT = window.innerHeight * 0.8;
 
 
 // namespace box
 export const NS_BOX = {
   padding: {
-    left: 30,
+    left: 0,
     right: 0,
     top: 5,
     bottom: 0,
     between: 20,
   },
-  height_factor: 100,
+  height_factor: 150,
   text: {
     padding: {
       left: 30,

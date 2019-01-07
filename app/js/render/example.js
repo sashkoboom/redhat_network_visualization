@@ -9,34 +9,34 @@ import SVGBuilder from './svg_builder';
 export default function example() {
   const nodes = [
     {
-      x: 100, y: 350, level: 100, ns: '2',
+      id: "a", x: 100, y: 350, level: 100, ns: '2',
     }, // 0
-    { x: 300, y: 150, level: 300 }, // 1
+    { id: "b", x: 300, y: 150, level: 300 }, // 1
     {
-      x: 300, y: 350, level: 300, ns: '1',
+        id: "c", x: 300, y: 350, level: 300, ns: '1',
     }, // 2
     {
-      x: 300, y: 550, level: 300, ns: '1',
+        id: "d",x: 300, y: 550, level: 300, ns: '1',
     }, // 3
-    { x: 500, y: 150, level: 500 }, // 4
+    { id: "e",x: 500, y: 150, level: 500 }, // 4
     {
-      x: 500, y: 350, level: 500, ns: '1',
+        id: "f",x: 500, y: 350, level: 500, ns: '1',
     }, // 5
     {
-      x: 500, y: 550, level: 500, ns: '1',
+        id: "g", x: 500, y: 550, level: 500, ns: '1',
     }, // 6
     {
-      x: 700, y: 350, level: 700, ns: '3',
+        id: "h", x: 700, y: 350, level: 700, ns: '3',
     }, // 7
   ];
   const links = [
-    { source: 0, target: 1 },
-    { source: 0, target: 2 },
-    { source: 0, target: 3 },
-    { source: 1, target: 4 },
-    { source: 2, target: 5 },
-    { source: 2, target: 6 },
-    { source: 5, target: 7 },
+    { source: "a", target: "b" },
+    { source: "a", target: "c" },
+    { source: "a", target: "d" },
+    { source: "b", target: "e" },
+    { source: "c", target: "f" },
+    { source: "c", target: "g" },
+    { source: "e", target: "h" },
   ];
 
   const ns_r1 = new NamespaceNode();

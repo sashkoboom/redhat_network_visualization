@@ -1,6 +1,8 @@
 /**
  * Created by sashkoboom on 5. 3. 2018.
  */
+/* eslint-disable */
+
 /*Tool to generate color scheme for future graph*/
 
 //import shuffleArray from "../utils/helpers";
@@ -39,12 +41,20 @@ const ColorManager = class{
             fill : ${this.colors[namespace]}}\n`
         });
         console.log(sheet);
+        console.log(this.colors);
         document.body.appendChild(sheet);
     }
 
 
     getColor(str){
-        return this.colors[str];
+        console.log("THA NAMESPACE COLOR AAAAAA", str);
+        if(this.colors[str]) return this.colors[str] ;
+        return str == "main_ns" ? this.colors[0] : "grey";
+    }
+
+    getColorForNode(node){
+    const color = this.getColor(node.ns);
+    return color;
     }
 
     getClassName (str){return this.classNames[str];}

@@ -1,7 +1,7 @@
 {
   "name": "redhat_network_visualization",
   "version": "1.0.0",
-  "description": "Visualizing tool",
+  "description": "Visualizing graph tool",
   "main": "index.js",
   "devDependencies": {
     "@babel/core": "^7.1.2",

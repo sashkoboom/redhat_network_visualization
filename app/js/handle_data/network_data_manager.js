@@ -4,6 +4,7 @@
 /* eslint-disable */
 /* eslint-disable no-param-reassign */
 
+import * as d3 from 'd3';
 import NamespaceNode from '../render/rect_node';
 
 const NetworkDataManager = class {
@@ -14,11 +15,12 @@ const NetworkDataManager = class {
       .map(val => new NamespaceNode(val))
     // calculate its xywh basing of each previous node
       .reduce((accumulator, curr, index) => {
-        window.console.log(accumulator);
         const Y = accumulator.length === 0 ? 0 : accumulator[accumulator.length - 1].getBottomY();
         accumulator.push(curr.calculateGraphics(index, Y));
         return accumulator;
       }, []);
+
+    console.log("NAMESPACES", this.namespaces);
 
     /*
         * Handle interfaces, harvest them as ready made objs from NSs
@@ -26,9 +28,8 @@ const NetworkDataManager = class {
         * */
     this.interfaces = this.namespaces
       .reduce((accumulator, curr /* , index */) => [...accumulator, ...curr.interfaces], []);
-    console.log(this.interfaces);
-    this.handleInterfaces(input);
-
+    console.log("RAW INTERFACES", this.interfaces);
+   // this.handleInterfaces(input);
     /*
          * Put logical links into objects with structure:
          * { source  :   id, target: id, .....attr}
@@ -42,60 +43,91 @@ const NetworkDataManager = class {
         });
       }
     });
+    console.log("links", this.links);
+    this.handleInterfacePositions();
+    console.log("interfaces with levels AND POSITIONS", this.interfaces);
   }
+
+  handleInterfacePositions(){
+    let y = 100;
+    console.log("chto blya", this.interfaces);
+    this.interfaces.forEach((interf) => {
+        // x position by its hierarchy level
+          if(interf.json.parents){
+            // really rough way
+            interf.x += 200;
+          }
+
+        interf.level = interf.x;
+
+        // y position by its parent OR if no parent than +100 beneath the last
+
+          if(interf.json.parents){
+            interf.y = this.interfaces.find(x => x.id === Object.keys(interf.json.parents)[0]).y;
+          }else{
+            if(interf.json.children){ y += 150* Object.keys(interf.json.children).length} else { y += 150 ;}
+            interf.y = y;
+          }
+        console.log("???", interf);
+
+
+
+      });
+    }
 
 
   handleInterfaces() {
-    // make small copies of the interfaces containing only:
-    // their id,  list of their childrens id's, list of parents id's
-    // and initial identifier that we haven't worked with them yet
+    let rootsCount = 0; // later use
+    const childlessParentless = []; // later use
 
-    let roots_count = 0; // later use
-    const childless_parentless = []; // later use
 
-    const small_interfaces = this.interfaces.reduce(
+     // make small copies of the interfaces containing only:
+     // their id,  list of their childrens id's, list of parents id's
+     // and initial identifier that we haven't worked with them yet
+    const smallInterfaces = this.interfaces.reduce(
       (accumulator, x) => {
-        let children;
+        let children ;
         (x.json.children) ? children = Object.keys(x.json.children) : children = null;
-
-        let parents;
+        let parents ;
         (x.json.parents) ? parents = Object.keys(x.json.parents) : parents = null;
-
-        if (parents === null) roots_count++;
-
+        if (parents === null) rootsCount++;
         // filter out the single nodes with no connections to an other array
         (children === null && parents === null)
-          ? childless_parentless.push(x)
+          ? childlessParentless.push(x)
           : accumulator.push({
             id: x.json.id, children, parents, marked: false,
           });
-
         return accumulator;
       },
       [],
     );
 
-    const hierarchies = childless_parentless
+    console.log("SMALL INTERFACES", smallInterfaces);
+    console.log("CHILDLESS PARENTLESS", childlessParentless);
+
+    const hierarchies = childlessParentless
       .map(x => d3.hierarchy(x));
 
+    console.log("HIERARCHIES", hierarchies);
     // array of d3.hierarchies that lack parents they need to be linked to
-    const orphans = [];
+    const childless = [];
     do {
-      for (const interf in small_interfaces) {
-        if (!interf.marked && !orphans.includes(interf)) {
-          // if no children then it's an orphan
-          if (interf.children === null) { orphans.push(interf); } else if (orphans.length > 0) {
+      for (const interf in smallInterfaces) {
+        if (!interf.marked && !childless.includes(interf)) {
+          // if no children then it's childless
+          if (interf.children === null) { childless.push(interf); }
+          else if (childless.length > 0) {
             for (let i_ch = 0; i_ch < interf.children.length; i_ch++) {
               let child;
               let orp_i = -1;
-              // look if the child is in the orphans array
-              for (let i_o = 0; i_o < orphans.length; i_o++) {
-                if (orphans[i_o].id == interf.children[i_ch]) { child = o; orp_i = i_o; break; }
+              // look if the child is in the childless array
+              for (let i_o = 0; i_o < childless.length; i_o++) {
+                if (childless[i_o].id == interf.children[i_ch]) { child = o; orp_i = i_o; break; }
               }
               if (child) {
                 interf.children[i_ch] = child;
                 child.marked = true;
-                orphans.splice(orp_i, 1);
+                childless.splice(orp_i, 1);
               }
             }
           }
@@ -103,7 +135,7 @@ const NetworkDataManager = class {
       }
     }
     // while   ( i !== 10 )
-    while (hierarchies.length !== roots_count);
+    while (hierarchies.length !== rootsCount);
   }
 
   getNSForSVG() {

@@ -1,6 +1,11 @@
 /**
  * Created by sashkoboom on 5. 3. 2018.
  */
+
+/* eslint-disable */
+
+// alert("pizda");
+
 import renderInputToTable from './render/input_table';
 import ColorManager from './render/color_manager';
 import NetworkDataManager from './handle_data/network_data_manager';
@@ -33,7 +38,7 @@ const main = (input = null) => {
     dataManager.getLinksForSVG(),
     colorManager,
   );
-  render.start();
+  render.draw();
 };
 
 /*
@@ -46,6 +51,6 @@ const handleFileSelect = (evt) => {
   fr.readAsText(files[0]);
 };
 
-example();
+ example();
 
 window.document.getElementById('files').addEventListener('change', handleFileSelect, false);
