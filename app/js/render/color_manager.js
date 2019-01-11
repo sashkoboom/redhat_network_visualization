@@ -30,8 +30,9 @@ const ColorManager = class{
         //make list of CSS classnames corresponding namespace names
         this.classNames = {};
         (namespaces).forEach(namespace => {
-            const cropped = namespace.replace("/", "");
-            this.classNames[namespace] =  cropped === "" ? "main_ns" : cropped;
+            //const cropped = namespace.replace("/", "");
+            //this.classNames[namespace] =  cropped === "" ? "main_ns" : cropped;
+            this.classNames[namespace] = this.namespaceToClassname(namespace);
         });
         //make a stylesheet for further color manipulation
         const sheet = document.createElement('style');
@@ -47,7 +48,6 @@ const ColorManager = class{
 
 
     getColor(str){
-        console.log("THA NAMESPACE COLOR AAAAAA", str);
         if(this.colors[str]) return this.colors[str] ;
         return str == "main_ns" ? this.colors[0] : "grey";
     }
@@ -58,6 +58,10 @@ const ColorManager = class{
     }
 
     getClassName (str){return this.classNames[str];}
+
+    namespaceToClassname(ns){
+        return "namespace_" + btoa(ns).replace("/", "_1").replace("==", "_2").replace("+", "_3").replace("=", "_4")
+    }
 };
 
 export default ColorManager;

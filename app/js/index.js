@@ -4,7 +4,6 @@
 
 /* eslint-disable */
 
-// alert("pizda");
 
 import renderInputToTable from './render/input_table';
 import ColorManager from './render/color_manager';
@@ -25,7 +24,7 @@ const main = (input = null) => {
   // Initialize color manager with array of names of given namespaces
   const colorManager = new ColorManager(Object.keys(input.namespaces));
 
-  // Draw a small table for me to see the input
+  // Draw a small table to see the input data
   renderInputToTable(input, colorManager);
 
   // Parse JSON-obj to my own objs I can then render
@@ -51,6 +50,6 @@ const handleFileSelect = (evt) => {
   fr.readAsText(files[0]);
 };
 
- example();
+// example();
 
 window.document.getElementById('files').addEventListener('change', handleFileSelect, false);

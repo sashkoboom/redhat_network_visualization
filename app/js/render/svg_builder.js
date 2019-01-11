@@ -9,12 +9,6 @@ import * as constants from '../utils/constants';
 const SVGBuilder = class {
   constructor(ns_data = [], inteface_data = [], links_data = [], colorManager = null) {
 
-    console.log("tak");
-    console.log(ns_data);
-    console.log(inteface_data);
-    console.log(links_data);
-    console.log(colorManager);
-
     this.namespaces = ns_data;
     this.interfaces = inteface_data;
     this.links = links_data;
@@ -51,9 +45,6 @@ const SVGBuilder = class {
     *
     * */
   draw(ns_arr = this.namespaces, nodes = this.interfaces, links = this.links) {
-
-
-
     // custom force to stop nodes from leaving the visible part of the plane
     function box_force() {
       for (const n of nodes) {
@@ -81,15 +72,15 @@ const SVGBuilder = class {
 
     // Manage the namespace nodes
    ns_arr.forEach((ns) => {
-      const x_r = ns.x; const y_r = ns.y; const w_r = ns.width; const
-        h_r = ns.height;
-      console.log(ns);
+      const x_r = ns.x;
+      const y_r = ns.y;
+      const w_r = ns.width;
+      const h_r = ns.height;
+
       const id = ns.id ? ns.id : ns.json.id;
       const fill_r = this.colorManager === null ? 'lavender' : this.colorManager.getColor(id);
 
       // Create constraint force for each namespace
-
-       alert();
        simulation.force(`ns_box_${id}`, () => {
         nodes.forEach((n) => {
           if (n.ns == id) {
@@ -99,7 +90,6 @@ const SVGBuilder = class {
           }
         });
       });
-
 
       // Draw namespace rectangles
       const ns_rect = this.pane
@@ -111,6 +101,14 @@ const SVGBuilder = class {
         .attr('fill', fill_r);
     });
 
+      const link = this.pane.append('g')
+          .attr('class', 'links')
+          .selectAll('line')
+          .data(links)
+          .enter()
+          .append('line')
+          .attr('stroke', 'black')
+          .attr('stroke-width', 2);
 
     const node = this.pane.append('g')
       .attr('class', 'nodes')
@@ -124,33 +122,34 @@ const SVGBuilder = class {
       .attr('fill', d => this.colorManager ? this.colorManager.getColorForNode(d) : "red")
         .attr("stroke", "black");
 
-    console.log("mades some circles i guess", node);
+    const text =  this.pane.append('g')
+        .selectAll('text')
+        .attr("class", "text")
+      .data(nodes)
+          .enter()
+          .append('text')
+          .attr('x', d => d.x - 50)
+          .attr('y', d=> d.y + 5 )
+          .attr('fill', 'black')
+            .attr("background", "white")
+          .attr('font-family', 'Ariel Black')
+          .attr('font-size', 18)
+          .text(d => d.name);
 
-    console.log("links the fuck", links);
+    console.log("mades some TEXT guess", text);
+
 
     const link_force = d3.forceLink(links)
       .id(d => d.id)
       .distance(d => 10)
       .strength(0);
-
     simulation.force('links', link_force);
-
-    const link = this.pane.append('g')
-      .attr('class', 'links')
-      .selectAll('line')
-      .data(links)
-      .enter()
-      .append('line')
-      .attr('stroke', 'black')
-      .attr('stroke-width', 2);
-
-    console.log("made some LINKS i guess", link);
 
     function tickActions() {
       // update circle positions each tick of the simulation
       node
-        .attr('cx', d => d.x)
-        .attr('cy', d => d.y);
+        .attr('cx', d => d.x + 20)
+        .attr('cy', d => d.y + 5);
 
       // update link positions
       // simply tells one end of the line to follow one node around
@@ -160,6 +159,10 @@ const SVGBuilder = class {
         .attr('y1', d => d.source.y)
         .attr('x2', d => d.target.x)
         .attr('y2', d => d.target.y);
+
+        text
+            .attr('x', d => d.x)
+            .attr('y', d => d.y);
     }
 
     simulation.on('tick', tickActions);

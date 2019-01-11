@@ -20,7 +20,6 @@ const NetworkDataManager = class {
         return accumulator;
       }, []);
 
-    console.log("NAMESPACES", this.namespaces);
 
     /*
         * Handle interfaces, harvest them as ready made objs from NSs
@@ -29,11 +28,8 @@ const NetworkDataManager = class {
     this.interfaces = this.namespaces
       .reduce((accumulator, curr /* , index */) => [...accumulator, ...curr.interfaces], []);
     console.log("RAW INTERFACES", this.interfaces);
-   // this.handleInterfaces(input);
-    /*
-         * Put logical links into objects with structure:
-         * { source  :   id, target: id, .....attr}
-         * */
+
+      this.handleInterfacePositions();
     this.links = [];
     this.interfaces.forEach((interf) => {
       if (interf.json.children) {
@@ -43,36 +39,39 @@ const NetworkDataManager = class {
         });
       }
     });
-    console.log("links", this.links);
-    this.handleInterfacePositions();
-    console.log("interfaces with levels AND POSITIONS", this.interfaces);
+  }
+
+  countLevel(interf){
+    if(!interf.json.parents) return 0;
+    const parent = this.interfaces.find(x => x.id === Object.keys(interf.json.parents)[0]);
+    return 300 + this.countLevel(parent);
   }
 
   handleInterfacePositions(){
     let y = 100;
-    console.log("chto blya", this.interfaces);
     this.interfaces.forEach((interf) => {
         // x position by its hierarchy level
           if(interf.json.parents){
-            // really rough way
-            interf.x += 200;
+            interf.x = this.countLevel(interf);
           }
-
         interf.level = interf.x;
 
-        // y position by its parent OR if no parent than +100 beneath the last
+      });
 
-          if(interf.json.parents){
-            interf.y = this.interfaces.find(x => x.id === Object.keys(interf.json.parents)[0]).y;
-          }else{
+    this.interfaces.forEach((interf) => {
+        // y position by  if no parent than +100 beneath the last
+        if(!interf.json.parents){
             if(interf.json.children){ y += 150* Object.keys(interf.json.children).length} else { y += 150 ;}
             interf.y = y;
+        }
+
+    });
+      this.interfaces.forEach((interf) => {
+          // y position by its parent
+          if(interf.json.parents){
+              interf.y = this.interfaces.find(x => x.id === Object.keys(interf.json.parents)[0]).y;
           }
-        console.log("???", interf);
-
-
-
-      });
+      })
     }
 
 
@@ -140,45 +139,14 @@ const NetworkDataManager = class {
 
   getNSForSVG() {
     return this.namespaces;
-
-    /*  let ns_r1 = new NamespaceNode();
-        ns_r1.setXYWH(230, 280, 600, 330);
-        ns_r1.setId('1');
-        let ns_r2 = new NamespaceNode();
-        ns_r2.setId('2');
-        let ns_r3 = new NamespaceNode();
-        ns_r3.setId('3');
-
-        ns_r2.setXYWH(10, 260, 70, 70);
-        ns_r3.setXYWH(800, 260, 70, 70);
-
-        return [ns_r1, ns_r2, ns_r3] */
   }
 
   getInterfacesForSVG() {
-    return this.interfaces;
-    /* [{x: 100, y: 350, level : 100, ns : '2'}, //0
-            {x: 300, y: 150, level : 300},//1
-            {x: 300, y: 350, level : 300, ns : '1'},//2
-            {x: 300, y: 550, level : 300, ns : '1'},//3
-            {x: 500, y: 150, level : 500},//4
-            {x: 500, y: 350, level : 500, ns : '1'},//5
-            {x: 500, y: 550, level : 500, ns : '1'},//6
-            {x: 700, y: 350, level : 700, ns: '3'}//7
-        ] */
+      return this.interfaces;
   }
 
   getLinksForSVG() {
     return this.links;
-    /* return [
-            {source : 0, target: 1},
-            {source : 0, target: 2},
-            {source : 0, target: 3},
-            {source : 1, target: 4},
-            {source : 2, target: 5},
-            {source : 2, target: 6},
-            {source : 5, target: 7}
-        ]; */
   }
 };
 

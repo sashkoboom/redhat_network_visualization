@@ -18,6 +18,7 @@
   "scripts": {
     "lint": "eslint",
     "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "showmustgoon": "",
     "test": "echo \"No test specified\" && exit 0"
   },
   "eslintConfig": {

@@ -35,7 +35,7 @@ const renderInputToTable = (json, colorManager) => {
       if (interf.peer) td3.innerHTML += interf.peer.target;
 
       if (interf.namespace) {
-        td4.innerHTML += interf.namespace;
+        td4.innerHTML += encodeURI(interf.namespace);
         td4.innerHTML += ', ';
       }
 
