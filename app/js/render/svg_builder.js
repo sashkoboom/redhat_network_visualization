@@ -5,6 +5,7 @@
 
 import * as d3 from 'd3';
 import * as constants from '../utils/constants';
+import * as helpers from "../utils/helpers";
 
 const SVGBuilder = class {
   constructor(ns_data = [], inteface_data = [], links_data = [], colorManager = null) {
@@ -13,6 +14,7 @@ const SVGBuilder = class {
     this.interfaces = inteface_data;
     this.links = links_data;
     this.colorManager = colorManager;
+    this.zoomQ = 1;
 
     const svg = d3.select('main')
       .append('svg')
@@ -21,7 +23,11 @@ const SVGBuilder = class {
 
 
     // create zoomable/pannable pane to put all the visuals in it
-    const zoom_actions = () => this.pane.attr('transform', d3.event.transform);
+    const zoom_actions = () => {
+        this.zoomQ = d3.event.transform.k;
+
+        this.pane.attr('transform', d3.event.transform)
+    };
 
     this.pane = svg.append('g')
       .attr('class', 'everything');
@@ -62,12 +68,19 @@ const SVGBuilder = class {
       }
     }
 
+    const pattern = this.pane.append("defs")
+          .append("pattern")
+          .attr({ id:"hash4_4", width:"8", height:"8", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
+          ;
+    pattern.append("rect")
+        .attr({ width:"4", height:"8", transform:"translate(0,0)", fill:"#88AAEE" });
+
     console.log("Making force simulation of nodes");
     console.log(nodes);
     const simulation = d3.forceSimulation()
       .nodes(nodes)
-      .force('collide', d3.forceCollide(50))
-      .force('forceX', d3.forceX(d => d.level));
+      .force('collide', d3.forceCollide(80))
+      .force('forceY', d3.forceY(d => d.level));
       //.force('border_box', box_force);
 
     // Manage the namespace nodes
@@ -85,8 +98,8 @@ const SVGBuilder = class {
         nodes.forEach((n) => {
           if (n.ns == id) {
 
-            n.x = Math.max(50 + x_r, Math.min(x_r + w_r - 50, n.x));
-            n.y = Math.max(50 + y_r, Math.min(y_r + h_r - 50, n.y));
+            n.x = Math.max( x_r, Math.min(x_r + w_r, n.x));
+            n.y = Math.max( y_r, Math.min(y_r + h_r, n.y));
           }
         });
       });
@@ -96,8 +109,8 @@ const SVGBuilder = class {
         .append('rect')
         .attr('x', x_r)
         .attr('y', y_r)
-        .attr('width', w_r)
-        .attr('height', h_r)
+          .attr('width', w_r)
+          .attr('height', h_r)
         .attr('fill', fill_r);
     });
 
@@ -108,18 +121,30 @@ const SVGBuilder = class {
           .enter()
           .append('line')
           .attr('stroke', 'black')
-          .attr('stroke-width', 2);
+          .attr('stroke-width', 3);
+
+      const end_marks = this.pane.append('g')
+          .attr('class', 'end_marks')
+          .selectAll('circle')
+          .data(links)
+          .enter()
+          .append('circle')
+          .attr("r", 13)
+          .style("fill", "black");
 
     const node = this.pane.append('g')
       .attr('class', 'nodes')
-      .selectAll('circle')
+      .selectAll('rect')
       .data(nodes)
       .enter()
-      .append('circle')
-      .attr('r', 50)
-      .attr('cx', d => d.x)
-      .attr('cy', d => d.y)
-      .attr('fill', d => this.colorManager ? this.colorManager.getColorForNode(d) : "red")
+      .append('rect')
+        .attr('width', constants.INTERFACE_BOX.width)
+        .attr('height', constants.INTERFACE_BOX.height)
+      .attr('x', d => d.x)
+      .attr('y', d => d.y)
+      .attr('fill',
+              // d => this.colorManager ? this.colorManager.getColorForNode(d) : "red")
+          "url(#hash4_4)")
         .attr("stroke", "black");
 
     const text =  this.pane.append('g')
@@ -128,8 +153,8 @@ const SVGBuilder = class {
       .data(nodes)
           .enter()
           .append('text')
-          .attr('x', d => d.x - 50)
-          .attr('y', d=> d.y + 5 )
+          .attr('x', d => d.x + 50)
+          .attr('y', d=> d.y + 50 )
           .attr('fill', 'black')
             .attr("background", "white")
           .attr('font-family', 'Ariel Black')
@@ -141,31 +166,41 @@ const SVGBuilder = class {
 
     const link_force = d3.forceLink(links)
       .id(d => d.id)
-      .distance(d => 10)
+      .distance(() => 10)
       .strength(0);
     simulation.force('links', link_force);
 
     function tickActions() {
+
+
       // update circle positions each tick of the simulation
       node
-        .attr('cx', d => d.x + 20)
-        .attr('cy', d => d.y + 5);
+        .attr('x', d => d.x)
+        .attr('y', d => d.y)
+      ;
 
       // update link positions
       // simply tells one end of the line to follow one node around
       // and the other end of the line to follow the other node around
       link
-        .attr('x1', d => d.source.x)
-        .attr('y1', d => d.source.y)
-        .attr('x2', d => d.target.x)
-        .attr('y2', d => d.target.y);
+        .attr('x1', d => d.source.x + constants.INTERFACE_BOX.width / 2)
+        .attr('y1', d => d.source.y + constants.INTERFACE_BOX.height / 2)
+        .attr('x2', d => d.target.x + constants.INTERFACE_BOX.width / 2)
+        .attr('y2', d => d.target.y + constants.INTERFACE_BOX.height / 2);
+
+
+      //calculate intersection for each node
+
+      end_marks
+            .attr("cx", d => helpers.getIntersection(d, 'x') )
+            .attr("cy", d => helpers.getIntersection(d, 'y'));
 
         text
-            .attr('x', d => d.x)
-            .attr('y', d => d.y);
+            .attr('x', d => d.x + 50)
+            .attr('y', d => d.y + 50);
     }
 
-    simulation.on('tick', tickActions);
+    simulation.on('tick', tickActions.bind(this));
 
     /*
         *
@@ -185,11 +220,11 @@ const SVGBuilder = class {
     const dragdrag = function (d) {
       if (d.ns) {
         for (const ns of ns_arr) {
-          if (ns.id == d.ns) {
+          if (ns.id === d.ns) {
             const x_r = ns.x; const y_r = ns.y; const w_r = ns.width; const
               h_r = ns.height;
-            d.fx = Math.max(50 + x_r, Math.min(x_r + w_r - 50, d3.event.x));
-            d.fy = Math.max(50 + y_r, Math.min(y_r + h_r - 50, d3.event.y));
+            d.fx = Math.max( x_r, Math.min(x_r + w_r - constants.INTERFACE_BOX.width, d3.event.x));
+            d.fy = Math.max(y_r, Math.min(y_r + h_r - constants.INTERFACE_BOX.height, d3.event.y));
             break;
           }
         }
@@ -218,6 +253,7 @@ const SVGBuilder = class {
 
     drag_handler(node);
   }
+
 
 
   drawNameSpaces() {

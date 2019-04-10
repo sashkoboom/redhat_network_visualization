@@ -4,9 +4,13 @@
 
 // w h of render plane
 export const WIDTH = window.innerWidth * 0.9;
-// export const HEIGHT = 3000;
+
 export const HEIGHT = window.innerHeight * 0.8;
 
+export const INTERFACE_BOX = {
+  width: 140,
+  height: 100,
+}
 
 // namespace box
 export const NS_BOX = {
@@ -17,7 +21,7 @@ export const NS_BOX = {
     bottom: 0,
     between: 20,
   },
-  height_factor: 150,
+  width_factor: 150,
   text: {
     padding: {
       left: 30,
@@ -28,7 +32,8 @@ export const NS_BOX = {
   },
 };
 
-NS_BOX.width = WIDTH - 2 * NS_BOX.padding.left;
+NS_BOX.height = HEIGHT - 2 * NS_BOX.padding.top;
+
 
 export const NS_CLASS_PADDING = 'namespace';
 

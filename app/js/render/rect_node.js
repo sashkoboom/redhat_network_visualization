@@ -17,8 +17,8 @@ class Node {
     this.height = h;
   }
 
-  getBottomY() {
-    return this.y + this.height;
+  getLeftX() {
+    return this.x + this.width;
   }
 }
 
@@ -28,7 +28,7 @@ class InterfaceNode extends Node {
         super();
         this.json = json;
         this.ns = json.namespace;
-        this.name = json.name
+        this.name = json.name;
         this.id = json.id;
         this.level = 100;
     }
@@ -47,13 +47,13 @@ export default class NamespaceNode extends Node {
   }
 
 
-  calculateGraphics(index = 0, prevY = 0) {
-    this.x = constants.NS_BOX.padding.left;
+  calculateGraphics(index = 0, prevX = 0) {
+    this.y = constants.NS_BOX.padding.left;
     if (index === 0) {
-      this.y = constants.NS_BOX.padding.top;
-    } else this.y = constants.NS_BOX.padding.between + prevY;
-    this.width = constants.NS_BOX.width;
-    this.height = this.interfaces.length * constants.NS_BOX.height_factor;
+      this.x = constants.NS_BOX.padding.top;
+    } else this.x = constants.NS_BOX.padding.between + prevX;
+    this.height = constants.NS_BOX.height;
+    this.width = this.interfaces.length * constants.NS_BOX.width_factor;
 
     return this;
   }

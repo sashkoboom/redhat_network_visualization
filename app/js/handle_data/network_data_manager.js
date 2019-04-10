@@ -6,6 +6,7 @@
 
 import * as d3 from 'd3';
 import NamespaceNode from '../render/rect_node';
+import * as constants from "../utils/constants"
 
 const NetworkDataManager = class {
   constructor(input = {}) {
@@ -15,12 +16,11 @@ const NetworkDataManager = class {
       .map(val => new NamespaceNode(val))
     // calculate its xywh basing of each previous node
       .reduce((accumulator, curr, index) => {
-        const Y = accumulator.length === 0 ? 0 : accumulator[accumulator.length - 1].getBottomY();
-        accumulator.push(curr.calculateGraphics(index, Y));
+        const X = accumulator.length === 0 ? 0 : accumulator[accumulator.length - 1].getLeftX();
+        accumulator.push(curr.calculateGraphics(index, X));
         return accumulator;
       }, []);
-
-
+    console.log("NAMESPACES", this.namespaces)
     /*
         * Handle interfaces, harvest them as ready made objs from NSs
         * and manage their XYWHs
@@ -30,6 +30,7 @@ const NetworkDataManager = class {
     console.log("RAW INTERFACES", this.interfaces);
 
       this.handleInterfacePositions();
+      this.handleNamespacePositions();
     this.links = [];
     this.interfaces.forEach((interf) => {
       if (interf.json.children) {
@@ -48,32 +49,40 @@ const NetworkDataManager = class {
   }
 
   handleInterfacePositions(){
-    let y = 100;
+    let x = 100;
     this.interfaces.forEach((interf) => {
         // x position by its hierarchy level
           if(interf.json.parents){
-            interf.x = this.countLevel(interf);
+            interf.y = this.countLevel(interf);
           }
-        interf.level = interf.x;
+        interf.level = interf.y;
 
       });
 
     this.interfaces.forEach((interf) => {
-        // y position by  if no parent than +100 beneath the last
+        // x position by if no parent than +100 beneath the last
         if(!interf.json.parents){
-            if(interf.json.children){ y += 150* Object.keys(interf.json.children).length} else { y += 150 ;}
-            interf.y = y;
+            if(interf.json.children){ x += 150 * Object.keys(interf.json.children).length} else { x += 150 ;}
+            interf.x = x;
         }
 
     });
-      this.interfaces.forEach((interf) => {
-          // y position by its parent
+
+    this.interfaces.forEach((interf) => {
+          // x position by its parent
           if(interf.json.parents){
-              interf.y = this.interfaces.find(x => x.id === Object.keys(interf.json.parents)[0]).y;
+              interf.x = this.interfaces.find(n => n.id === Object.keys(interf.json.parents)[0]).x;
           }
       })
     }
 
+    handleNamespacePositions(){
+      this.namespaces.forEach(ns => {
+          // fix height based on the hierarchy height
+          ns.height = ns.interfaces.sort((i1, i2) => i2.y - i1.y )[0].y + constants.INTERFACE_BOX.height
+          // fix Y position based on Z position of the highest node
+      })
+    }
 
   handleInterfaces() {
     let rootsCount = 0; // later use
@@ -148,6 +157,7 @@ const NetworkDataManager = class {
   getLinksForSVG() {
     return this.links;
   }
+
 };
 
 export default NetworkDataManager;

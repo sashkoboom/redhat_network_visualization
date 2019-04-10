@@ -742,7 +742,7 @@
                 }
             },
             "name": "some_ns2",
-            "routes": {
+            "routnpmes": {
                 "0": {
                     "name": "unspec",
                     "routes": [

@@ -50,6 +50,5 @@ const handleFileSelect = (evt) => {
   fr.readAsText(files[0]);
 };
 
-// example();
 
 window.document.getElementById('files').addEventListener('change', handleFileSelect, false);
