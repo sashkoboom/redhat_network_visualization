@@ -34,12 +34,24 @@ const NetworkDataManager = class {
     this.links = [];
     this.interfaces.forEach((interf) => {
       if (interf.json.children) {
-        Object.values(interf.json.children).forEach((child) => {
-          child.source = interf.json.id;
-          this.links.push(child);
+        Object.values(interf.json.children).forEach((link) => {
+          link.source = interf.json.id;
+          link.svg = {};
+          interf.links.push(link);
+          this.links.push(link);
         });
       }
     });
+    this.links.forEach(link => {
+        const t = this.getInterfaceByID(link.target);
+        t.links.push(link);
+        console.log(t);
+    })
+    ;
+  }
+
+  getInterfaceByID(id){
+      return this.interfaces.find(x => x.id === id);
   }
 
   countLevel(interf){

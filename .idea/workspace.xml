@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8204df46-4165-4628-8c88-00a0084575b5" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/handle_data/network_data_manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/handle_data/network_data_manager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/render/rect_node.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/render/rect_node.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/render/svg_builder.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/render/svg_builder.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/utils/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/utils/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/utils/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/utils/helpers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/samples/sample2-reformatted.json" beforeDir="false" afterPath="$PROJECT_DIR$/samples/sample2-reformatted.json" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,25 +23,7 @@
         <entry file="file://$PROJECT_DIR$/app/js/utils/constants.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="392">
-              <caret line="34" column="48" lean-forward="true" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/handle_data/network_data_manager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="155">
-              <caret line="81" column="104" selection-start-line="81" selection-start-column="104" selection-end-line="81" selection-end-column="104" />
-              <folding>
-                <element signature="e#110#135#0" expanded="true" />
-                <element signature="e#1406#1584#0" />
-                <element signature="e#1614#2399#0" />
-                <element signature="e#2423#4661#0" />
-                <element signature="e#4679#4712#0" />
-                <element signature="e#4738#4773#0" />
-                <element signature="e#4794#4822#0" />
-              </folding>
+              <caret line="46" column="40" lean-forward="true" selection-start-line="46" selection-start-column="40" selection-end-line="46" selection-end-column="40" />
             </state>
           </provider>
         </entry>
@@ -52,20 +31,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/render/rect_node.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="49" column="43" lean-forward="true" selection-start-line="49" selection-start-column="43" selection-end-line="49" selection-end-column="43" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/index.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="257">
-              <caret line="45" column="35" lean-forward="true" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
-              <folding>
-                <element signature="e#72#126#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="465">
+              <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -73,49 +40,77 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/render/svg_builder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="70" column="5" lean-forward="true" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
+            <state relative-caret-position="160">
+              <caret line="72" column="10" selection-start-line="72" selection-start-column="4" selection-end-line="72" selection-end-column="10" />
               <folding>
                 <element signature="e#71#96#0" expanded="true" />
                 <element signature="e#1320#1497#0" />
                 <element signature="e#1521#1731#0" />
-                <element signature="e#2070#2884#0" />
-                <element signature="e#6230#7150#0" />
                 <element signature="e#7230#7616#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/index.html">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/js/render/interactions.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="12" lean-forward="true" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+            <state relative-caret-position="165">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#22#47#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/utils/helpers.js">
+        <entry file="file://$PROJECT_DIR$/app/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="52" column="17" lean-forward="true" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
+            <state relative-caret-position="-7">
+              <caret line="24" column="67" lean-forward="true" selection-start-line="24" selection-start-column="67" selection-end-line="24" selection-end-column="67" />
               <folding>
-                <element signature="e#245#1880#0" />
-                <element signature="e#1910#3208#0" />
+                <element signature="e#72#126#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/js/handle_data/network_data_manager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="354">
+              <caret line="47" column="23" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
+              <folding>
+                <element signature="e#110#135#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="285">
+              <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>&quot;type&quot;:</find>
       <find>vxlan0</find>
-      <find>mylink1</find>
       <find>switch</find>
       <find>route</find>
       <find>addresses</find>
@@ -127,10 +122,18 @@
       <find>colli</find>
       <find>end_</find>
       <find>y</find>
-      <find>handleInterfaces</find>
-      <find>fact</find>
-      <find>exa</find>
       <find>patt</find>
+      <find>mylink1</find>
+      <find>handleInterfaces</find>
+      <find>mou</find>
+      <find>mouseover</find>
+      <find>exa</find>
+      <find>stroke</find>
+      <find>d.svg</find>
+      <find>this.links</find>
+      <find>fact</find>
+      <find>sty</find>
+      <find>consol</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -141,11 +144,13 @@
       <list>
         <option value="$PROJECT_DIR$/samples/sample2-reformatted.json" />
         <option value="$PROJECT_DIR$/app/js/index.js" />
-        <option value="$PROJECT_DIR$/app/js/handle_data/network_data_manager.js" />
+        <option value="$PROJECT_DIR$/app/js/utils/helpers.js" />
+        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/app/js/utils/constants.js" />
         <option value="$PROJECT_DIR$/app/js/render/rect_node.js" />
         <option value="$PROJECT_DIR$/app/js/render/svg_builder.js" />
-        <option value="$PROJECT_DIR$/app/js/utils/helpers.js" />
+        <option value="$PROJECT_DIR$/app/js/render/interactions.js" />
+        <option value="$PROJECT_DIR$/app/js/handle_data/network_data_manager.js" />
       </list>
     </option>
   </component>
@@ -194,9 +199,7 @@
             <path>
               <item name="redhat_network_visualization" type="b2602c69:ProjectViewProjectNode" />
               <item name="redhat_network_visualization" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
+              <item name="samples" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -238,12 +241,12 @@
       <workItem from="1552926047832" duration="994000" />
       <workItem from="1552993624545" duration="5467000" />
       <workItem from="1554585744999" duration="7000" />
-      <workItem from="1554585753717" duration="16313000" />
+      <workItem from="1554585753717" duration="25792000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23094000" />
+    <option name="totallyTimeSpent" value="32573000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -288,17 +291,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/samples/sample2-reformatted.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="798" column="34" lean-forward="true" selection-start-line="798" selection-start-column="34" selection-end-line="798" selection-end-column="34" />
-          <folding>
-            <element signature="n#!!block;n#routes#0;n#!!block;n#some_ns2/#0;n#!!block;n#namespaces#0;n#!!top" />
-            <element signature="n#!!block;n#routes#0;n#!!block;n#third_ns/#0;n#!!block;n#namespaces#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/samples/sample1-reformatted.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="480">
@@ -318,57 +310,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/handle_data/network_data_manager.js">
+    <entry file="file://$PROJECT_DIR$/samples/sample2-reformatted.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="155">
-          <caret line="81" column="104" selection-start-line="81" selection-start-column="104" selection-end-line="81" selection-end-column="104" />
+        <state relative-caret-position="926">
+          <caret line="309" column="49" lean-forward="true" selection-start-line="309" selection-start-column="49" selection-end-line="309" selection-end-column="49" />
           <folding>
-            <element signature="e#110#135#0" expanded="true" />
-            <element signature="e#1406#1584#0" />
-            <element signature="e#1614#2399#0" />
-            <element signature="e#2423#4661#0" />
-            <element signature="e#4679#4712#0" />
-            <element signature="e#4738#4773#0" />
-            <element signature="e#4794#4822#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/utils/constants.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="392">
-          <caret line="34" column="48" lean-forward="true" selection-start-line="34" selection-start-column="48" selection-end-line="34" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/render/rect_node.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="49" column="43" lean-forward="true" selection-start-line="49" selection-start-column="43" selection-end-line="49" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="45" column="35" lean-forward="true" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
-          <folding>
-            <element signature="e#72#126#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/render/svg_builder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="70" column="5" lean-forward="true" selection-start-line="70" selection-start-column="5" selection-end-line="70" selection-end-column="5" />
-          <folding>
-            <element signature="e#71#96#0" expanded="true" />
-            <element signature="e#1320#1497#0" />
-            <element signature="e#1521#1731#0" />
-            <element signature="e#2070#2884#0" />
-            <element signature="e#6230#7150#0" />
-            <element signature="e#7230#7616#0" />
+            <element signature="n#!!block;n#routes#0;n#!!block;n#third_ns/#0;n#!!block;n#namespaces#0;n#!!top" />
           </folding>
         </state>
       </provider>
@@ -376,7 +323,7 @@
     <entry file="file://$PROJECT_DIR$/app/js/utils/helpers.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
-          <caret line="52" column="17" lean-forward="true" selection-start-line="52" selection-start-column="17" selection-end-line="52" selection-end-column="17" />
+          <caret line="52" column="39" lean-forward="true" selection-start-line="52" selection-start-column="39" selection-end-line="52" selection-end-column="39" />
           <folding>
             <element signature="e#245#1880#0" />
             <element signature="e#1910#3208#0" />
@@ -384,10 +331,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-7">
+          <caret line="24" column="67" lean-forward="true" selection-start-line="24" selection-start-column="67" selection-end-line="24" selection-end-column="67" />
+          <folding>
+            <element signature="e#72#126#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="12" lean-forward="true" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+        <state relative-caret-position="285">
+          <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/utils/constants.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="46" column="40" lean-forward="true" selection-start-line="46" selection-start-column="40" selection-end-line="46" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/render/interactions.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#22#47#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/render/rect_node.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="465">
+          <caret line="34" column="25" lean-forward="true" selection-start-line="34" selection-start-column="25" selection-end-line="34" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/render/svg_builder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="72" column="10" selection-start-line="72" selection-start-column="4" selection-end-line="72" selection-end-column="10" />
+          <folding>
+            <element signature="e#71#96#0" expanded="true" />
+            <element signature="e#1320#1497#0" />
+            <element signature="e#1521#1731#0" />
+            <element signature="e#7230#7616#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/handle_data/network_data_manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="354">
+          <caret line="47" column="23" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
+          <folding>
+            <element signature="e#110#135#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

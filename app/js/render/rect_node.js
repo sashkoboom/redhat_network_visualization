@@ -8,6 +8,8 @@ class Node {
     this.y = y;
     this.width = width;
     this.height = height;
+    this.svg = [];
+
   }
 
   setXYWH(x = 0, y = 0, w = 100, h = 50) {
@@ -31,6 +33,7 @@ class InterfaceNode extends Node {
         this.name = json.name;
         this.id = json.id;
         this.level = 100;
+        this.links = [];
     }
 }
 

@@ -6,6 +6,7 @@
 import * as d3 from 'd3';
 import * as constants from '../utils/constants';
 import * as helpers from "../utils/helpers";
+import * as interactions from "./interactions";
 
 const SVGBuilder = class {
   constructor(ns_data = [], inteface_data = [], links_data = [], colorManager = null) {
@@ -68,12 +69,6 @@ const SVGBuilder = class {
       }
     }
 
-    const pattern = this.pane.append("defs")
-          .append("pattern")
-          .attr({ id:"hash4_4", width:"8", height:"8", patternUnits:"userSpaceOnUse", patternTransform:"rotate(60)"})
-          ;
-    pattern.append("rect")
-        .attr({ width:"4", height:"8", transform:"translate(0,0)", fill:"#88AAEE" });
 
     console.log("Making force simulation of nodes");
     console.log(nodes);
@@ -111,8 +106,14 @@ const SVGBuilder = class {
         .attr('y', y_r)
           .attr('width', w_r)
           .attr('height', h_r)
-        .attr('fill', fill_r);
+        .attr('fill', fill_r)
+          .on("mouseover", () => interactions.mouseOverNamespace(ns))
+          .on("mouseout", () => interactions.mouseOutNamespace(ns));
     });
+
+
+
+
 
       const link = this.pane.append('g')
           .attr('class', 'links')
@@ -121,7 +122,12 @@ const SVGBuilder = class {
           .enter()
           .append('line')
           .attr('stroke', 'black')
-          .attr('stroke-width', 3);
+          .attr('stroke-width', 3)
+          .on("mouseover", interactions.mouseOverLinks)
+          .on("mouseout", interactions.mouseOutLinks)
+          .each(function(d){
+              d.svg["link"] = this ;
+          });
 
       const end_marks = this.pane.append('g')
           .attr('class', 'end_marks')
@@ -130,7 +136,12 @@ const SVGBuilder = class {
           .enter()
           .append('circle')
           .attr("r", 13)
-          .style("fill", "black");
+          .attr("fill", "black")
+          .on("mouseover", interactions.mouseOverLinks)
+          .on("mouseout", interactions.mouseOutLinks)
+          .each(function(d){
+              d.svg["end_mark"] =  this ;
+          });
 
     const node = this.pane.append('g')
       .attr('class', 'nodes')
@@ -142,10 +153,30 @@ const SVGBuilder = class {
         .attr('height', constants.INTERFACE_BOX.height)
       .attr('x', d => d.x)
       .attr('y', d => d.y)
+        .on("mouseover", interactions.mouseOverInterface)
+        .on("mouseout", interactions.mouseOutInterface)
+
       .attr('fill',
               // d => this.colorManager ? this.colorManager.getColorForNode(d) : "red")
-          "url(#hash4_4)")
-        .attr("stroke", "black");
+                d => {
+                    switch(d.json.state){
+                        case "up": {
+                            return "green"
+                        }
+                        case "none" : {
+                            return "grey"
+                        }
+                        case "down" : {
+                            return "red"
+                        }
+                        default:
+                            return "white"
+                    }
+                })
+        .attr("stroke", "black")
+        .each(function(d){
+            d.svg["rect"] = this ;
+        });
 
     const text =  this.pane.append('g')
         .selectAll('text')
@@ -159,7 +190,10 @@ const SVGBuilder = class {
             .attr("background", "white")
           .attr('font-family', 'Ariel Black')
           .attr('font-size', 18)
-          .text(d => d.name);
+          .text(d => d.name)
+            .each(function(d){
+                d.svg["text"] = this ;
+        });
 
     console.log("mades some TEXT guess", text);
 
@@ -200,7 +234,7 @@ const SVGBuilder = class {
             .attr('y', d => d.y + 50);
     }
 
-    simulation.on('tick', tickActions.bind(this));
+    simulation.on('tick', tickActions);
 
     /*
         *

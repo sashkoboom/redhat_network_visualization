@@ -39,3 +39,9 @@ export const NS_CLASS_PADDING = 'namespace';
 
 export const NS_TEXT_PADDING_TOP = 15;
 export const NS_TEXT_PADDING_LEFT = 30;
+
+export const STROKE_COLOR = 'black';
+export const HIGHLIGHT_STROKE_COLOR = 'blue';
+
+export const STROKE_WIDTH = 3;
+export const HIGHLIGHT_STROKE_WIDTH = 5;
