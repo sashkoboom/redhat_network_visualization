@@ -5,7 +5,7 @@
 
 import * as d3 from 'd3';
 import * as constants from '../utils/constants';
-import * as helpers from "../utils/helpers";
+import * as graphics from "./graphics";
 import * as interactions from "./interactions";
 
 const SVGBuilder = class {
@@ -69,6 +69,32 @@ const SVGBuilder = class {
       }
     }
 
+      // Pattern definition
+      this.pane.append('defs')
+          .append('pattern')
+          .attr('id', 'yellow-pattern')
+          .attr('patternUnits', 'userSpaceOnUse')
+          .attr('width', 50)
+          .attr('height', 50)
+          .append('image')
+          .attr('xlink:href', constants.YELLOW_PATTERN)
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', 50)
+          .attr('height', 50);
+
+    this.pane.append('defs')
+          .append('pattern')
+          .attr('id', 'red-pattern')
+          .attr('patternUnits', 'userSpaceOnUse')
+          .attr('width', 50)
+          .attr('height', 50)
+          .append('image')
+          .attr('xlink:href', constants.RED_PATTERN)
+          .attr('x', 0)
+          .attr('y', 0)
+          .attr('width', 50)
+          .attr('height', 50);
 
     console.log("Making force simulation of nodes");
     console.log(nodes);
@@ -92,7 +118,6 @@ const SVGBuilder = class {
        simulation.force(`ns_box_${id}`, () => {
         nodes.forEach((n) => {
           if (n.ns == id) {
-
             n.x = Math.max( x_r, Math.min(x_r + w_r, n.x));
             n.y = Math.max( y_r, Math.min(y_r + h_r, n.y));
           }
@@ -108,7 +133,8 @@ const SVGBuilder = class {
           .attr('height', h_r)
         .attr('fill', fill_r)
           .on("mouseover", () => interactions.mouseOverNamespace(ns))
-          .on("mouseout", () => interactions.mouseOutNamespace(ns));
+          .on("mouseout", () => interactions.mouseOutNamespace(ns))
+
     });
 
 
@@ -135,7 +161,7 @@ const SVGBuilder = class {
           .data(links)
           .enter()
           .append('circle')
-          .attr("r", 13)
+          .attr("r", constants.END_MARK_RADIUS)
           .attr("fill", "black")
           .on("mouseover", interactions.mouseOverLinks)
           .on("mouseout", interactions.mouseOutLinks)
@@ -143,8 +169,21 @@ const SVGBuilder = class {
               d.svg["end_mark"] =  this ;
           });
 
+      const start_marks = this.pane.append('g')
+          .attr('class', 'start_marks')
+          .selectAll('circle')
+          .data(links)
+          .enter()
+          .append('circle')
+          .attr("r", 13)
+          .attr("fill", "black")
+          .on("mouseover", interactions.mouseOverLinks)
+          .on("mouseout", interactions.mouseOutLinks)
+          .each(function(d){
+              d.svg["start_mark"] =  this ;
+          });
+
     const node = this.pane.append('g')
-      .attr('class', 'nodes')
       .selectAll('rect')
       .data(nodes)
       .enter()
@@ -153,29 +192,49 @@ const SVGBuilder = class {
         .attr('height', constants.INTERFACE_BOX.height)
       .attr('x', d => d.x)
       .attr('y', d => d.y)
+        .attr('rx', 20)
+        .attr('ry', 20)
         .on("mouseover", interactions.mouseOverInterface)
         .on("mouseout", interactions.mouseOutInterface)
-
-      .attr('fill',
-              // d => this.colorManager ? this.colorManager.getColorForNode(d) : "red")
-                d => {
+        .attr('fill',
+                 d => {
                     switch(d.json.state){
+
                         case "up": {
-                            return "green"
+                            return constants.GREY
                         }
                         case "none" : {
-                            return "grey"
+                         return 'url(#yellow-pattern)'
                         }
                         case "down" : {
-                            return "red"
+                            return 'url(#red-pattern)'
                         }
                         default:
                             return "white"
                     }
                 })
-        .attr("stroke", "black")
+        .attr("stroke", constants.STROKE_COLOR)
+        .attr("stroke-width", constants.STROKE_WIDTH)
         .each(function(d){
             d.svg["rect"] = this ;
+        });
+
+    const inner_rects = this.pane.append('g')
+        .selectAll('rect')
+        .data(nodes)
+        .enter()
+        .append('rect')
+        .attr('width', constants.INTERFACE_BOX.width - 2 * constants.INTERFACE_INNER_PADDING_X)
+        .attr('height', constants.INTERFACE_BOX.height - 2 * constants.INTERFACE_INNER_PADDING_Y)
+        .attr('x', d => d.x + constants.INTERFACE_INNER_PADDING_X)
+        .attr('y', d => d.y + constants.INTERFACE_INNER_PADDING_Y)
+        .attr('rx', 10)
+        .attr('ry', 10)
+        .on("mouseover", interactions.mouseOverInterface)
+        .on("mouseout", interactions.mouseOutInterface)
+        .attr('fill', constants.GREY)
+        .each(function(d){
+            d.svg["inner_rect"] = this ;
         });
 
     const text =  this.pane.append('g')
@@ -187,7 +246,7 @@ const SVGBuilder = class {
           .attr('x', d => d.x + 50)
           .attr('y', d=> d.y + 50 )
           .attr('fill', 'black')
-            .attr("background", "white")
+          .attr("background", "white")
           .attr('font-family', 'Ariel Black')
           .attr('font-size', 18)
           .text(d => d.name)
@@ -226,12 +285,20 @@ const SVGBuilder = class {
       //calculate intersection for each node
 
       end_marks
-            .attr("cx", d => helpers.getIntersection(d, 'x') )
-            .attr("cy", d => helpers.getIntersection(d, 'y'));
+            .attr("cx", d => graphics.getIntersection(d, 'x') )
+            .attr("cy", d => graphics.getIntersection(d, 'y'));
+
+      start_marks
+            .attr("cx", d => graphics.getIntersection(d, 'x', "start") )
+            .attr("cy", d => graphics.getIntersection(d, 'y', "start"));
 
         text
             .attr('x', d => d.x + 50)
             .attr('y', d => d.y + 50);
+
+        inner_rects
+            .attr('x', d => d.x + constants.INTERFACE_INNER_PADDING_X)
+            .attr('y', d => d.y + constants.INTERFACE_INNER_PADDING_Y)
     }
 
     simulation.on('tick', tickActions);
@@ -286,6 +353,7 @@ const SVGBuilder = class {
       .on('end', dragend);
 
     drag_handler(node);
+    drag_handler(inner_rects);
   }
 
 

@@ -10,8 +10,8 @@ const changeLinksColorTo = (d, color, stroke) => {
         .attr('stroke', color)
         .attr('stroke-width', stroke));
 
-    d3.select(d.svg["end_mark"])
-        .attr('fill', color)
+    [d.svg["end_mark"], d.svg["start_mark"]]
+        .forEach((i) => d3.select(i).attr('fill', color));
 };
 
 export const mouseOverLinks =  (d) => changeLinksColorTo(d, constants.HIGHLIGHT_STROKE_COLOR,  constants.HIGHLIGHT_STROKE_WIDTH);
@@ -20,7 +20,11 @@ export const mouseOutLinks = (d) => changeLinksColorTo(d, constants.STROKE_COLOR
 
 const changeNodesStrokeTo = (d, color, stroke, linksAction) => {
 // get all the links comin from this node and for each do mouseOver
-    d.links.forEach(link => linksAction(link, color, stroke))
+    d.links && d.links.length > 0 ? d.links.forEach(link => linksAction(link, color, stroke)) :
+        d3.select(d.svg["rect"])
+                .attr('stroke', color)
+                .attr('stroke-width', stroke)
+
 };
 
 export const mouseOverInterface =  (d) => changeNodesStrokeTo(d,
