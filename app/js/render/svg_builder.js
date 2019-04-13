@@ -100,9 +100,9 @@ const SVGBuilder = class {
     console.log(nodes);
     const simulation = d3.forceSimulation()
       .nodes(nodes)
-      .force('collide', d3.forceCollide(80))
-      .force('forceY', d3.forceY(d => d.level));
-      //.force('border_box', box_force);
+      .force('collide', d3.forceCollide(constants.INTERFACE_BOX.width))
+      .force('forceY', d3.forceY(d =>  d.level * constants.LEVEL_FACTOR + 50));
+      //lo
 
     // Manage the namespace nodes
    ns_arr.forEach((ns) => {
@@ -112,7 +112,7 @@ const SVGBuilder = class {
       const h_r = ns.height;
 
       const id = ns.id ? ns.id : ns.json.id;
-      const fill_r = this.colorManager === null ? 'lavender' : this.colorManager.getColor(id);
+      const fill_r = constants.NS_BACKGROUND_COLOR;
 
       // Create constraint force for each namespace
        simulation.force(`ns_box_${id}`, () => {
@@ -148,7 +148,7 @@ const SVGBuilder = class {
           .enter()
           .append('line')
           .attr('stroke', 'black')
-          .attr('stroke-width', 3)
+          .attr('stroke-width', constants.STROKE_WIDTH)
           .on("mouseover", interactions.mouseOverLinks)
           .on("mouseout", interactions.mouseOutLinks)
           .each(function(d){
@@ -196,6 +196,7 @@ const SVGBuilder = class {
         .attr('ry', 20)
         .on("mouseover", interactions.mouseOverInterface)
         .on("mouseout", interactions.mouseOutInterface)
+        .on("click", d => console.log("CLICKED ON", d))
         .attr('fill',
                  d => {
                     switch(d.json.state){
@@ -214,7 +215,6 @@ const SVGBuilder = class {
                     }
                 })
         .attr("stroke", constants.STROKE_COLOR)
-        .attr("stroke-width", constants.STROKE_WIDTH)
         .each(function(d){
             d.svg["rect"] = this ;
         });
@@ -268,37 +268,47 @@ const SVGBuilder = class {
 
       // update circle positions each tick of the simulation
       node
-        .attr('x', d => d.x)
-        .attr('y', d => d.y)
+          .each(d => {
+              const r = graphics.boxingConstrains (d, ns_arr, d);
+              d.delta = r;
+          })
+        // .attr('x', d => d.x)
+        .attr('x', d => d.delta.x)
+        // .attr('y', d => d.y)
+        .attr('y', d => d.delta.y)
       ;
 
       // update link positions
       // simply tells one end of the line to follow one node around
       // and the other end of the line to follow the other node around
       link
-        .attr('x1', d => d.source.x + constants.INTERFACE_BOX.width / 2)
-        .attr('y1', d => d.source.y + constants.INTERFACE_BOX.height / 2)
-        .attr('x2', d => d.target.x + constants.INTERFACE_BOX.width / 2)
-        .attr('y2', d => d.target.y + constants.INTERFACE_BOX.height / 2);
+          .each(l => {
+              l.deltaEnd = graphics.getIntersection(l, 'end');
+              l.deltaStart = graphics.getIntersection(l,  'start');
+          })
+          .attr('x1', d => d.source.delta.x + constants.INTERFACE_BOX.width / 2)
+        .attr('y1', d => d.source.delta.y + constants.INTERFACE_BOX.height / 2)
+        .attr('x2', d => d.target.delta.x + constants.INTERFACE_BOX.width / 2)
+        .attr('y2', d => d.target.delta.y + constants.INTERFACE_BOX.height / 2);
 
 
       //calculate intersection for each node
 
       end_marks
-            .attr("cx", d => graphics.getIntersection(d, 'x') )
-            .attr("cy", d => graphics.getIntersection(d, 'y'));
+            .attr("cx", d => d.deltaEnd.x )
+            .attr("cy", d => d.deltaEnd.y);
 
       start_marks
-            .attr("cx", d => graphics.getIntersection(d, 'x', "start") )
-            .attr("cy", d => graphics.getIntersection(d, 'y', "start"));
+            .attr("cx", d => d.deltaStart.x )
+            .attr("cy", d => d.deltaStart.y);
 
         text
-            .attr('x', d => d.x + 50)
-            .attr('y', d => d.y + 50);
+            .attr('x', d => d.delta.x + 50)
+            .attr('y', d => d.delta.y + 50);
 
         inner_rects
-            .attr('x', d => d.x + constants.INTERFACE_INNER_PADDING_X)
-            .attr('y', d => d.y + constants.INTERFACE_INNER_PADDING_Y)
+            .attr('x', d => d.delta.x + constants.INTERFACE_INNER_PADDING_X)
+            .attr('y', d => d.delta.y + constants.INTERFACE_INNER_PADDING_Y)
     }
 
     simulation.on('tick', tickActions);
@@ -318,28 +328,14 @@ const SVGBuilder = class {
 
     };
 
-    const dragdrag = function (d) {
-      if (d.ns) {
-        for (const ns of ns_arr) {
-          if (ns.id === d.ns) {
-            const x_r = ns.x; const y_r = ns.y; const w_r = ns.width; const
-              h_r = ns.height;
-            d.fx = Math.max( x_r, Math.min(x_r + w_r - constants.INTERFACE_BOX.width, d3.event.x));
-            d.fy = Math.max(y_r, Math.min(y_r + h_r - constants.INTERFACE_BOX.height, d3.event.y));
-            break;
-          }
-        }
-      } else {
-        d.fx = Math.max(50, Math.min(constants.WIDTH - 50, d3.event.x));
-        d.fy = Math.max(50, Math.min(constants.HEIGHT - 50, d3.event.y));
-      }
-
-
+    const dragdrag = (d) => {
+        const r = graphics.boxingConstrains(d, ns_arr, d3.event);
+        d.fx = r.x;
+        d.fy = r.y;
+    };
         // d.fx = d3.event.x;
         // d.fy = d3.event.y;
 
-
-    };
 
     const dragend = function (d) {
       if (!d3.event.active) simulation.alphaTarget(0);

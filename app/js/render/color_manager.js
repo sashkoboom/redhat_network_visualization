@@ -48,13 +48,11 @@ const ColorManager = class{
 
 
     getColor(str){
-        if(this.colors[str]) return this.colors[str] ;
-        return str == "main_ns" ? this.colors[0] : "grey";
+        return '#99CCCC';
     }
 
     getColorForNode(node){
-    const color = this.getColor(node.ns);
-    return color;
+    return '#99CCCC'
     }
 
     getClassName (str){return this.classNames[str];}

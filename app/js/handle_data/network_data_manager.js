@@ -10,6 +10,11 @@ import * as constants from "../utils/constants"
 
 const NetworkDataManager = class {
   constructor(input = {}) {
+
+      this.levels = {};
+      Object.keys(input.namespaces).forEach( ns => this.levels[ns] = {} );
+
+
     // Handle namespaces, make each one an object and calculate its render's XYWH etc.
     this.namespaces = Object.values(input.namespaces)
     // make each val into an obj
@@ -45,7 +50,6 @@ const NetworkDataManager = class {
     this.links.forEach(link => {
         const t = this.getInterfaceByID(link.target);
         t.links.push(link);
-        console.log(t);
     })
     ;
   }
@@ -57,26 +61,29 @@ const NetworkDataManager = class {
   countLevel(interf){
     if(!interf.json.parents) return 0;
     const parent = this.interfaces.find(x => x.id === Object.keys(interf.json.parents)[0]);
-    return 300 + this.countLevel(parent);
+    return 1 + this.countLevel(parent);
   }
 
   handleInterfacePositions(){
     let x = 100;
     this.interfaces.forEach((interf) => {
-        // x position by its hierarchy level
-          if(interf.json.parents){
-            interf.y = this.countLevel(interf);
-          }
-        interf.level = interf.y;
-
+        // y position by its hierarchy level
+        interf.level =  this.countLevel(interf);
+        this.levels[interf.ns][interf.level] ? this.levels[interf.ns][interf.level]++ : this.levels[interf.ns][interf.level] = 1;
+        interf.y = interf.level * constants.LEVEL_FACTOR + 50;
       });
 
+    console.log(this.levels);
+
     this.interfaces.forEach((interf) => {
-        // x position by if no parent than +100 beneath the last
+        // x position by parent if no parent than +100 after the last
         if(!interf.json.parents){
             if(interf.json.children){ x += 150 * Object.keys(interf.json.children).length} else { x += 150 ;}
             interf.x = x;
+        }else{
+            interf.x = this.getInterfaceByID(Object.keys(interf.json.parents)[0]);
         }
+
 
     });
 
@@ -91,9 +98,25 @@ const NetworkDataManager = class {
     handleNamespacePositions(){
       this.namespaces.forEach(ns => {
           // fix height based on the hierarchy height
-          ns.height = ns.interfaces.sort((i1, i2) => i2.y - i1.y )[0].y + constants.INTERFACE_BOX.height
+          ns.height = ns.interfaces.sort((i1, i2) => i2.y - i1.y )[0].y  + constants.INTERFACE_BOX.height
+          // fix width based on count of nodes of the wides level
+          console.log(Math.max.apply(null, (Object.values(this.levels[ns.id]))));
+          ns.width = Math.max.apply(null, (Object.values(this.levels[ns.id]))) * constants.NS_BOX.width_factor;
           // fix Y position based on Z position of the highest node
-      })
+          ns.y = Math.min.apply(null, ns.interfaces.map(i => i.y)) - constants.NS_BOX.padding.top ;
+
+      });
+
+        let prevX = 0;
+
+        this.namespaces.forEach(ns => {
+            ns.x = prevX + 30;
+            prevX = ns.x + ns.width;
+        })
+
+        // change order of namespaces base on count of the connections coming from them
+
+
     }
 
   handleInterfaces() {

@@ -5,6 +5,7 @@
 /* eslint-disable */
 
 import * as constants from "../utils/constants";
+import * as d3 from "d3";
 
 const checkLineIntersection = (line1StartX, line1StartY, line1EndX, line1EndY, line2StartX, line2StartY, line2EndX, line2EndY) => {
     // if the lines intersect, the result contains the x and y of the intersection (treating the lines as infinite) and booleans for whether line segment 1 or line segment 2 contain the point
@@ -46,66 +47,96 @@ const checkLineIntersection = (line1StartX, line1StartY, line1EndX, line1EndY, l
 };
 
 const testWithLine = (line, d) => checkLineIntersection(
-    d.source.x + constants.INTERFACE_BOX.width / 2,
-    d.source.y + constants.INTERFACE_BOX.height / 2,
-    d.target.x + constants.INTERFACE_BOX.width / 2,
-    d.target.y + constants.INTERFACE_BOX.height / 2,
+    d.source.delta.x + constants.INTERFACE_BOX.width / 2,
+    d.source.delta.y + constants.INTERFACE_BOX.height / 2,
+    d.target.delta.x + constants.INTERFACE_BOX.width / 2,
+    d.target.delta.y + constants.INTERFACE_BOX.height / 2,
 
     line[0], line[1], line[2], line[3]
 );
 
 
-export function getIntersection(d, attr, position = "end"){
+export function getIntersection(d, position = "end"){
+
+
 
     const squareLines = position === "end" ? [
         // top
-        [d.target.x,
-            d.target.y,
-            d.target.x + constants.INTERFACE_BOX.width,
-            d.target.y,],
+        [
+            d.target.delta.x,
+            d.target.delta.y,
+            d.target.delta.x + constants.INTERFACE_BOX.width,
+            d.target.delta.y,],
         //left
-        [d.target.x,
-            d.target.y,
-            d.target.x,
-            d.target.y + constants.INTERFACE_BOX.height],
+        [
+            d.target.delta.x,
+            d.target.delta.y,
+            d.target.delta.x,
+            d.target.delta.y + constants.INTERFACE_BOX.height],
         // right
-        [d.target.x + constants.INTERFACE_BOX.width,
-            d.target.y,
-            d.target.x + constants.INTERFACE_BOX.width,
-            d.target.y + constants.INTERFACE_BOX.height,]
+        [
+            d.target.delta.x + constants.INTERFACE_BOX.width,
+            d.target.delta.y,
+            d.target.delta.x + constants.INTERFACE_BOX.width,
+            d.target.delta.y + constants.INTERFACE_BOX.height,]
         //bottom
-        ,[d.target.x,
-            d.target.y + constants.INTERFACE_BOX.height,
-            d.target.x + constants.INTERFACE_BOX.width,
-            d.target.y + constants.INTERFACE_BOX.height,],
+        ,[
+            d.target.delta.x,
+            d.target.delta.y + constants.INTERFACE_BOX.height,
+            d.target.delta.x + constants.INTERFACE_BOX.width,
+            d.target.delta.y + constants.INTERFACE_BOX.height,],
 
     ] : [
         // bottom
-        [d.source.x,
-            d.source.y + constants.INTERFACE_BOX.height,
-            d.source.x + constants.INTERFACE_BOX.width,
-            d.source.y + constants.INTERFACE_BOX.height],
+        [   d.source.delta.x,
+            d.source.delta.y + constants.INTERFACE_BOX.height,
+            d.source.delta.x + constants.INTERFACE_BOX.width,
+            d.source.delta.y + constants.INTERFACE_BOX.height],
         //left
-        [d.source.x,
-            d.source.y,
-            d.source.x,
-            d.source.y + constants.INTERFACE_BOX.height],
+        [
+            d.source.delta.x,
+            d.source.delta.y,
+            d.source.delta.x,
+            d.source.delta.y + constants.INTERFACE_BOX.height],
         // right
-        [d.source.x + constants.INTERFACE_BOX.width,
-            d.source.y,
-            d.source.x + constants.INTERFACE_BOX.width,
-            d.source.y + constants.INTERFACE_BOX.height,]
+        [
+            d.source.delta.x + constants.INTERFACE_BOX.width,
+            d.source.delta.y,
+            d.source.delta.x + constants.INTERFACE_BOX.width,
+            d.source.delta.y + constants.INTERFACE_BOX.height,]
         //top
-        ,[d.source.x,
-            d.source.y,
-            d.source.x + constants.INTERFACE_BOX.width,
-            d.source.y ],
+        ,[
+            d.source.delta.x,
+            d.source.delta.y,
+            d.source.delta.x + constants.INTERFACE_BOX.width,
+            d.source.delta.y ],
     ];
 
     for(const l of squareLines){
         const r = testWithLine(l, d);
-        if(r.onLine1 && r.onLine2) return r[attr]
+        if(r.onLine1 && r.onLine2) return r
     }
 
     return 0;
+}
+
+export function boxingConstrains (d, ns_arr, where) {
+    const result = {x: 0, y: 0};
+    if (d.ns) {
+        for (const ns of ns_arr) {
+            if (ns.id === d.ns) {
+                const x_r = ns.x; const y_r = ns.y; const w_r = ns.width; const
+                    h_r = ns.height;
+                result.x = Math.max( x_r, Math.min(x_r + w_r - constants.INTERFACE_BOX.width, where.x));
+                result.y = Math.max(y_r, Math.min(y_r + h_r - constants.INTERFACE_BOX.height, where.y));
+                break;
+            }
+        }
+    } else {
+        result.x = Math.max(50, Math.min(constants.WIDTH - 50, d3.event.x));
+        result.y = Math.max(50, Math.min(constants.HEIGHT - 50, d3.event.y));
+    }
+    return result;
+
+
 }

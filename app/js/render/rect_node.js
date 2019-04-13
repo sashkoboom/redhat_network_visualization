@@ -3,7 +3,7 @@ import * as constants from '../utils/constants';
 /* eslint-disable */
 
 class Node {
-  constructor(x = 60, y = 0, width = 0, height = 0) {
+  constructor(x = 0, y = 100, width = 0, height = 0) {
     this.x = x;
     this.y = y;
     this.width = width;
@@ -32,7 +32,6 @@ class InterfaceNode extends Node {
         this.ns = json.namespace;
         this.name = json.name;
         this.id = json.id;
-        this.level = 100;
         this.links = [];
     }
 }
@@ -51,9 +50,9 @@ export default class NamespaceNode extends Node {
 
 
   calculateGraphics(index = 0, prevX = 0) {
-    this.y = constants.NS_BOX.padding.left;
+    this.y = constants.NS_BOX.padding.top;
     if (index === 0) {
-      this.x = constants.NS_BOX.padding.top;
+      this.x = constants.NS_BOX.padding.left;
     } else this.x = constants.NS_BOX.padding.between + prevX;
     this.height = constants.NS_BOX.height;
     this.width = this.interfaces.length * constants.NS_BOX.width_factor;
