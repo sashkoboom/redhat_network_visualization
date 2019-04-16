@@ -31,7 +31,7 @@ export const mouseOverInterface =  (d) => changeNodesStrokeTo(d,
     constants.HIGHLIGHT_STROKE_COLOR, constants.HIGHLIGHT_STROKE_WIDTH, mouseOverLinks);
 
 export const mouseOutInterface = (d) => changeNodesStrokeTo(d,
-    constants.STROKE_COLOR, constants.STROKE_WIDTH, mouseOutLinks);
+    constants.STROKE_COLOR, function(d) { return d.json.type === "internal" ? 20 : constants.STROKE_WIDTH}, mouseOutLinks);
 
 
 

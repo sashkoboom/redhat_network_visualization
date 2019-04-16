@@ -35,6 +35,7 @@ const main = (input = null) => {
     dataManager.getNSForSVG(),
     dataManager.getInterfacesForSVG(),
     dataManager.getLinksForSVG(),
+    dataManager.getOtherLinksForSVG(),
     colorManager,
   );
   render.draw();

@@ -9,11 +9,12 @@ import * as graphics from "./graphics";
 import * as interactions from "./interactions";
 
 const SVGBuilder = class {
-  constructor(ns_data = [], inteface_data = [], links_data = [], colorManager = null) {
+  constructor(ns_data = [], inteface_data = [], links_data = [], other_links_data = [], colorManager = null) {
 
     this.namespaces = ns_data;
     this.interfaces = inteface_data;
     this.links = links_data;
+    this.otherLinks = links_data;
     this.colorManager = colorManager;
     this.zoomQ = 1;
 
@@ -51,7 +52,7 @@ const SVGBuilder = class {
     * each node must contain id of its namespace
     *
     * */
-  draw(ns_arr = this.namespaces, nodes = this.interfaces, links = this.links) {
+  draw(ns_arr = this.namespaces, nodes = this.interfaces, links = this.links, otherLinks = this.otherLinks) {
     // custom force to stop nodes from leaving the visible part of the plane
     function box_force() {
       for (const n of nodes) {
@@ -148,12 +149,28 @@ const SVGBuilder = class {
           .enter()
           .append('line')
           .attr('stroke', 'black')
+          .attr('stroke-dasharray', '0')
           .attr('stroke-width', constants.STROKE_WIDTH)
           .on("mouseover", interactions.mouseOverLinks)
           .on("mouseout", interactions.mouseOutLinks)
           .each(function(d){
               d.svg["link"] = this ;
           });
+
+      // const other_link = this.pane.append('g')
+      //     .attr('class', 'links')
+      //     .selectAll('line')
+      //     .data(otherLinks)
+      //     .enter()
+      //     .append('line')
+      //     .attr('stroke', 'red')
+      //     .attr('stroke-dasharray', '2em')
+      //     .attr('stroke-width', '10')
+      //     .on("mouseover", interactions.mouseOverLinks)
+      //     .on("mouseout", interactions.mouseOutLinks)
+      //     .each(function(d){
+      //         d.svg["other_link"] = this ;
+      //     });
 
       const end_marks = this.pane.append('g')
           .attr('class', 'end_marks')
@@ -188,7 +205,7 @@ const SVGBuilder = class {
       .data(nodes)
       .enter()
       .append('rect')
-        .attr('width', constants.INTERFACE_BOX.width)
+        .attr('width', d => d.width)
         .attr('height', constants.INTERFACE_BOX.height)
       .attr('x', d => d.x)
       .attr('y', d => d.y)
@@ -215,6 +232,10 @@ const SVGBuilder = class {
                     }
                 })
         .attr("stroke", constants.STROKE_COLOR)
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", d => d.json.type === "internal" ? 10 : 1)
+        .attr("stroke-dasharray", d => d.json.type === "internal" ? "1, 30" : 0
+        )
         .each(function(d){
             d.svg["rect"] = this ;
         });
@@ -224,7 +245,7 @@ const SVGBuilder = class {
         .data(nodes)
         .enter()
         .append('rect')
-        .attr('width', constants.INTERFACE_BOX.width - 2 * constants.INTERFACE_INNER_PADDING_X)
+        .attr('width', d => (d.name.length > 10) ? d.name.length * 12 : constants.INTERFACE_BOX.width - 2 * constants.INTERFACE_INNER_PADDING_X)
         .attr('height', constants.INTERFACE_BOX.height - 2 * constants.INTERFACE_INNER_PADDING_Y)
         .attr('x', d => d.x + constants.INTERFACE_INNER_PADDING_X)
         .attr('y', d => d.y + constants.INTERFACE_INNER_PADDING_Y)
@@ -232,7 +253,7 @@ const SVGBuilder = class {
         .attr('ry', 10)
         .on("mouseover", interactions.mouseOverInterface)
         .on("mouseout", interactions.mouseOutInterface)
-        .attr('fill', constants.GREY)
+        .attr('fill', d => d.json.type === "internal" ? "white" : constants.GREY)
         .each(function(d){
             d.svg["inner_rect"] = this ;
         });
@@ -243,11 +264,11 @@ const SVGBuilder = class {
       .data(nodes)
           .enter()
           .append('text')
-          .attr('x', d => d.x + 50)
+          .attr('x', d => d.x + 30)
           .attr('y', d=> d.y + 50 )
           .attr('fill', 'black')
           .attr("background", "white")
-          .attr('font-family', 'Ariel Black')
+          .attr('font-family', 'Arial, "Helvetica Neue", Helvetica, sans-serif')
           .attr('font-size', 18)
           .text(d => d.name)
             .each(function(d){
@@ -269,7 +290,7 @@ const SVGBuilder = class {
       // update circle positions each tick of the simulation
       node
           .each(d => {
-              const r = graphics.boxingConstrains (d, ns_arr, d);
+              const r = graphics.boxingConstrains (d, ns_arr, d, d.width, d.height);
               d.delta = r;
           })
         // .attr('x', d => d.x)
@@ -283,13 +304,17 @@ const SVGBuilder = class {
       // and the other end of the line to follow the other node around
       link
           .each(l => {
-              l.deltaEnd = graphics.getIntersection(l, 'end');
-              l.deltaStart = graphics.getIntersection(l,  'start');
+              l.deltaEnd = graphics.getIntersection(l, 'end', l.target.width, l.target.height);
+              l.deltaStart = graphics.getIntersection(l,  'start', l.source.width, l.source.height);
           })
           .attr('x1', d => d.source.delta.x + constants.INTERFACE_BOX.width / 2)
         .attr('y1', d => d.source.delta.y + constants.INTERFACE_BOX.height / 2)
         .attr('x2', d => d.target.delta.x + constants.INTERFACE_BOX.width / 2)
         .attr('y2', d => d.target.delta.y + constants.INTERFACE_BOX.height / 2);
+
+
+
+
 
 
       //calculate intersection for each node
@@ -303,7 +328,7 @@ const SVGBuilder = class {
             .attr("cy", d => d.deltaStart.y);
 
         text
-            .attr('x', d => d.delta.x + 50)
+            .attr('x', d => d.delta.x + 30)
             .attr('y', d => d.delta.y + 50);
 
         inner_rects
@@ -329,7 +354,7 @@ const SVGBuilder = class {
     };
 
     const dragdrag = (d) => {
-        const r = graphics.boxingConstrains(d, ns_arr, d3.event);
+        const r = graphics.boxingConstrains(d, ns_arr, d3.event, d.width, d.height);
         d.fx = r.x;
         d.fy = r.y;
     };

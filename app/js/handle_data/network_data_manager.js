@@ -33,9 +33,10 @@ const NetworkDataManager = class {
     this.interfaces = this.namespaces
       .reduce((accumulator, curr /* , index */) => [...accumulator, ...curr.interfaces], []);
     console.log("RAW INTERFACES", this.interfaces);
-
+      this.links = [];
+      this.otherLinks = [];
       this.handleNamespacePositions();
-    this.links = [];
+
     this.interfaces.forEach((interf) => {
       if (interf.json.children) {
         Object.values(interf.json.children).forEach((link) => {
@@ -51,6 +52,9 @@ const NetworkDataManager = class {
         t.links.push(link);
     })
     ;
+
+    console.log("LINKS", this.links);
+    console.log("OTHER LINKS", this.otherLinks);
   }
 
   getInterfaceByID(id){
@@ -83,6 +87,15 @@ const NetworkDataManager = class {
         }else{
             //
             interf.x = this.getInterfaceByID(Object.keys(interf.json.parents)[0]);
+        }
+
+        if(interf.json.peer){
+            const link = interf.json.peer;
+            link.source = interf;
+            link.target = this.getInterfaceByID(link.target);
+            link.svg = {};
+            interf.otherLinks.push(link);
+            this.otherLinks.push(link);
         }
 
 
@@ -226,6 +239,10 @@ const NetworkDataManager = class {
   getLinksForSVG() {
     return this.links;
   }
+
+  getOtherLinksForSVG(){
+   return this.otherLinks;
+    }
 
 };
 

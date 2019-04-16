@@ -56,7 +56,7 @@ const testWithLine = (line, d) => checkLineIntersection(
 );
 
 
-export function getIntersection(d, position = "end"){
+export function getIntersection(d, position = "end", width, height){
 
 
 
@@ -65,50 +65,50 @@ export function getIntersection(d, position = "end"){
         [
             d.target.delta.x,
             d.target.delta.y,
-            d.target.delta.x + constants.INTERFACE_BOX.width,
+            d.target.delta.x + width,
             d.target.delta.y,],
         //left
         [
             d.target.delta.x,
             d.target.delta.y,
             d.target.delta.x,
-            d.target.delta.y + constants.INTERFACE_BOX.height],
+            d.target.delta.y + height],
         // right
         [
-            d.target.delta.x + constants.INTERFACE_BOX.width,
+            d.target.delta.x + width,
             d.target.delta.y,
-            d.target.delta.x + constants.INTERFACE_BOX.width,
-            d.target.delta.y + constants.INTERFACE_BOX.height,]
+            d.target.delta.x + width,
+            d.target.delta.y + height,]
         //bottom
         ,[
             d.target.delta.x,
-            d.target.delta.y + constants.INTERFACE_BOX.height,
-            d.target.delta.x + constants.INTERFACE_BOX.width,
-            d.target.delta.y + constants.INTERFACE_BOX.height,],
+            d.target.delta.y + height,
+            d.target.delta.x + width,
+            d.target.delta.y + height,],
 
     ] : [
         // bottom
         [   d.source.delta.x,
-            d.source.delta.y + constants.INTERFACE_BOX.height,
-            d.source.delta.x + constants.INTERFACE_BOX.width,
-            d.source.delta.y + constants.INTERFACE_BOX.height],
+            d.source.delta.y + height,
+            d.source.delta.x + width,
+            d.source.delta.y + height],
         //left
         [
             d.source.delta.x,
             d.source.delta.y,
             d.source.delta.x,
-            d.source.delta.y + constants.INTERFACE_BOX.height],
+            d.source.delta.y + height],
         // right
         [
-            d.source.delta.x + constants.INTERFACE_BOX.width,
+            d.source.delta.x + width,
             d.source.delta.y,
-            d.source.delta.x + constants.INTERFACE_BOX.width,
-            d.source.delta.y + constants.INTERFACE_BOX.height,]
+            d.source.delta.x + width,
+            d.source.delta.y + height,]
         //top
         ,[
             d.source.delta.x,
             d.source.delta.y,
-            d.source.delta.x + constants.INTERFACE_BOX.width,
+            d.source.delta.x + width,
             d.source.delta.y ],
     ];
 
@@ -120,15 +120,15 @@ export function getIntersection(d, position = "end"){
     return 0;
 }
 
-export function boxingConstrains (d, ns_arr, where) {
+export function boxingConstrains (d, ns_arr, where, width, height) {
     const result = {x: 0, y: 0};
     if (d.ns) {
         for (const ns of ns_arr) {
             if (ns.id === d.ns) {
                 const x_r = ns.x; const y_r = ns.y; const w_r = ns.width; const
                     h_r = ns.height;
-                result.x = Math.max( x_r, Math.min(x_r + w_r - constants.INTERFACE_BOX.width, where.x));
-                result.y = Math.max(y_r, Math.min(y_r + h_r - constants.INTERFACE_BOX.height, where.y));
+                result.x = Math.max( x_r, Math.min(x_r + w_r - width, where.x));
+                result.y = Math.max(y_r, Math.min(y_r + h_r - height, where.y));
                 break;
             }
         }
