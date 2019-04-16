@@ -11,23 +11,24 @@ export const INTERFACE_BOX = {
   width: 140,
   height: 110,
   stroke_width: 1,
+  collide: 120,
 };
 
 // namespace box
 export const NS_BOX = {
   padding: {
-    left: 0,
-    right: 0,
-    top: 50,
+    left: 100,
+    right: 100,
+    top: 500,
     bottom: 0,
     between: 20,
   },
-  width_factor: 350,
+  width_factor: 200,
   text: {
     padding: {
       left: 30,
       right: 0,
-      top: 15,
+      top: 30,
       bottom: 0,
     },
   },
@@ -54,7 +55,7 @@ export const RED_PATTERN = 'data:image/jpeg;base64,/9j/4QlQaHR0cDovL25zLmFkb2JlL
 export const INTERFACE_INNER_PADDING_X = 20;
 export const INTERFACE_INNER_PADDING_Y = 20;
 
-export const LEVEL_FACTOR = 300;
+export const LEVEL_FACTOR = 500;
 
 export const GREY = '#DCDCDC';
 

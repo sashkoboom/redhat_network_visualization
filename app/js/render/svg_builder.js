@@ -100,9 +100,9 @@ const SVGBuilder = class {
     console.log(nodes);
     const simulation = d3.forceSimulation()
       .nodes(nodes)
-      .force('collide', d3.forceCollide(constants.INTERFACE_BOX.width))
-      .force('forceY', d3.forceY(d =>  d.level * constants.LEVEL_FACTOR + 50));
-      //lo
+       .force('collide', d3.forceCollide(constants.INTERFACE_BOX.collide))
+        .force('forceY', d3.forceY(d =>  d.level * constants.LEVEL_FACTOR + 50));
+
 
     // Manage the namespace nodes
    ns_arr.forEach((ns) => {

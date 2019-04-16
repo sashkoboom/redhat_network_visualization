@@ -12,7 +12,7 @@ const NetworkDataManager = class {
   constructor(input = {}) {
 
       this.levels = {};
-      Object.keys(input.namespaces).forEach( ns => this.levels[ns] = {} );
+      Object.keys(input.namespaces).forEach( ns => this.levels[ns] = { } );
 
 
     // Handle namespaces, make each one an object and calculate its render's XYWH etc.
@@ -34,7 +34,6 @@ const NetworkDataManager = class {
       .reduce((accumulator, curr /* , index */) => [...accumulator, ...curr.interfaces], []);
     console.log("RAW INTERFACES", this.interfaces);
 
-      this.handleInterfacePositions();
       this.handleNamespacePositions();
     this.links = [];
     this.interfaces.forEach((interf) => {
@@ -64,53 +63,88 @@ const NetworkDataManager = class {
     return 1 + this.countLevel(parent);
   }
 
-  handleInterfacePositions(){
-    let x = 100;
-    this.interfaces.forEach((interf) => {
-        // y position by its hierarchy level
-        interf.level =  this.countLevel(interf);
-        this.levels[interf.ns][interf.level] ? this.levels[interf.ns][interf.level]++ : this.levels[interf.ns][interf.level] = 1;
-        interf.y = interf.level * constants.LEVEL_FACTOR + 50;
-      });
+  handleInterfacePositions(interfaces, x){
 
-    console.log(this.levels);
 
-    this.interfaces.forEach((interf) => {
+      let lastRootMove = 0;
+    interfaces.forEach((interf) => {
+
+
         // x position by parent if no parent than +100 after the last
         if(!interf.json.parents){
-            if(interf.json.children){ x += 150 * Object.keys(interf.json.children).length} else { x += 150 ;}
-            interf.x = x;
+            let currRootMove = 0;
+            // if it's a root, move it according to 1/2 prev root children + 1/2 yours children
+            if(interf.json.children){
+                currRootMove = Object.keys(interf.json.children).length * 50;
+            }
+            x += lastRootMove + 300 + currRootMove ;
+            lastRootMove = currRootMove;
+            interf.x = x + 50;
         }else{
+            //
             interf.x = this.getInterfaceByID(Object.keys(interf.json.parents)[0]);
         }
 
 
     });
 
-    this.interfaces.forEach((interf) => {
+    interfaces.forEach((interf) => {
           // x position by its parent
           if(interf.json.parents){
               interf.x = this.interfaces.find(n => n.id === Object.keys(interf.json.parents)[0]).x;
           }
-      })
+      });
+
+      return x + lastRootMove ;
     }
 
+
     handleNamespacePositions(){
+
+        this.interfaces.forEach((interf) => {
+            // y position by its hierarchy level
+            interf.level =  this.countLevel(interf);
+            this.levels[interf.ns][interf.level] ?
+                this.levels[interf.ns][interf.level].push(interf) : this.levels[interf.ns][interf.level] = [interf];
+
+            // step down is calculated by how many interfaces are on the same level => bigger step
+            interf.y = this.levels[interf.ns][interf.level].length * 0.1 * interf.level * constants.LEVEL_FACTOR + 50;
+        });
+
+
+        console.log("LEVELS", this.levels);
+      let x = 0;
+      let lastX = 0;
       this.namespaces.forEach(ns => {
+
+          ns.interfaces = Object.values(this.levels[ns.id]).flat();
+
+          x = this.handleInterfacePositions(ns.interfaces, x);
+
           // fix height based on the hierarchy height
-          ns.height = ns.interfaces.sort((i1, i2) => i2.y - i1.y )[0].y  + constants.INTERFACE_BOX.height
-          // fix width based on count of nodes of the wides level
-          console.log(Math.max.apply(null, (Object.values(this.levels[ns.id]))));
-          ns.width = Math.max.apply(null, (Object.values(this.levels[ns.id]))) * constants.NS_BOX.width_factor;
-          // fix Y position based on Z position of the highest node
-          ns.y = Math.min.apply(null, ns.interfaces.map(i => i.y)) - constants.NS_BOX.padding.top ;
+          console.log("tak", ns.interfaces.sort((i1, i2) => i2.level - i1.level )[0]);
+
+         // plocha w * h = n * iw * ih
+
+
+          // multiply by count of interfaces in ns
+          ns.height = 2 * constants.NS_BOX.padding.top +  ns.interfaces.sort((i1, i2) => i2.level - i1.level )[0].level * constants.LEVEL_FACTOR * 2  + constants.INTERFACE_BOX.height;
+           // fix width based on count of nodes of the wides level
+         console.log("last", lastX);
+         console.log("x", x);
+          ns.width =  x - lastX + 200;
+          // ns.width = 2 * constants.NS_BOX.padding.left + Math.max.apply(null, (Object.values(this.levels[ns.id]).map(x => x.count))) * constants.NS_BOX.width_factor;
+          // ns.width = ns.interfaces.length * constants.INTERFACE_BOX.width * constants.INTERFACE_BOX.height * 9 / ns.height;
+                      // fix Y position based on Z position of the highest node
+           ns.y = Math.min.apply(null, ns.interfaces.map(i => i.y)) - constants.NS_BOX.padding.top ;
+           lastX = x + 100;
 
       });
 
         let prevX = 0;
 
         this.namespaces.forEach(ns => {
-            ns.x = prevX + 30;
+            ns.x = prevX + 100;
             prevX = ns.x + ns.width;
         })
 
