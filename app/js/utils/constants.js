@@ -8,10 +8,19 @@ export const WIDTH = window.innerWidth * 0.9;
 export const HEIGHT = window.innerHeight * 0.8;
 
 export const INTERFACE_BOX = {
-  width: 140,
+  width: 240,
   height: 110,
   stroke_width: 1,
   collide: 120,
+  fontsize: {
+    up: 18,
+    standard: 36,
+  },
+};
+
+export const SCALING = {
+  downLimit: 0.15,
+  upLimit: 0.45,
 };
 
 // namespace box

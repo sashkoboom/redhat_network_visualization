@@ -79,7 +79,7 @@ const NetworkDataManager = class {
             let currRootMove = 0;
             // if it's a root, move it according to 1/2 prev root children + 1/2 yours children
             if(interf.json.children){
-                currRootMove = Object.keys(interf.json.children).length * 50;
+                currRootMove = Object.keys(interf.json.children).length * 70;
             }
             x += lastRootMove + 300 + currRootMove ;
             lastRootMove = currRootMove;

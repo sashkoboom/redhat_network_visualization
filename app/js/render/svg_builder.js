@@ -7,6 +7,7 @@ import * as d3 from 'd3';
 import * as constants from '../utils/constants';
 import * as graphics from "./graphics";
 import * as interactions from "./interactions";
+import * as scaling from "./scaling"
 
 const SVGBuilder = class {
   constructor(ns_data = [], inteface_data = [], links_data = [], other_links_data = [], colorManager = null) {
@@ -16,7 +17,11 @@ const SVGBuilder = class {
     this.links = links_data;
     this.otherLinks = links_data;
     this.colorManager = colorManager;
-    this.zoomQ = 1;
+    this.scale = new scaling.UpScale();
+
+    this.text_1 = null ;
+    this.text_2 = null ;
+    this.text_3 = null ;
 
     const svg = d3.select('main')
       .append('svg')
@@ -26,9 +31,21 @@ const SVGBuilder = class {
 
     // create zoomable/pannable pane to put all the visuals in it
     const zoom_actions = () => {
-        this.zoomQ = d3.event.transform.k;
 
-        this.pane.attr('transform', d3.event.transform)
+        console.log(d3.event.transform.k);
+
+        if(d3.event.transform.k <=  constants.SCALING.downLimit){
+           this.scale = new scaling.DownScale();
+        }else if(d3.event.transform.k >= constants.SCALING.downLimit && d3.event.transform.k <= constants.SCALING.upLimit){
+           this.scale = new scaling.StandardScale();
+       }else if(d3.event.transform.k >= constants.SCALING.upLimit){
+           this.scale = new scaling.UpScale();
+       }
+
+        this.scale.handleScale();
+
+
+        this.pane.attr('transform', d3.event.transform);
     };
 
     this.pane = svg.append('g')
@@ -157,21 +174,6 @@ const SVGBuilder = class {
               d.svg["link"] = this ;
           });
 
-      // const other_link = this.pane.append('g')
-      //     .attr('class', 'links')
-      //     .selectAll('line')
-      //     .data(otherLinks)
-      //     .enter()
-      //     .append('line')
-      //     .attr('stroke', 'red')
-      //     .attr('stroke-dasharray', '2em')
-      //     .attr('stroke-width', '10')
-      //     .on("mouseover", interactions.mouseOverLinks)
-      //     .on("mouseout", interactions.mouseOutLinks)
-      //     .each(function(d){
-      //         d.svg["other_link"] = this ;
-      //     });
-
       const end_marks = this.pane.append('g')
           .attr('class', 'end_marks')
           .selectAll('circle')
@@ -245,7 +247,7 @@ const SVGBuilder = class {
         .data(nodes)
         .enter()
         .append('rect')
-        .attr('width', d => (d.name.length > 10) ? d.name.length * 12 : constants.INTERFACE_BOX.width - 2 * constants.INTERFACE_INNER_PADDING_X)
+        .attr('width', d => (d.name.length > 10) ? d.width * 0.8 : constants.INTERFACE_BOX.width - 2 * constants.INTERFACE_INNER_PADDING_X)
         .attr('height', constants.INTERFACE_BOX.height - 2 * constants.INTERFACE_INNER_PADDING_Y)
         .attr('x', d => d.x + constants.INTERFACE_INNER_PADDING_X)
         .attr('y', d => d.y + constants.INTERFACE_INNER_PADDING_Y)
@@ -258,25 +260,53 @@ const SVGBuilder = class {
             d.svg["inner_rect"] = this ;
         });
 
-    const text =  this.pane.append('g')
+    const text_1 =  this.pane
+        .append('g')
+
         .selectAll('text')
-        .attr("class", "text")
       .data(nodes)
           .enter()
           .append('text')
+          .attr("class", 'text_1')
           .attr('x', d => d.x + 30)
           .attr('y', d=> d.y + 50 )
-          .attr('fill', 'black')
-          .attr("background", "white")
-          .attr('font-family', 'Arial, "Helvetica Neue", Helvetica, sans-serif')
-          .attr('font-size', 18)
-          .text(d => d.name)
+          .attr('font-size', constants.INTERFACE_BOX.fontsize.standard)
+          .text(d =>  d.name)
             .each(function(d){
-                d.svg["text"] = this ;
-        });
+                d.svg["text_1"] = this ;
+                d.texts["text_1"] = d.name;
+            });
 
-    console.log("mades some TEXT guess", text);
+    const text_2 =  this.pane.append('g')
+        .selectAll('text')
+      .data(nodes)
+          .enter()
+          .append('text')
+        .attr("class", 'text_2')
+          .attr('x', d => d.x + 30)
+          .attr('y', d=> d.y + 70 )
+          .attr('font-size', 18)
+          .text(d =>  d.json.mac)
+            .each(function(d){
+                d.svg["text_2"] = this ;
+                d.texts['text_2'] = d.json.mac;
 
+            });
+
+    const text_3 =  this.pane.append('g')
+        .selectAll('text')
+      .data(nodes)
+          .enter()
+          .append('text')
+        .attr("class", 'text_3')
+          .attr('x', d => d.x + 30)
+          .attr('y', d=> d.y + 90 )
+          .attr('font-size', 18)
+          .text(d =>  `MTU ${d.json.mtu}`)
+            .each(function(d){
+                d.svg["text_3"] = this ;
+                d.texts['text_3'] = d.json.mtu ;
+            });
 
     const link_force = d3.forceLink(links)
       .id(d => d.id)
@@ -315,8 +345,6 @@ const SVGBuilder = class {
 
 
 
-
-
       //calculate intersection for each node
 
       end_marks
@@ -327,16 +355,28 @@ const SVGBuilder = class {
             .attr("cx", d => d.deltaStart.x )
             .attr("cy", d => d.deltaStart.y);
 
-        text
+
+        text_1
             .attr('x', d => d.delta.x + 30)
             .attr('y', d => d.delta.y + 50);
+
+        text_2
+            .attr('x', d => d.delta.x + 30)
+            .attr('y', d => d.delta.y + 70);
+
+        text_3
+            .attr('x', d => d.delta.x + 30)
+            .attr('y', d => d.delta.y + 90);
+
+
+
 
         inner_rects
             .attr('x', d => d.delta.x + constants.INTERFACE_INNER_PADDING_X)
             .attr('y', d => d.delta.y + constants.INTERFACE_INNER_PADDING_Y)
     }
 
-    simulation.on('tick', tickActions);
+    simulation.on('tick', tickActions.bind(this));
 
     /*
         *

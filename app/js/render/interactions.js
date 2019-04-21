@@ -34,8 +34,6 @@ export const mouseOutInterface = (d) => changeNodesStrokeTo(d,
     constants.STROKE_COLOR, function(d) { return d.json.type === "internal" ? 20 : constants.STROKE_WIDTH}, mouseOutLinks);
 
 
-
-
 export const mouseOverNamespace = (d) => d.interfaces.forEach(i => mouseOverInterface(i));
 export const mouseOutNamespace = (d) => d.interfaces.forEach(i => mouseOutInterface(i));
 

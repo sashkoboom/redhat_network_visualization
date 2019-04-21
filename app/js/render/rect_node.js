@@ -32,6 +32,7 @@ class InterfaceNode extends Node {
         this.ns = json.namespace;
         this.name = json.name;
         this.width = (this.name.length > 10) ? this.name.length * 15 : constants.INTERFACE_BOX.width;
+        this.texts = {};
         this.height = constants.INTERFACE_BOX.height;
         this.id = json.id;
         this.links = [];
