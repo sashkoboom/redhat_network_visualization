@@ -17,8 +17,8 @@ export const INTERFACE_BOX = {
     0: 36,
     '-1': 0,
   },
-  paddingIn: 5,
-  paddingOut: 20,
+  paddingIn: 25,
+  paddingOut: 25,
 };
 
 export const SCALING = {
@@ -71,4 +71,4 @@ export const LEVEL_FACTOR = 500;
 
 export const GREY = '#DCDCDC';
 
-export const END_MARK_RADIUS = 13;
+export const END_MARK_RADIUS = 20;

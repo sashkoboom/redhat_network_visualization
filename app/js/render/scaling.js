@@ -135,11 +135,9 @@ export class StandardScale extends Scale {
     heightRect(d) {
         // 2 * padding + 1 * line : 2 * lines
 
-        const r = 2 * constants.INTERFACE_BOX.paddingIn
+        return 2 * constants.INTERFACE_BOX.paddingIn
             + 2 * constants.INTERFACE_BOX.paddingOut
             + constants.INTERFACE_BOX.fontsize[this.scale];
-        console.log("RRRRRR", r);
-        return r;
 
 }
 }
@@ -203,11 +201,6 @@ export class UpScale extends Scale {
         if(d.json.mac) count++;
         if(d.json.mtu) count++;
 
-        console.log("count", count);
-        console.log("2 * constants.INTERFACE_BOX.paddingIn", 2 * constants.INTERFACE_BOX.paddingIn);
-        console.log("2 * constants.INTERFACE_BOX.paddingOut", 2 * constants.INTERFACE_BOX.paddingOut);
-        console.log("constants.INTERFACE_BOX.fontsize[this.scale.scale] * count",
-            constants.INTERFACE_BOX.fontsize[this.scale] * count);
 
         // paddingOut * 2 + paddingIn * 2 +  height of line * count of lines
         const r = 2 * constants.INTERFACE_BOX.paddingIn

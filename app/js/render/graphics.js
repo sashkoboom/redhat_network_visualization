@@ -144,12 +144,12 @@ export function boxingConstrains (d, ns_arr, where, width, height) {
 const p =  constants.INTERFACE_BOX.paddingOut * 2;
 
 export function innerRectW(d, scale){
-    if(d.json.state === "up" || scale.scale === -1) return 0;
+    if( scale.scale === -1) return 0;
 
    return d.width ? d.width - p : constants.INTERFACE_BOX.width - p
 }
 export function innerRectH(d, scale){
-    if(d.json.state === "up" || scale.scale === -1) return 0;
+    if( scale.scale === -1) return 0;
    return d.height ? d.height - p : constants.INTERFACE_BOX.height - p
 }
 

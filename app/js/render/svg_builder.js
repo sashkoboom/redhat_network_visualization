@@ -172,11 +172,11 @@ const SVGBuilder = class {
 
 
       const link = this.pane.append('g')
-          .attr('class', 'links')
           .selectAll('line')
           .data(links)
           .enter()
           .append('line')
+          .attr('class', 'links')
           .attr('stroke', 'black')
           .attr('stroke-dasharray', '0')
           .attr('stroke-width', constants.STROKE_WIDTH)
@@ -187,11 +187,11 @@ const SVGBuilder = class {
           });
 
       const end_marks = this.pane.append('g')
-          .attr('class', 'end_marks')
           .selectAll('circle')
           .data(links)
           .enter()
           .append('circle')
+          .attr('class', 'end_marks')
           .attr("r", constants.END_MARK_RADIUS)
           .attr("fill", "black")
           .on("mouseover", interactions.mouseOverLinks)
@@ -201,11 +201,11 @@ const SVGBuilder = class {
           });
 
       const start_marks = this.pane.append('g')
-          .attr('class', 'start_marks')
           .selectAll('circle')
           .data(links)
           .enter()
           .append('circle')
+          .attr('class', 'start_marks')
           .attr("r", 13)
           .attr("fill", "black")
           .on("mouseover", interactions.mouseOverLinks)
@@ -219,6 +219,7 @@ const SVGBuilder = class {
       .data(nodes)
       .enter()
       .append('rect')
+        .attr("transition", 500)
         .attr('class', 'main_rect')
         .attr('x', d => d.x)
         .attr('y', d => d.y)
@@ -389,8 +390,8 @@ const SVGBuilder = class {
 
 
         inner_rects
-            .attr('x', d => d.delta.x + constants.INTERFACE_INNER_PADDING_X)
-            .attr('y', d => d.delta.y + constants.INTERFACE_INNER_PADDING_Y)
+            .attr('x', d => d.delta.x + constants.INTERFACE_BOX.paddingOut)
+            .attr('y', d => d.delta.y + constants.INTERFACE_BOX.paddingOut)
     }
 
     this.simulation.on('tick', tickActions.bind(this));
