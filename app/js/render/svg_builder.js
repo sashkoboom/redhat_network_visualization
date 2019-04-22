@@ -8,8 +8,10 @@ import * as constants from '../utils/constants';
 import * as graphics from "./graphics";
 import * as interactions from "./interactions";
 import * as scaling from "./scaling"
+import {INTERFACE_BOX} from "../utils/constants";
 
 const SVGBuilder = class {
+
   constructor(ns_data = [], inteface_data = [], links_data = [], other_links_data = [], colorManager = null) {
 
     this.namespaces = ns_data;
@@ -17,7 +19,7 @@ const SVGBuilder = class {
     this.links = links_data;
     this.otherLinks = links_data;
     this.colorManager = colorManager;
-    this.scale = new scaling.UpScale();
+    this.scale = new scaling.UpScale(this.interfaces);
 
     this.text_1 = null ;
     this.text_2 = null ;
@@ -32,18 +34,28 @@ const SVGBuilder = class {
     // create zoomable/pannable pane to put all the visuals in it
     const zoom_actions = () => {
 
-        console.log(d3.event.transform.k);
+        const prevScale = this.scale;
+
+
 
         if(d3.event.transform.k <=  constants.SCALING.downLimit){
-           this.scale = new scaling.DownScale();
+           this.scale = new scaling.DownScale(this.interfaces);
         }else if(d3.event.transform.k >= constants.SCALING.downLimit && d3.event.transform.k <= constants.SCALING.upLimit){
-           this.scale = new scaling.StandardScale();
+           this.scale = new scaling.StandardScale(this.interfaces);
        }else if(d3.event.transform.k >= constants.SCALING.upLimit){
-           this.scale = new scaling.UpScale();
+           this.scale = new scaling.UpScale(this.interfaces);
        }
 
-        this.scale.handleScale();
+        if(this.scale.scale !== prevScale.scale){
+            this.scale.handleScale();
+            console.log(this.simulation);
+            this.simulation
+                .force("collide", d3.forceCollide(this.scale.collision))
+                .alphaTarget(1)
+                .restart();
+        }
 
+        // this.simulation.start();
 
         this.pane.attr('transform', d3.event.transform);
     };
@@ -116,10 +128,10 @@ const SVGBuilder = class {
 
     console.log("Making force simulation of nodes");
     console.log(nodes);
-    const simulation = d3.forceSimulation()
+    this.simulation = d3.forceSimulation()
       .nodes(nodes)
        .force('collide', d3.forceCollide(constants.INTERFACE_BOX.collide))
-        .force('forceY', d3.forceY(d =>  d.level * constants.LEVEL_FACTOR + 50));
+        .force('forceY', d3.forceY(d =>  d.level * constants.LEVEL_FACTOR + 50).strength(0.01));
 
 
     // Manage the namespace nodes
@@ -133,7 +145,7 @@ const SVGBuilder = class {
       const fill_r = constants.NS_BACKGROUND_COLOR;
 
       // Create constraint force for each namespace
-       simulation.force(`ns_box_${id}`, () => {
+       this.simulation.force(`ns_box_${id}`, () => {
         nodes.forEach((n) => {
           if (n.ns == id) {
             n.x = Math.max( x_r, Math.min(x_r + w_r, n.x));
@@ -207,10 +219,9 @@ const SVGBuilder = class {
       .data(nodes)
       .enter()
       .append('rect')
-        .attr('width', d => d.width)
-        .attr('height', constants.INTERFACE_BOX.height)
-      .attr('x', d => d.x)
-      .attr('y', d => d.y)
+        .attr('class', 'main_rect')
+        .attr('x', d => d.x)
+        .attr('y', d => d.y)
         .attr('rx', 20)
         .attr('ry', 20)
         .on("mouseover", interactions.mouseOverInterface)
@@ -219,7 +230,6 @@ const SVGBuilder = class {
         .attr('fill',
                  d => {
                     switch(d.json.state){
-
                         case "up": {
                             return constants.GREY
                         }
@@ -235,8 +245,8 @@ const SVGBuilder = class {
                 })
         .attr("stroke", constants.STROKE_COLOR)
         .attr("stroke-linecap", "round")
-        .attr("stroke-width", d => d.json.type === "internal" ? 10 : 1)
-        .attr("stroke-dasharray", d => d.json.type === "internal" ? "1, 30" : 0
+        .attr("stroke-width", d => d.json.type === "internal" ? 30 : 1)
+        .attr("stroke-dasharray", d => d.json.type === "internal" ? "1, 20" : 0
         )
         .each(function(d){
             d.svg["rect"] = this ;
@@ -247,8 +257,7 @@ const SVGBuilder = class {
         .data(nodes)
         .enter()
         .append('rect')
-        .attr('width', d => (d.name.length > 10) ? d.width * 0.8 : constants.INTERFACE_BOX.width - 2 * constants.INTERFACE_INNER_PADDING_X)
-        .attr('height', constants.INTERFACE_BOX.height - 2 * constants.INTERFACE_INNER_PADDING_Y)
+        .attr('class', 'inner_rect')
         .attr('x', d => d.x + constants.INTERFACE_INNER_PADDING_X)
         .attr('y', d => d.y + constants.INTERFACE_INNER_PADDING_Y)
         .attr('rx', 10)
@@ -269,8 +278,8 @@ const SVGBuilder = class {
           .append('text')
           .attr("class", 'text_1')
           .attr('x', d => d.x + 30)
-          .attr('y', d=> d.y + 50 )
-          .attr('font-size', constants.INTERFACE_BOX.fontsize.standard)
+          .attr('y', d => d.y + 50 )
+          .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])
           .text(d =>  d.name)
             .each(function(d){
                 d.svg["text_1"] = this ;
@@ -285,11 +294,11 @@ const SVGBuilder = class {
         .attr("class", 'text_2')
           .attr('x', d => d.x + 30)
           .attr('y', d=> d.y + 70 )
-          .attr('font-size', 18)
-          .text(d =>  d.json.mac)
+          .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])
+          .text(d => d.json.mtu ? `MTU ${d.json.mtu}` : "")
             .each(function(d){
                 d.svg["text_2"] = this ;
-                d.texts['text_2'] = d.json.mac;
+                d.texts['text_2'] = d.json.mtu ? `MTU ${d.json.mtu}` : "";
 
             });
 
@@ -301,21 +310,26 @@ const SVGBuilder = class {
         .attr("class", 'text_3')
           .attr('x', d => d.x + 30)
           .attr('y', d=> d.y + 90 )
-          .attr('font-size', 18)
-          .text(d =>  `MTU ${d.json.mtu}`)
+          .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])
+          .text(d =>  d.json.mac ? `${d.json.mac}` : "")
             .each(function(d){
                 d.svg["text_3"] = this ;
-                d.texts['text_3'] = d.json.mtu ;
+                d.texts['text_3'] = d.json.mac ;
             });
+
+    node.attr('width', d => graphics.rectW(d, this.scale))
+        .attr('height', d => graphics.rectH(d, this.scale));
+
+    inner_rects.attr('width', d => graphics.innerRectW(d, this.scale))
+        .attr('height', d => graphics.innerRectH(d, this.scale));
 
     const link_force = d3.forceLink(links)
       .id(d => d.id)
       .distance(() => 10)
       .strength(0);
-    simulation.force('links', link_force);
+    this.simulation.force('links', link_force);
 
     function tickActions() {
-
 
       // update circle positions each tick of the simulation
       node
@@ -337,14 +351,15 @@ const SVGBuilder = class {
               l.deltaEnd = graphics.getIntersection(l, 'end', l.target.width, l.target.height);
               l.deltaStart = graphics.getIntersection(l,  'start', l.source.width, l.source.height);
           })
-          .attr('x1', d => d.source.delta.x + constants.INTERFACE_BOX.width / 2)
-        .attr('y1', d => d.source.delta.y + constants.INTERFACE_BOX.height / 2)
-        .attr('x2', d => d.target.delta.x + constants.INTERFACE_BOX.width / 2)
-        .attr('y2', d => d.target.delta.y + constants.INTERFACE_BOX.height / 2);
+          .attr('x1', d => d.source.delta.x + d.source.width / 2)
+        .attr('y1', d => d.source.delta.y + d.source.height / 2)
+        .attr('x2', d => d.target.delta.x + d.target.width / 2)
+        .attr('y2', d => d.target.delta.y + d.target.height / 2);
 
 
 
 
+      const pt = constants.INTERFACE_BOX.paddingOut + constants.INTERFACE_BOX.paddingIn;
       //calculate intersection for each node
 
       end_marks
@@ -355,19 +370,21 @@ const SVGBuilder = class {
             .attr("cx", d => d.deltaStart.x )
             .attr("cy", d => d.deltaStart.y);
 
+      const fontpt = constants.INTERFACE_BOX.fontsize[this.scale.scale] ;
 
         text_1
-            .attr('x', d => d.delta.x + 30)
-            .attr('y', d => d.delta.y + 50);
+            .attr('x', d => d.delta.x + pt)
+            .attr('y', d => d.delta.y + pt + fontpt);
+
+
 
         text_2
-            .attr('x', d => d.delta.x + 30)
-            .attr('y', d => d.delta.y + 70);
+            .attr('x', d => d.delta.x + pt)
+            .attr('y', d => d.delta.y + pt + fontpt * 2);
 
         text_3
-            .attr('x', d => d.delta.x + 30)
-            .attr('y', d => d.delta.y + 90);
-
+            .attr('x', d => d.delta.x + pt)
+            .attr('y', d => d.delta.y + pt + fontpt * 3);
 
 
 
@@ -376,7 +393,7 @@ const SVGBuilder = class {
             .attr('y', d => d.delta.y + constants.INTERFACE_INNER_PADDING_Y)
     }
 
-    simulation.on('tick', tickActions.bind(this));
+    this.simulation.on('tick', tickActions.bind(this));
 
     /*
         *
@@ -387,7 +404,7 @@ const SVGBuilder = class {
         * */
 
     const dragstart = (d) => {
-      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
 
@@ -403,15 +420,15 @@ const SVGBuilder = class {
 
 
     const dragend = function (d) {
-      if (!d3.event.active) simulation.alphaTarget(0);
+      if (!d3.event.active) this.simulation.alphaTarget(0);
       d.fx = null;
       d.fy = null;
     };
 
     const drag_handler = d3.drag()
-      .on('start', dragstart)
-      .on('drag', dragdrag)
-      .on('end', dragend);
+      .on('start', dragstart.bind(this))
+      .on('drag', dragdrag.bind(this))
+      .on('end', dragend.bind(this));
 
     drag_handler(node);
     drag_handler(inner_rects);
@@ -443,7 +460,7 @@ const SVGBuilder = class {
       .attr('height', this.INTERFACE_HEIGHT)
       .attr('fill', 'black')
       .attr('font-family', 'Ariel Black')
-      .attr('font-size', 18)
+      .attr('font-size', INTERFACE_BOX.fontsize.up)
       .text(d => d.id);
   }
 

@@ -16,7 +16,7 @@ const checkLineIntersection = (line1StartX, line1StartY, line1EndX, line1EndY, l
         onLine2: false
     };
     denominator = ((line2EndY - line2StartY) * (line1EndX - line1StartX)) - ((line2EndX - line2StartX) * (line1EndY - line1StartY));
-    if (denominator == 0) {
+    if (denominator === 0) {
         return result;
     }
     a = line1StartY - line2StartY;
@@ -46,18 +46,17 @@ const checkLineIntersection = (line1StartX, line1StartY, line1EndX, line1EndY, l
     return result;
 };
 
-const testWithLine = (line, d) => checkLineIntersection(
-    d.source.delta.x + constants.INTERFACE_BOX.width / 2,
-    d.source.delta.y + constants.INTERFACE_BOX.height / 2,
-    d.target.delta.x + constants.INTERFACE_BOX.width / 2,
-    d.target.delta.y + constants.INTERFACE_BOX.height / 2,
+const testWithLine = (line, d, width, height) => checkLineIntersection(
+    d.source.delta.x + width / 2,
+    d.source.delta.y + height / 2,
+    d.target.delta.x + width / 2,
+    d.target.delta.y + height / 2,
 
     line[0], line[1], line[2], line[3]
 );
 
 
 export function getIntersection(d, position = "end", width, height){
-
 
 
     const squareLines = position === "end" ? [
@@ -113,9 +112,11 @@ export function getIntersection(d, position = "end", width, height){
     ];
 
     for(const l of squareLines){
-        const r = testWithLine(l, d);
+        const r = testWithLine(l, d, width, height);
         if(r.onLine1 && r.onLine2) return r
     }
+
+
 
     return 0;
 }
@@ -138,5 +139,26 @@ export function boxingConstrains (d, ns_arr, where, width, height) {
     }
     return result;
 
+}
 
+const p =  constants.INTERFACE_BOX.paddingOut * 2;
+
+export function innerRectW(d, scale){
+    if(d.json.state === "up" || scale.scale === -1) return 0;
+
+   return d.width ? d.width - p : constants.INTERFACE_BOX.width - p
+}
+export function innerRectH(d, scale){
+    if(d.json.state === "up" || scale.scale === -1) return 0;
+   return d.height ? d.height - p : constants.INTERFACE_BOX.height - p
+}
+
+export function rectW(d, scale){
+    d.width = scale.widthRect(d);
+    return d.width;
+}
+
+export function rectH(d, scale){
+    d.height = scale.heightRect(d);
+    return d.height;
 }
