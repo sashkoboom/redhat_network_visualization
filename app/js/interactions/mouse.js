@@ -1,7 +1,9 @@
 /* eslint-disable */
+// import 'tippy.js/themes/light.css';
 
 import * as d3 from "d3";
 import * as constants from "../utils/constants";
+import * as tippyManager from "./tippy_manager";
 
 
 let  MOUSE_ON = undefined;
@@ -67,13 +69,15 @@ const outInterface = (d) => {
 };
 
 export const mouseOverInterface =  (d) => {
-
     MOUSE_ON = d;
+
+    tippyManager.makeTippy(d);
+
     setTimeout(() => {
         if(MOUSE_ON === d) {
             changeAllOpacityToExcept(0.1, d);
             overInterface(d)
-        }}, 800);
+        }}, constants.FADE_OUT_DELAY);
 
 
     overInterface(d);

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import * as d3 from "d3";
 import * as constants from "../utils/constants";
-import * as graphics from "./graphics";
+import * as graphics from "../render/graphics";
 
 /// selection.node.getComputedTextLength()
 

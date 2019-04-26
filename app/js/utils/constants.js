@@ -72,3 +72,7 @@ export const LEVEL_FACTOR = 500;
 export const GREY = '#DCDCDC';
 
 export const END_MARK_RADIUS = 20;
+
+export const FADE_OUT_DELAY = 500;
+
+

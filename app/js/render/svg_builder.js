@@ -6,8 +6,8 @@
 import * as d3 from 'd3';
 import * as constants from '../utils/constants';
 import * as graphics from "./graphics";
-import * as interactions from "./interactions";
-import * as scaling from "./scaling"
+import * as mouseInteractions from "../interactions/mouse";
+import * as scaling from "../interactions/scaling"
 import {INTERFACE_BOX} from "../utils/constants";
 
 const SVGBuilder = class {
@@ -162,8 +162,8 @@ const SVGBuilder = class {
           .attr('width', w_r)
           .attr('height', h_r)
         .attr('fill', fill_r)
-          .on("mouseover", () => interactions.mouseOverNamespace(ns))
-          .on("mouseout", () => interactions.mouseOutNamespace(ns))
+          .on("mouseover", () => mouseInteractions.mouseOverNamespace(ns))
+          .on("mouseout", () => mouseInteractions.mouseOutNamespace(ns))
 
     });
 
@@ -180,8 +180,8 @@ const SVGBuilder = class {
           .attr('stroke', 'black')
           .attr('stroke-dasharray', '0')
           .attr('stroke-width', constants.STROKE_WIDTH)
-          .on("mouseover", interactions.mouseOverLinks)
-          .on("mouseout", interactions.mouseOutLinks)
+          .on("mouseover", mouseInteractions.mouseOverLinks)
+          .on("mouseout", mouseInteractions.mouseOutLinks)
           .each(function(d){
               d.svg["link"] = this ;
           });
@@ -194,8 +194,8 @@ const SVGBuilder = class {
           .attr('class', 'end_marks')
           .attr("r", constants.END_MARK_RADIUS)
           .attr("fill", "black")
-          .on("mouseover", interactions.mouseOverLinks)
-          .on("mouseout", interactions.mouseOutLinks)
+          .on("mouseover", mouseInteractions.mouseOverLinks)
+          .on("mouseout", mouseInteractions.mouseOutLinks)
           .each(function(d){
               d.svg["end_mark"] =  this ;
           });
@@ -208,8 +208,8 @@ const SVGBuilder = class {
           .attr('class', 'start_marks')
           .attr("r", 13)
           .attr("fill", "black")
-          .on("mouseover", interactions.mouseOverLinks)
-          .on("mouseout", interactions.mouseOutLinks)
+          .on("mouseover", mouseInteractions.mouseOverLinks)
+          .on("mouseout", mouseInteractions.mouseOutLinks)
           .each(function(d){
               d.svg["start_mark"] =  this ;
           });
@@ -225,8 +225,8 @@ const SVGBuilder = class {
         .attr('y', d => d.y)
         .attr('rx', 20)
         .attr('ry', 20)
-        .on("mouseover", interactions.mouseOverInterface)
-        .on("mouseout", interactions.mouseOutInterface)
+        .on("mouseover", mouseInteractions.mouseOverInterface)
+        .on("mouseout", mouseInteractions.mouseOutInterface)
         .on("click", d => console.log("CLICKED ON", d))
         .attr('fill',
                  d => {
@@ -263,8 +263,8 @@ const SVGBuilder = class {
         .attr('y', d => d.y + constants.INTERFACE_INNER_PADDING_Y)
         .attr('rx', 10)
         .attr('ry', 10)
-        .on("mouseover", interactions.mouseOverInterface)
-        .on("mouseout", interactions.mouseOutInterface)
+        .on("mouseover", mouseInteractions.mouseOverInterface)
+        .on("mouseout", mouseInteractions.mouseOutInterface)
         .attr('fill', d => d.json.type === "internal" ? "white" : constants.GREY)
         .each(function(d){
             d.svg["inner_rect"] = this ;
