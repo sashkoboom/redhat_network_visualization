@@ -7,6 +7,7 @@
 import * as d3 from 'd3';
 import NamespaceNode from '../render/rect_node';
 import * as constants from "../utils/constants"
+import * as helpers from "../utils/helpers"
 
 const NetworkDataManager = class {
   constructor(input = {}) {
@@ -130,7 +131,7 @@ const NetworkDataManager = class {
       let lastX = 0;
       this.namespaces.forEach(ns => {
 
-          ns.interfaces = Object.values(this.levels[ns.id]).flat();
+          ns.interfaces = helpers.flatten(Object.values(this.levels[ns.id]));
 
           x = this.handleInterfacePositions(ns.interfaces, x);
 
