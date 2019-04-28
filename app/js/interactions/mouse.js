@@ -71,16 +71,28 @@ const outInterface = (d) => {
 export const mouseOverInterface =  (d) => {
     MOUSE_ON = d;
 
-    tippyManager.makeTippy(d);
 
     setTimeout(() => {
         if(MOUSE_ON === d) {
             changeAllOpacityToExcept(0.1, d);
-            overInterface(d)
+            overInterface(d);
         }}, constants.FADE_OUT_DELAY);
 
 
     overInterface(d);
+};
+
+export const clickOnInterface = (d) => {
+    console.log("eba", d);
+
+    if(d.hasTippy) {
+
+        d.svg['rect']._tippy.state.isMounted ?  tippyManager.hideTippy(d) : tippyManager.showTippy(d);
+
+    } else {
+        d.hasTippy = true;
+        tippyManager.makeTippy(d)
+    };
 };
 
 export const mouseOutInterface = (d) => {

@@ -4,12 +4,12 @@
 
 /* eslint-disable */
 
-
+import '../styles/styles.css';
 import renderInputToTable from './render/input_table';
 import ColorManager from './render/color_manager';
 import NetworkDataManager from './handle_data/network_data_manager';
 import SVGBuilder from './render/svg_builder';
-import example from './render/example';
+
 
 class InvalidOJSONError extends Error {
   constructor(message) {

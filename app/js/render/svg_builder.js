@@ -227,7 +227,10 @@ const SVGBuilder = class {
         .attr('ry', 20)
         .on("mouseover", mouseInteractions.mouseOverInterface)
         .on("mouseout", mouseInteractions.mouseOutInterface)
-        .on("click", d => console.log("CLICKED ON", d))
+        .on("click", d => {
+            mouseInteractions.clickOnInterface(d);
+            console.log("CLICKED ON", d)
+        })
         .attr('fill',
                  d => {
                     switch(d.json.state){
@@ -265,6 +268,7 @@ const SVGBuilder = class {
         .attr('ry', 10)
         .on("mouseover", mouseInteractions.mouseOverInterface)
         .on("mouseout", mouseInteractions.mouseOutInterface)
+        .on("click", mouseInteractions.clickOnInterface)
         .attr('fill', d => d.json.type === "internal" ? "white" : constants.GREY)
         .each(function(d){
             d.svg["inner_rect"] = this ;
@@ -280,6 +284,7 @@ const SVGBuilder = class {
           .attr("class", 'text_1')
           .attr('x', d => d.x + 30)
           .attr('y', d => d.y + 50 )
+        .on("click", mouseInteractions.clickOnInterface)
           .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])
           .text(d =>  d.name)
             .each(function(d){
@@ -293,6 +298,7 @@ const SVGBuilder = class {
           .enter()
           .append('text')
         .attr("class", 'text_2')
+        .on("click", mouseInteractions.clickOnInterface)
           .attr('x', d => d.x + 30)
           .attr('y', d=> d.y + 70 )
           .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])
