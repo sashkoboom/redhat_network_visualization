@@ -161,7 +161,7 @@ const SVGBuilder = class {
         .attr('y', y_r)
           .attr('width', w_r)
           .attr('height', h_r)
-        .attr('fill', fill_r)
+            .attr('fill', constants.GREEN)
           .on("mouseover", () => mouseInteractions.mouseOverNamespace(ns))
           .on("mouseout", () => mouseInteractions.mouseOutNamespace(ns))
 
@@ -238,9 +238,11 @@ const SVGBuilder = class {
                             return constants.GREY
                         }
                         case "none" : {
-                         return 'url(#yellow-pattern)'
+                            // return constants.YELLOW
+                            return 'url(#yellow-pattern)'
                         }
                         case "down" : {
+                            // return constants.RED
                             return 'url(#red-pattern)'
                         }
                         default:
