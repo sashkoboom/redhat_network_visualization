@@ -17,7 +17,6 @@ const changeAllOpacityTo = (o) => d3
     .attr("opacity", o);
 
 const changeAllOpacityToExcept = (o, d) => {
-
     let arr = [...Object.values(d.svg)] ;
     d.links.map(link => Object.values(link.svg)).forEach(a => arr = [...arr, ...a]);
     d.links.forEach(l => {arr = [...arr, ...Object.values(l.target.svg)]});

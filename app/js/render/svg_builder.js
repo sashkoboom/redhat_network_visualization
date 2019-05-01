@@ -37,12 +37,15 @@ const SVGBuilder = class {
     const zoom_actions = () => {
 
         if(this.overlay){
+
+            const sel = '.overlay_rect, .overlay';
+
             setTimeout(() =>{
-                d3.selectAll(".overlay")
+                d3.selectAll(sel)
                     .attr("opacity", 0);
             }, 100);
             setTimeout(() =>{
-                d3.selectAll(".overlay")
+                d3.selectAll(sel)
                     .remove();
             }, 1100);
             this.overlay = false;
@@ -88,14 +91,36 @@ const SVGBuilder = class {
       .on('zoom', zoom_actions.bind(this));
     this.zoom_handler(svg);
 
-     const overlay = svg
+      let l = 0;
+
+      svg
           .append('text')
           .attr('class', 'overlay')
-          .text(constants.OVERLAY_TEXT);
-          overlay.attr('x', function(){
-              const l = this.getComputedTextLength();
-              return constants.WIDTH / 2 - l / 2})
-          .attr('y', constants.HEIGHT / 2)
+          .text(constants.OVERLAY_TEXT)
+          .attr('x', function(){
+               l = this.getComputedTextLength();
+              return constants.WIDTH / 2 - l / 2});
+
+
+        d3.selectAll('.overlay').remove();
+
+      svg
+          .append('rect')
+          .attr('class', 'overlay_rect')
+          .attr('width', l * 1.3)
+          .attr('height', 100)
+          .attr('x', function(){
+              return constants.WIDTH / 2 - l * 1.3 / 2})
+          .attr('y', constants.HEIGHT / 2  - 24/2 - 100/2);
+
+      const overlay = svg
+          .append('text')
+          .attr('class', 'overlay')
+          .text(constants.OVERLAY_TEXT)
+           .attr('x', function(){
+          l = this.getComputedTextLength();
+          return constants.WIDTH / 2 - l / 2})
+          .attr('y', constants.HEIGHT / 2);
 
 
   }
