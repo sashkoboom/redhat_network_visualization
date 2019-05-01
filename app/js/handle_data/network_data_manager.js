@@ -43,13 +43,15 @@ const NetworkDataManager = class {
         Object.values(interf.json.children).forEach((link) => {
           link.source = interf.json.id;
           link.svg = {};
+          link.peer = false;
           interf.links.push(link);
           this.links.push(link);
         });
       }
     });
     this.links.forEach(link => {
-        const t = this.getInterfaceByID(link.target);
+       console.log("---->", link.target);
+        const t = typeof link.target === "string" ? this.getInterfaceByID(link.target) : link.target ;
         t.links.push(link);
     })
     ;
@@ -95,8 +97,9 @@ const NetworkDataManager = class {
             link.source = interf;
             link.target = this.getInterfaceByID(link.target);
             link.svg = {};
-            interf.otherLinks.push(link);
-            this.otherLinks.push(link);
+            link.peer = true;
+            interf.links.push(link);
+            this.links.push(link);
         }
 
 

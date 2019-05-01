@@ -44,6 +44,7 @@ export default class NamespaceNode extends Node {
   constructor(json = null) {
     super();
     this.json = json;
+    this.svg = {};
     if (json !== null) {
       this.id = json.id;
       this.name = json.name;

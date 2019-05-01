@@ -3,7 +3,34 @@ html, body{
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 }
 
-#table { border: black;  }
+.routing { border: black;  }
+
+
+.routing th, .routing tr td {
+    padding: 0.2rem;
+    background-color: white;
+}
+
+.routing th{
+    background-color: white;
+    padding-bottom: 0.7em;
+    padding: 0.6em;
+}
+
+.routing tr td {
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    background-color: inherit ;
+}
+
+.routing tr{
+    background-color: white;
+}
+
+.routing tr:hover{
+    background-color: #F5F5F5;
+}
+
 svg{
     background-color: white;
     border-radius: 30px;
@@ -31,16 +58,50 @@ svg{
     margin: 10px 5px 0 0;
 }
 
-.tooltip_small {
+[class*='tooltip_'] {
     padding: 1em;
 
 }
 
+.tippy-tooltip{
+    max-width: 100px;
+    background-color: #ea2f2f;
+}
+
+.tooltip_big{
+    width: 500px;
+}
+
+.tooltip_small{
+    background-color: white;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.tooltip_small div {
+    margin: 0.2em;
+}
+
+.addr_container {
+    display: flex;
+    flex-wrap: wrap;
+
+
+}
+
+.addr {
+    margin: 0.1rem;
+    background-color: #DCDCDC;
+    padding: 0.3rem;
+    font-size: 12px;
+    border-radius: 3px;
+}
 [class*='close-'] {
     color: #777;
     font: 14px/100% arial, sans-serif;
-    position: absolute;
-    right: 5px;
+    align-self: flex-end;
     text-decoration: none;
     text-shadow: 0 1px 0 #fff;
     top: 5px;
@@ -90,7 +151,12 @@ svg{
 text{
     fill : black;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
 
+.overlay{
+    font-size: 24px;
+    stroke: #101010;
+    transition: opacity 1s;
 }
 
 .inner_rect, text {

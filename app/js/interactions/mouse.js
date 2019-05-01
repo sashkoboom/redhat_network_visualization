@@ -4,6 +4,9 @@
 import * as d3 from "d3";
 import * as constants from "../utils/constants";
 import * as tippyManager from "./tippy_manager";
+import * as templates from '../render/templates';
+import {makeTippy} from "./tippy_manager";
+import {makeNameTippy, destroyNameTippy} from "./tippy_manager";
 
 
 let  MOUSE_ON = undefined;
@@ -24,10 +27,9 @@ const changeAllOpacityToExcept = (o, d) => {
     .transition(500)
     .attr("opacity", function () { return arr.includes(this) ? 1 : 0.1}
     );
-}
+};
 
 const changeLinksColorTo = (d, color, stroke) => {
-
 
     [d.source.svg['rect'], d.target.svg['rect'], ...Object.values(d.svg)]
         .forEach(svg => d3.select(svg)
@@ -48,24 +50,34 @@ export const mouseOutLinks = (d) => {
 const changeNodesStrokeTo = (d, color, stroke, linksAction) => {
 // get all the links comin from this node and for each do mouseOver
     d.links && d.links.length > 0 ? d.links.forEach(link => linksAction(link, color, stroke)) :
-        d3.select(d.svg["rect"])
-                .attr('stroke', color)
-                .attr('stroke-width', stroke)
-            .attr("opacity", 1)
+
+         d3.select(d.svg["rect"])
+             .attr('stroke', color).attr('stroke-width', stroke)
+            .attr("opacity", 1);
+
+
 
 };
 
 
 const overInterface =  (d) => {
+    // if(tippify) {
+    //     makeNameTippy(d);
+    //     d.links.forEach(link => makeNameTippy(link.target))
+    // }
     // changeAllOpacityTo(0.1);
     changeNodesStrokeTo(d,
         constants.HIGHLIGHT_STROKE_COLOR, constants.HIGHLIGHT_STROKE_WIDTH, mouseOverLinks)
 };
 
 const outInterface = (d) => {
+    // if(tippify) {
+    //     destroyNameTippy(d);
+    //     d.links.forEach(link => destroyNameTippy(link.target))
+    // }
     // changeAllOpacityTo(1);
     changeNodesStrokeTo(d,
-        constants.STROKE_COLOR, function(d) { return d.json.type === "internal" ? 70 : constants.STROKE_WIDTH}, mouseOutLinks)
+        constants.STROKE_COLOR, function(d) { return d.json.type === "internal" ? 70 : constants.STROKE_WIDTH}, mouseOutLinks )
 };
 
 export const mouseOverInterface =  (d) => {
@@ -75,7 +87,7 @@ export const mouseOverInterface =  (d) => {
     setTimeout(() => {
         if(MOUSE_ON === d) {
             changeAllOpacityToExcept(0.1, d);
-            overInterface(d);
+            overInterface(d, true);
         }}, constants.FADE_OUT_DELAY);
 
 
@@ -83,7 +95,6 @@ export const mouseOverInterface =  (d) => {
 };
 
 export const clickOnInterface = (d) => {
-    console.log("eba", d);
 
     if(d.hasTippy) {
 
@@ -91,14 +102,26 @@ export const clickOnInterface = (d) => {
 
     } else {
         d.hasTippy = true;
-        tippyManager.makeTippy(d)
+        tippyManager.makeTippy(d, templates.interfaceTemplate(d));
+    };
+};
+export const clickOnNamespace = (ns) => {
+    console.log("eba", ns);
+
+    if(ns.hasTippy) {
+
+        ns.svg['rect']._tippy.state.isMounted ?  tippyManager.hideTippy(ns) : tippyManager.showTippy(ns);
+
+    } else {
+        ns.hasTippy = true;
+        tippyManager.makeTippy(ns, templates.nameSpaceTemplate(ns), "top")
     };
 };
 
 export const mouseOutInterface = (d) => {
     MOUSE_ON = undefined;
     changeAllOpacityTo(1);
-    outInterface(d);
+    outInterface(d, true);
 };
 
 

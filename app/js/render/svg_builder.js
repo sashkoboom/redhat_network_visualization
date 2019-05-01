@@ -10,6 +10,7 @@ import * as mouseInteractions from "../interactions/mouse";
 import * as scaling from "../interactions/scaling"
 import {INTERFACE_BOX} from "../utils/constants";
 
+
 const SVGBuilder = class {
 
   constructor(ns_data = [], inteface_data = [], links_data = [], other_links_data = [], colorManager = null) {
@@ -17,9 +18,10 @@ const SVGBuilder = class {
     this.namespaces = ns_data;
     this.interfaces = inteface_data;
     this.links = links_data;
-    this.otherLinks = links_data;
+    this.otherLinks = other_links_data;
     this.colorManager = colorManager;
     this.scale = new scaling.UpScale(this.interfaces);
+    this.overlay = true;
 
     this.text_1 = null ;
     this.text_2 = null ;
@@ -33,6 +35,19 @@ const SVGBuilder = class {
 
     // create zoomable/pannable pane to put all the visuals in it
     const zoom_actions = () => {
+
+        if(this.overlay){
+            setTimeout(() =>{
+                d3.selectAll(".overlay")
+                    .attr("opacity", 0);
+            }, 100);
+            setTimeout(() =>{
+                d3.selectAll(".overlay")
+                    .remove();
+            }, 1100);
+            this.overlay = false;
+        }
+
 
         const prevScale = this.scale;
 
@@ -53,6 +68,9 @@ const SVGBuilder = class {
                 .force("collide", d3.forceCollide(this.scale.collision))
                 .alphaTarget(1)
                 .restart();
+
+            this.setRestart();
+
         }
 
         // this.simulation.start();
@@ -61,10 +79,25 @@ const SVGBuilder = class {
     };
 
     this.pane = svg.append('g')
+    this.pane = svg.append('g')
       .attr('class', 'everything');
+
+
+
     this.zoom_handler = d3.zoom()
       .on('zoom', zoom_actions.bind(this));
     this.zoom_handler(svg);
+
+     const overlay = svg
+          .append('text')
+          .attr('class', 'overlay')
+          .text(constants.OVERLAY_TEXT);
+          overlay.attr('x', function(){
+              const l = this.getComputedTextLength();
+              return constants.WIDTH / 2 - l / 2})
+          .attr('y', constants.HEIGHT / 2)
+
+
   }
 
   start(NSdata = []) {
@@ -72,6 +105,13 @@ const SVGBuilder = class {
    // this.draw();
   }
 
+  setRestart(timeout = 50){
+      setTimeout(() => {
+          this.simulation
+              .alphaTarget(0)
+              .restart();
+      }, timeout)
+  }
 
   /*
     * What must be pre-defined:
@@ -130,8 +170,11 @@ const SVGBuilder = class {
     console.log(nodes);
     this.simulation = d3.forceSimulation()
       .nodes(nodes)
+        .alpha(1)
        .force('collide', d3.forceCollide(constants.INTERFACE_BOX.collide))
         .force('forceY', d3.forceY(d =>  d.level * constants.LEVEL_FACTOR + 50).strength(0.01));
+
+    this.setRestart(2000);
 
 
     // Manage the namespace nodes
@@ -162,8 +205,12 @@ const SVGBuilder = class {
           .attr('width', w_r)
           .attr('height', h_r)
             .attr('fill', constants.GREEN)
+          .on('click', () => mouseInteractions.clickOnNamespace(ns))
           .on("mouseover", () => mouseInteractions.mouseOverNamespace(ns))
           .on("mouseout", () => mouseInteractions.mouseOutNamespace(ns))
+          .each(function () {
+              ns.svg["rect"] = this;
+          })
 
     });
 
@@ -178,13 +225,15 @@ const SVGBuilder = class {
           .append('line')
           .attr('class', 'links')
           .attr('stroke', 'black')
-          .attr('stroke-dasharray', '0')
+          .attr('stroke-dasharray', d => d.peer ? "20, 80" : 0)
           .attr('stroke-width', constants.STROKE_WIDTH)
           .on("mouseover", mouseInteractions.mouseOverLinks)
           .on("mouseout", mouseInteractions.mouseOutLinks)
           .each(function(d){
               d.svg["link"] = this ;
           });
+
+
 
       const end_marks = this.pane.append('g')
           .selectAll('circle')
@@ -287,6 +336,8 @@ const SVGBuilder = class {
           .attr('x', d => d.x + 30)
           .attr('y', d => d.y + 50 )
         .on("click", mouseInteractions.clickOnInterface)
+        .on("mouseover", mouseInteractions.mouseOverInterface)
+        .on("mouseout", mouseInteractions.mouseOutInterface)
           .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])
           .text(d =>  d.name)
             .each(function(d){
@@ -301,6 +352,8 @@ const SVGBuilder = class {
           .append('text')
         .attr("class", 'text_2')
         .on("click", mouseInteractions.clickOnInterface)
+        .on("mouseover", mouseInteractions.mouseOverInterface)
+        .on("mouseout", mouseInteractions.mouseOutInterface)
           .attr('x', d => d.x + 30)
           .attr('y', d=> d.y + 70 )
           .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])
@@ -317,6 +370,9 @@ const SVGBuilder = class {
           .enter()
           .append('text')
         .attr("class", 'text_3')
+        .on("click", mouseInteractions.clickOnInterface)
+        .on("mouseover", mouseInteractions.mouseOverInterface)
+        .on("mouseout", mouseInteractions.mouseOutInterface)
           .attr('x', d => d.x + 30)
           .attr('y', d=> d.y + 90 )
           .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])
@@ -337,6 +393,11 @@ const SVGBuilder = class {
       .distance(() => 10)
       .strength(0);
     this.simulation.force('links', link_force);
+
+
+
+
+
 
     function tickActions() {
 
@@ -364,6 +425,7 @@ const SVGBuilder = class {
         .attr('y1', d => d.source.delta.y + d.source.height / 2)
         .attr('x2', d => d.target.delta.x + d.target.width / 2)
         .attr('y2', d => d.target.delta.y + d.target.height / 2);
+
 
 
 
@@ -413,7 +475,7 @@ const SVGBuilder = class {
         * */
 
     const dragstart = (d) => {
-      if (!d3.event.active) this.simulation.alphaTarget(0.3).restart();
+      if (!d3.event.active) this.simulation.alphaTarget(0.1).restart();
       d.fx = d.x;
       d.fy = d.y;
 
@@ -429,9 +491,11 @@ const SVGBuilder = class {
 
 
     const dragend = function (d) {
-      if (!d3.event.active) this.simulation.alphaTarget(0);
+      if (!d3.event.active) this.simulation.alphaTarget(0.1);
       d.fx = null;
       d.fy = null;
+
+      this.setRestart();
     };
 
     const drag_handler = d3.drag()
@@ -441,6 +505,10 @@ const SVGBuilder = class {
 
     drag_handler(node);
     drag_handler(inner_rects);
+    drag_handler(text_1);
+    drag_handler(text_2);
+    drag_handler(text_3);
+
   }
 
 
