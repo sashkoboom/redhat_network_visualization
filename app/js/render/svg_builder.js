@@ -27,10 +27,9 @@ const SVGBuilder = class {
     this.text_2 = null ;
     this.text_3 = null ;
 
-    const svg = d3.select('main')
-      .append('svg')
-      .attr('width', constants.WIDTH)
-      .attr('height', constants.HEIGHT);
+
+      const svg = d3.select('main')
+          .append('svg');
 
 
     // create zoomable/pannable pane to put all the visuals in it
@@ -199,7 +198,7 @@ const SVGBuilder = class {
        .force('collide', d3.forceCollide(constants.INTERFACE_BOX.collide))
         .force('forceY', d3.forceY(d =>  d.level * constants.LEVEL_FACTOR + 50).strength(0.01));
 
-    this.setRestart(2000);
+    this.setRestart(10000);
 
 
     // Manage the namespace nodes
@@ -223,7 +222,7 @@ const SVGBuilder = class {
       });
 
       // Draw namespace rectangles
-      const ns_rect = this.pane
+       this.pane
         .append('rect')
         .attr('x', x_r)
         .attr('y', y_r)
@@ -235,7 +234,15 @@ const SVGBuilder = class {
           .on("mouseout", () => mouseInteractions.mouseOutNamespace(ns))
           .each(function () {
               ns.svg["rect"] = this;
-          })
+          });
+
+       this.pane
+           .append('text')
+           .attr('class', 'ns_text')
+           .attr('x', x_r + constants.NS_BOX.text.padding.left)
+           .attr('y', y_r + constants.NS_BOX.text.padding.top)
+           .attr('font-size', constants.NS_BOX.text.size)
+           .text(id);
 
     });
 

@@ -1,19 +1,33 @@
 /* eslint-disable */
 
+
+const addr = (d) => {
+    if(!d.json.addresses || d.json.addresses.length < 1) return '';
+    let r = '<div class="addr_container">';
+    d.json.addresses.forEach(adr => {
+        r += `<span class="round_span_addr">${adr.address}</span>`
+    });
+    r+= '</div>'
+    return r;
+}
+
+
 export const interfaceTemplate = (d) => `
 <div class="tooltip_small">
 
-<div> ${d.name}</div>
+    <div> ${d.name} </div>
 
-<div>driver:${d.json.driver ? d.json.driver : "none"}</div>
+    <div><span class="dot_${d.json.state}"></span> state : ${d.json.state} </div>
 
-<div>${d.json.addresses.length > 0 ? "adrrr" : "no IP addresses"}</div>
+     ${d.json.driver ? `<div>driver: ${d.json.driver}</div>` : ''} 
+   
+        ${addr(d)}
+    
+    ${ d.json.mac ? `<div> MAC <span class="round_span_addr"> ${d.json.mac}</span></div>` : '' }
 
-<div>${d.json.mac ? d.json.mac : "no MAC addr"}</div>
+    <div>MTU ${d.json.mtu}</div>
 
-<div>MTU ${d.json.mtu}</div>
-
-<div>`;
+</div>`;
 
 const plus = ' <div class="round-button" id="plus_${d.name}">&#43; </div>';
 

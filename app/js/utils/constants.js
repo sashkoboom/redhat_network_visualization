@@ -3,9 +3,9 @@
  */
 
 // w h of render plane
-export const WIDTH = window.innerWidth * 0.9;
+export const WIDTH = window.innerWidth * 0.95;
 
-export const HEIGHT = window.innerHeight * 0.8;
+export const HEIGHT = window.innerHeight * 0.9;
 
 export const INTERFACE_BOX = {
   width: 120,
@@ -37,10 +37,11 @@ export const NS_BOX = {
   },
   width_factor: 200,
   text: {
+    size: 48,
     padding: {
       left: 30,
       right: 0,
-      top: 30,
+      top: 70,
       bottom: 0,
     },
   },
@@ -83,6 +84,6 @@ export const HIGHLIGHT_STROKE_COLOR = BLUE;
 
 export const END_MARK_RADIUS = 20;
 
-export const FADE_OUT_DELAY = 500;
+export const FADE_OUT_DELAY = 400;
 
 export const OVERLAY_TEXT = 'Pan & zoom to see the whole graph';

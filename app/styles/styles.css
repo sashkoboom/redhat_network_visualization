@@ -1,6 +1,44 @@
 html, body{
     background-color: aliceblue;
     font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+main{
+    display: flex;
+    justify-content: center;
+}
+
+
+
+.custom-file-upload {
+
+    margin-top: 3em;
+    width: 20vw;
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 1em 2em;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 1em;
+    background-color: #cccccc;
+
+    transition: 600ms;
+}
+
+.custom-file-upload:hover{
+    background-color: #afafaf;
+}
+
+.custom-file-upload:active{
+    background-color: #a09f9f;
 }
 
 .routing { border: black;  }
@@ -31,25 +69,49 @@ html, body{
     background-color: #F5F5F5;
 }
 
+
 svg{
     background-color: white;
     border-radius: 30px;
-    margin: 30px;
     border: 1px solid rgb(209, 209, 224);
+    margin: 1vh 1vw;
+    width: 98vw;
+    height: 98vh;
+    transition: 100ms;
+}
+
+svg.low_opacity{
+    opacity: 0;
 }
 
 .link {
     stroke : black;
 }
 
-/*div{*/
-/*padding: 2em;*/
-/*}*/
+[class*='dot'] {
+    height: 10px;
+    width: 10px;
+    border-radius: 50%;
+    border: 0.5px solid #cccccc;
+    display: inline-block;
+    margin-bottom: -1.755px;
 
-.state_down{
-    fill: #ea2f2f;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%234f0616' fill-opacity='0.72'%3E%3Cpath d='M0 38.59l2.83-2.83 1.41 1.41L1.41 40H0v-1.41zM0 1.4l2.83 2.83 1.41-1.41L1.41 0H0v1.41zM38.59 40l-2.83-2.83 1.41-1.41L40 38.59V40h-1.41zM40 1.41l-2.83 2.83-1.41-1.41L38.59 0H40v1.41zM20 18.6l2.83-2.83 1.41 1.41L21.41 20l2.83 2.83-1.41 1.41L20 21.41l-2.83 2.83-1.41-1.41L18.59 20l-2.83-2.83 1.41-1.41L20 18.59z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
+
+.dot_up{
+    border: none;
+    background-color: #bbb;
+}
+.dot_none{
+    border: none;
+    background-color: #FFC038;
+}
+.dot_down{
+    border: none;
+    background-color: #f26768;
+}
+
+
 
 
 .thumb {
@@ -73,40 +135,54 @@ svg{
 }
 
 .tooltip_small{
+
     background-color: white;
-    width: 200px;
+   width: 180px;
+    font-size: 13px;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
 }
 
 .tooltip_small div {
-    margin: 0.2em;
+    margin: 0.3em;
+}
+
+.round_span_addr{
+    background-color: #DCDCDC;
+    margin: 0.3em;
 }
 
 .addr_container {
     display: flex;
     flex-wrap: wrap;
-
+    flex-direction: column;
+    align-items: center;
 
 }
 
-.addr {
+[class*='round_span_']{
     margin: 0.1rem;
-    background-color: #DCDCDC;
     padding: 0.3rem;
-    font-size: 12px;
-    border-radius: 3px;
+
+    border-radius: 0.2em;
 }
 [class*='close-'] {
-    color: #777;
-    font: 14px/100% arial, sans-serif;
+
+    position: fixed;
+    right: 30px;
+    top: 20px;
+
+
+    color: black;
+
+    font: 20px/100% arial, sans-serif;
     align-self: flex-end;
     text-decoration: none;
     text-shadow: 0 1px 0 #fff;
-    top: 5px;
-    padding-top: 0.3em;
-    padding-right: 0.3em;
+    /*padding: 1em;*/
+    border-radius: 50%;
 }
 
 .close-classic:after {
@@ -155,6 +231,7 @@ text{
 .overlay_rect {
     fill: white;
     transition: opacity 1s;
+    border-radius: 30px;
 }
 .overlay{
     font-size: 24px;
@@ -166,8 +243,10 @@ text{
     cursor: pointer;
 }
 
-tspan{
-
+.box__dragndrop,
+.box__uploading,
+.box__success,
+.box__error {
+    display: none;
 }
-
 
