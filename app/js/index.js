@@ -38,13 +38,13 @@ const main = (input = null) => {
   i.parentNode.removeChild(i);
 
   const closeBtn = document.createElement('span');
-  closeBtn.classList.add("close-thin");
+  closeBtn.classList.add("close-thin-corner");
 
   closeBtn.addEventListener('click', () => {
 
     mainEl.removeChild(closeBtn);
     const svg = document.querySelector('svg');
-    svg.classList.add('low_opacity')
+    svg.classList.add('low_opacity');
     setTimeout(() => {
       mainEl.removeChild(svg);
 

@@ -2,10 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8204df46-4165-4628-8c88-00a0084575b5" name="Default Changelist" comment="&amp;">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/render/svg_builder.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/render/svg_builder.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/js/interactions/mouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/interactions/mouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/js/interactions/tippy_manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/interactions/tippy_manager.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/js/render/color_manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/render/color_manager.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/render/templates.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/render/templates.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/utils/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/utils/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/js/utils/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/utils/helpers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/styles/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
     </list>
@@ -21,10 +24,57 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/js/render/svg_builder.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="708">
+              <caret line="353" column="44" lean-forward="true" selection-start-line="353" selection-start-column="44" selection-end-line="353" selection-end-column="44" />
+              <folding>
+                <element signature="e#71#96#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-28">
-              <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+            <state relative-caret-position="135">
+              <caret line="9" selection-start-line="9" selection-end-line="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/js/interactions/tippy_manager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="205">
+              <caret line="77" column="56" selection-start-line="77" selection-start-column="56" selection-end-line="77" selection-end-column="56" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+                <element signature="e#21#46#0" expanded="true" />
+                <element signature="e#204#692#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/js/render/color_manager.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-435">
+              <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="59" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/js/utils/helpers.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="39" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="39" />
+              <folding>
+                <element signature="n#!!doc" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -32,8 +82,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="452">
-              <caret line="58" column="9" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
+            <state relative-caret-position="166">
+              <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
               <folding>
                 <element signature="e#71#101#0" expanded="true" />
               </folding>
@@ -41,11 +91,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/js/interactions/mouse.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="479">
-              <caret line="65" column="8" lean-forward="true" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="8" />
+            <state relative-caret-position="171">
+              <caret line="44" column="23" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#61#86#0" expanded="true" />
@@ -55,22 +105,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/handle_data/network_data_manager.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="285">
-              <caret line="19" column="12" selection-start-line="19" selection-start-column="12" selection-end-line="19" selection-end-column="12" />
-              <folding>
-                <element signature="e#110#135#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/js/render/templates.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="3" lean-forward="true" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
+            <state relative-caret-position="160">
+              <caret line="17" column="76" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="76" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="n#div#0;n#!!top" />
@@ -82,8 +120,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/styles/styles.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
-              <caret line="96" column="25" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="25" />
+            <state relative-caret-position="135">
+              <caret line="189" selection-start-line="189" selection-end-line="189" />
             </state>
           </provider>
         </entry>
@@ -100,42 +138,6 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/interactions/scaling.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="314">
-              <caret line="184" column="80" selection-start-line="184" selection-start-column="56" selection-end-line="184" selection-end-column="80" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="e#21#46#0" expanded="true" />
-                <element signature="n#DownScale#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/render/rect_node.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="690">
-              <caret line="46" column="18" selection-start-line="46" selection-start-column="18" selection-end-line="46" selection-end-column="18" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/js/utils/constants.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="72" column="27" selection-start-line="72" selection-start-column="20" selection-end-line="72" selection-end-column="27" />
-              <folding>
-                <element signature="e#198#354#0" />
-                <element signature="e#380#418#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -147,19 +149,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>tippify</find>
-      <find>x</find>
-      <find>this.over</find>
-      <find>over</find>
-      <find>.over</find>
-      <find>trans</find>
-      <find>overlay_rect</find>
-      <find>setRes</find>
-      <find>border-</find>
-      <find>margin</find>
-      <find>custom-file-upload</find>
-      <find>ns_arr</find>
-      <find>300</find>
       <find>body</find>
       <find>cus</find>
       <find>main</find>
@@ -170,13 +159,26 @@
       <find>state</find>
       <find>links.push</find>
       <find>stat</find>
-      <find>alert</find>
       <find>add</find>
       <find>class</find>
       <find>overl</find>
-      <find>close</find>
-      <find>svg</find>
       <find>-1ю95</find>
+      <find>click</find>
+      <find>tippy(</find>
+      <find>hide</find>
+      <find>id</find>
+      <find>svg</find>
+      <find>mouseOutIn</find>
+      <find>CLICK</find>
+      <find>what</find>
+      <find>changeOpacity</find>
+      <find>changeAllOpacityTo</find>
+      <find>d3.select(d.svg['rect']).transition(500).attr('opacity', 0.1);</find>
+      <find>close</find>
+      <find>d3</find>
+      <find>alert</find>
+      <find>close-thin</find>
+      <find>set</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/app/js</dir>
@@ -190,24 +192,24 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/samples/sample2-reformatted.json" />
-        <option value="$PROJECT_DIR$/app/js/render/color_manager.js" />
         <option value="$PROJECT_DIR$/app/js/render/scaling.js" />
-        <option value="$PROJECT_DIR$/app/js/utils/helpers.js" />
         <option value="$PROJECT_DIR$/app/js/render/graphics.js" />
         <option value="$PROJECT_DIR$/app/js/tippy.js/esm/index.js" />
         <option value="$PROJECT_DIR$/app/js/render/interactions.js" />
         <option value="$PROJECT_DIR$/webpack.config.js" />
         <option value="$PROJECT_DIR$/app/js/render/rect_node.js" />
         <option value="$PROJECT_DIR$/app/js/handle_data/network_data_manager.js" />
-        <option value="$PROJECT_DIR$/app/js/interactions/tippy_manager.js" />
         <option value="$PROJECT_DIR$/app/js/render/overlay.js" />
-        <option value="$PROJECT_DIR$/app/js/interactions/mouse.js" />
         <option value="$PROJECT_DIR$/app/js/render/svg_builder.js" />
         <option value="$PROJECT_DIR$/app/js/utils/constants.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/app/js/index.js" />
-        <option value="$PROJECT_DIR$/app/styles/styles.css" />
+        <option value="$PROJECT_DIR$/app/js/utils/helpers.js" />
+        <option value="$PROJECT_DIR$/app/js/render/color_manager.js" />
         <option value="$PROJECT_DIR$/app/js/render/templates.js" />
+        <option value="$PROJECT_DIR$/app/js/interactions/tippy_manager.js" />
+        <option value="$PROJECT_DIR$/app/styles/styles.css" />
+        <option value="$PROJECT_DIR$/app/js/interactions/mouse.js" />
       </list>
     </option>
   </component>
@@ -243,21 +245,7 @@
               <item name="redhat_network_visualization" type="462c0819:PsiDirectoryNode" />
               <item name="app" type="462c0819:PsiDirectoryNode" />
               <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="handle_data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="redhat_network_visualization" type="b2602c69:ProjectViewProjectNode" />
-              <item name="redhat_network_visualization" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="interactions" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="redhat_network_visualization" type="b2602c69:ProjectViewProjectNode" />
-              <item name="redhat_network_visualization" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="render" type="462c0819:PsiDirectoryNode" />
+              <item name="utils" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="redhat_network_visualization" type="b2602c69:ProjectViewProjectNode" />
@@ -331,12 +319,12 @@
       <workItem from="1555507321937" duration="28870000" />
       <workItem from="1555920173644" duration="22397000" />
       <workItem from="1556284157720" duration="9841000" />
-      <workItem from="1556457221806" duration="49768000" />
+      <workItem from="1556457221806" duration="61448000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="191458000" />
+    <option name="totallyTimeSpent" value="203138000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -351,7 +339,7 @@
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24242425" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24242425" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -409,25 +397,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/render/color_manager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="54" column="20" lean-forward="true" selection-start-line="54" selection-start-column="20" selection-end-line="54" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tippy.css" />
     <entry file="file://$PROJECT_DIR$/app/js/tippy.js/esm/index.js" />
-    <entry file="file://$PROJECT_DIR$/app/js/utils/helpers.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="15" selection-start-line="12" selection-start-column="15" selection-end-line="12" selection-end-column="15" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="615">
@@ -466,35 +437,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/interactions/tippy_manager.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#22#51#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/js/render/overlay.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="37" lean-forward="true" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/render/svg_builder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="324" column="34" selection-start-line="324" selection-start-column="30" selection-end-line="324" selection-end-column="34" />
-          <folding>
-            <element signature="e#71#96#0" expanded="true" />
-            <element signature="e#2600#2777#0" />
-            <element signature="e#2801#3011#0" />
           </folding>
         </state>
       </provider>
@@ -549,48 +497,87 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/interactions/mouse.js">
+    <entry file="file://$PROJECT_DIR$/app/js/render/svg_builder.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="479">
-          <caret line="65" column="8" lean-forward="true" selection-start-line="65" selection-start-column="8" selection-end-line="65" selection-end-column="8" />
+        <state relative-caret-position="708">
+          <caret line="353" column="44" lean-forward="true" selection-start-line="353" selection-start-column="44" selection-end-line="353" selection-end-column="44" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="e#61#86#0" expanded="true" />
+            <element signature="e#71#96#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
+    <entry file="file://$PROJECT_DIR$/app/js/render/templates.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-28">
-          <caret line="18" lean-forward="true" selection-start-line="18" selection-end-line="18" />
+        <state relative-caret-position="160">
+          <caret line="17" column="76" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="76" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#div#0;n#!!top" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="58" column="9" selection-start-line="58" selection-start-column="9" selection-end-line="58" selection-end-column="9" />
+        <state relative-caret-position="166">
+          <caret line="40" column="37" selection-start-line="40" selection-start-column="37" selection-end-line="40" selection-end-column="37" />
           <folding>
             <element signature="e#71#101#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/styles/styles.css">
+    <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="96" column="25" selection-start-line="96" selection-start-column="25" selection-end-line="96" selection-end-column="25" />
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/render/templates.js">
+    <entry file="file://$PROJECT_DIR$/app/js/utils/helpers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="3" lean-forward="true" selection-start-line="22" selection-start-column="3" selection-end-line="22" selection-end-column="3" />
+        <state relative-caret-position="225">
+          <caret line="15" column="39" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="39" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <element signature="n#div#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/render/color_manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-435">
+          <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/interactions/tippy_manager.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="77" column="56" selection-start-line="77" selection-start-column="56" selection-end-line="77" selection-end-column="56" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#21#46#0" expanded="true" />
+            <element signature="e#204#692#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/styles/styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="189" selection-start-line="189" selection-end-line="189" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/interactions/mouse.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="44" column="23" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="e#61#86#0" expanded="true" />
           </folding>
         </state>
       </provider>

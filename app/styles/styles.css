@@ -169,14 +169,7 @@ svg.low_opacity{
     border-radius: 0.2em;
 }
 [class*='close-'] {
-
-    position: fixed;
-    right: 30px;
-    top: 20px;
-
-
-    color: black;
-
+    color: #a09f9f;
     font: 20px/100% arial, sans-serif;
     align-self: flex-end;
     text-decoration: none;
@@ -185,17 +178,23 @@ svg.low_opacity{
     border-radius: 50%;
 }
 
-.close-classic:after {
-    content: 'X'; /* ANSI X letter */
+.close-thin-corner{
+    color: black;
+    position: fixed;
+    right: 30px;
+    top: 20px;
 }
 
-.close-thin:after {
-    content: '×'; /* UTF-8 symbol */
+.close-thin-tippy{
+    font-size: 24px;
+
+    margin: 0;
 }
 
-.close-thik:after {
-    content: '✖'; /* UTF-8 symbol */
+[class*='close-']:after {
+    content: '×';
 }
+
 
 .round-button {
     display:block;

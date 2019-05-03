@@ -13,3 +13,8 @@ export function flatten(input) {
     return res;
 }
 
+export function validSelectorFromString(str){
+    return  btoa(str).replace("/", "_1").replace("==", "_2").replace("+", "_3").replace("=", "_4")
+
+}
+

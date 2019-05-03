@@ -8,7 +8,8 @@ import * as templates from '../render/templates';
 import {makeTippy} from "./tippy_manager";
 import {makeNameTippy, destroyNameTippy} from "./tippy_manager";
 
-
+let CLICKED_ON = undefined;
+let except = undefined;
 let  MOUSE_ON = undefined;
 
 const changeAllOpacityTo = (o) => d3
@@ -22,6 +23,7 @@ const changeAllOpacityToExcept = (o, d) => {
     d.links.forEach(l => {arr = [...arr, ...Object.values(l.target.svg)]});
     d.links.forEach(l => {arr = [...arr, ...Object.values(l.source.svg)]});
     console.log("ARR", arr);
+    except = arr ;
     d3.selectAll(".main_rect, .links, .end_marks, .start_marks")
     .transition(500)
     .attr("opacity", function () { return arr.includes(this) ? 1 : 0.1}
@@ -41,9 +43,12 @@ const changeLinksColorTo = (d, color, stroke) => {
 };
 
 export const mouseOverLinks =  (d) => {
-    changeLinksColorTo(d, constants.HIGHLIGHT_STROKE_COLOR,  constants.HIGHLIGHT_STROKE_WIDTH)};
+    if(CLICKED_ON) return;
+    changeLinksColorTo(d, constants.HIGHLIGHT_STROKE_COLOR,  constants.HIGHLIGHT_STROKE_WIDTH)
+};
 
 export const mouseOutLinks = (d) => {
+    if(CLICKED_ON) return;
     changeLinksColorTo(d, constants.STROKE_COLOR, constants.STROKE_WIDTH)};
 
 const changeNodesStrokeTo = (d, color, stroke, linksAction) => {
@@ -60,26 +65,30 @@ const changeNodesStrokeTo = (d, color, stroke, linksAction) => {
 
 
 const overInterface =  (d) => {
-    // if(tippify) {
-    //     makeNameTippy(d);
-    //     d.links.forEach(link => makeNameTippy(link.target))
-    // }
-    // changeAllOpacityTo(0.1);
+    if(CLICKED_ON) return;
+
     changeNodesStrokeTo(d,
         constants.HIGHLIGHT_STROKE_COLOR, constants.HIGHLIGHT_STROKE_WIDTH, mouseOverLinks)
 };
 
 const outInterface = (d) => {
-    // if(tippify) {
-    //     destroyNameTippy(d);
-    //     d.links.forEach(link => destroyNameTippy(link.target))
-    // }
-    // changeAllOpacityTo(1);
+    if(CLICKED_ON) return;
     changeNodesStrokeTo(d,
         constants.STROKE_COLOR, function(d) { return d.json.type === "internal" ? 70 : constants.STROKE_WIDTH}, mouseOutLinks )
 };
 
+const changeNodeOpacity = (d, o) =>
+    [...Object.values(d.svg)].forEach(s => d3.select(s).transition(500).attr("opacity", o))
+
 export const mouseOverInterface =  (d) => {
+
+    if(CLICKED_ON) {
+        d3.select(d.svg['rect'])
+            .transition(500)
+            .attr('opacity', 1)
+
+    }else{
+
     MOUSE_ON = d;
 
 
@@ -90,26 +99,41 @@ export const mouseOverInterface =  (d) => {
         }}, constants.FADE_OUT_DELAY);
 
 
-    overInterface(d);
+    overInterface(d);}
+
 };
 
 export const clickOnInterface = (d) => {
 
-    if(d.hasTippy) {
-
+    if(CLICKED_ON === d) {
+        CLICKED_ON = undefined;
+        changeAllOpacityTo(1);
+        if(d.hasTippy && d.svg['rect']._tippy.state.isMounted) tippyManager.hideTippy(d);
+        return;
+    }
+    if(CLICKED_ON !== d || CLICKED_ON === undefined){
+        if(d.hasTippy) {
         d.svg['rect']._tippy.state.isMounted ?  tippyManager.hideTippy(d) : tippyManager.showTippy(d);
-
     } else {
         d.hasTippy = true;
         tippyManager.makeTippy(d, templates.interfaceTemplate(d));
-    };
+    }
+        if(!CLICKED_ON) {
+            CLICKED_ON = d;
+            changeAllOpacityToExcept(d, 0.1);
+        }
+    }
+
+
+
 };
+
 export const clickOnNamespace = (ns) => {
     console.log("eba", ns);
 
     if(ns.hasTippy) {
 
-        ns.svg['rect']._tippy.state.isMounted ?  tippyManager.hideTippy(ns) : tippyManager.showTippy(ns);
+        ns.svg['rect']._tippy.state.isMounted ?  {} : tippyManager.showTippy(ns);
 
     } else {
         ns.hasTippy = true;
@@ -118,14 +142,31 @@ export const clickOnNamespace = (ns) => {
 };
 
 export const mouseOutInterface = (d) => {
+    console.log(except);
+    console.log(except.includes(d.svg['rect']));
+
+    const openedTippy = d.hasTippy && d.svg['rect']._tippy.state.isMounted ;
+
+    if(CLICKED_ON) {
+        if(CLICKED_ON !== d && !except.includes(d.svg['rect']) && !openedTippy)
+            d3.select(d.svg['rect']).transition(500).attr('opacity', 0.1);
+    } else {
     MOUSE_ON = undefined;
     changeAllOpacityTo(1);
     outInterface(d, true);
+    }
+
 };
 
 
-export const mouseOverNamespace = (d) => d.interfaces.forEach(i => overInterface(i));
-export const mouseOutNamespace = (d) => d.interfaces.forEach(i => outInterface(i));
+export const mouseOverNamespace = (d) => !CLICKED_ON ? d.interfaces.forEach(i => overInterface(i)) : {};
+export const mouseOutNamespace = (d) => !CLICKED_ON ? d.interfaces.forEach(i => outInterface(i)) : {};
 
+export const TARGET = () => {
+   return CLICKED_ON;
+};
 
+export const HIGHLIGHTED = (d) => {
+    return except.includes(d.svg['rect']);
+}
 

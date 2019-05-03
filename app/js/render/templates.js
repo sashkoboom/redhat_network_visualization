@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+import { validSelectorFromString } from "../utils/helpers";
 
 const addr = (d) => {
     if(!d.json.addresses || d.json.addresses.length < 1) return '';
@@ -14,7 +15,7 @@ const addr = (d) => {
 
 export const interfaceTemplate = (d) => `
 <div class="tooltip_small">
-
+    <span id='close_${validSelectorFromString(d.id)}'class="close-thin-tippy"></span>
     <div> ${d.name} </div>
 
     <div><span class="dot_${d.json.state}"></span> state : ${d.json.state} </div>

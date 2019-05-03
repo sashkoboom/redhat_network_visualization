@@ -5,7 +5,7 @@
 
 /*Tool to generate color scheme for future graph*/
 
-//import shuffleArray from "../utils/helpers";
+import { validSelectorFromString } from "../utils/helpers";
 
 const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -58,8 +58,7 @@ const ColorManager = class{
     getClassName (str){return this.classNames[str];}
 
     namespaceToClassname(ns){
-        return "namespace_" + btoa(ns).replace("/", "_1").replace("==", "_2").replace("+", "_3").replace("=", "_4")
-    }
+        return "namespace_" + validSelectorFromString(ns) }
 };
 
 export default ColorManager;
