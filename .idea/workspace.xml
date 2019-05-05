@@ -3,14 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="8204df46-4165-4628-8c88-00a0084575b5" name="Default Changelist" comment="&amp;">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/interactions/mouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/interactions/mouse.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/interactions/tippy_manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/interactions/tippy_manager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/render/color_manager.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/render/color_manager.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/render/templates.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/render/templates.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/utils/helpers.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/utils/helpers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/styles/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/styles/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/js/render/svg_builder.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/render/svg_builder.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,8 +21,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/render/svg_builder.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="708">
-              <caret line="353" column="44" lean-forward="true" selection-start-line="353" selection-start-column="44" selection-end-line="353" selection-end-column="44" />
+            <state relative-caret-position="100">
+              <caret line="131" column="25" selection-start-line="131" selection-start-column="25" selection-end-line="131" selection-end-column="25" />
               <folding>
                 <element signature="e#71#96#0" expanded="true" />
               </folding>
@@ -47,12 +42,11 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/interactions/tippy_manager.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="205">
-              <caret line="77" column="56" selection-start-line="77" selection-start-column="56" selection-end-line="77" selection-end-column="56" />
+            <state relative-caret-position="317">
+              <caret line="116" column="8" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="8" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#21#46#0" expanded="true" />
-                <element signature="e#204#692#0" />
               </folding>
             </state>
           </provider>
@@ -94,8 +88,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/js/interactions/mouse.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="44" column="23" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
+            <state relative-caret-position="158">
+              <caret line="162" column="50" selection-start-line="162" selection-start-column="50" selection-end-line="162" selection-end-column="50" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="e#61#86#0" expanded="true" />
@@ -149,16 +143,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>body</find>
-      <find>cus</find>
-      <find>main</find>
-      <find>inp</find>
-      <find>tooltip_small</find>
-      <find>addr</find>
-      <find>round_</find>
-      <find>state</find>
-      <find>links.push</find>
-      <find>stat</find>
       <find>add</find>
       <find>class</find>
       <find>overl</find>
@@ -176,9 +160,19 @@
       <find>d3.select(d.svg['rect']).transition(500).attr('opacity', 0.1);</find>
       <find>close</find>
       <find>d3</find>
-      <find>alert</find>
       <find>close-thin</find>
       <find>set</find>
+      <find>resta</find>
+      <find>alert</find>
+      <find>opacity</find>
+      <find>openedTipp</find>
+      <find>changeAll</find>
+      <find>changeAllOpacityToExcept</find>
+      <find>node</find>
+      <find>nodes</find>
+      <find>make</find>
+      <find>mou</find>
+      <find>d.opp</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/app/js</dir>
@@ -200,15 +194,15 @@
         <option value="$PROJECT_DIR$/app/js/render/rect_node.js" />
         <option value="$PROJECT_DIR$/app/js/handle_data/network_data_manager.js" />
         <option value="$PROJECT_DIR$/app/js/render/overlay.js" />
-        <option value="$PROJECT_DIR$/app/js/render/svg_builder.js" />
         <option value="$PROJECT_DIR$/app/js/utils/constants.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/app/js/index.js" />
         <option value="$PROJECT_DIR$/app/js/utils/helpers.js" />
         <option value="$PROJECT_DIR$/app/js/render/color_manager.js" />
         <option value="$PROJECT_DIR$/app/js/render/templates.js" />
-        <option value="$PROJECT_DIR$/app/js/interactions/tippy_manager.js" />
         <option value="$PROJECT_DIR$/app/styles/styles.css" />
+        <option value="$PROJECT_DIR$/app/js/render/svg_builder.js" />
+        <option value="$PROJECT_DIR$/app/js/interactions/tippy_manager.js" />
         <option value="$PROJECT_DIR$/app/js/interactions/mouse.js" />
       </list>
     </option>
@@ -319,12 +313,12 @@
       <workItem from="1555507321937" duration="28870000" />
       <workItem from="1555920173644" duration="22397000" />
       <workItem from="1556284157720" duration="9841000" />
-      <workItem from="1556457221806" duration="61448000" />
+      <workItem from="1556457221806" duration="64712000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="203138000" />
+    <option name="totallyTimeSpent" value="206402000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -351,7 +345,7 @@
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32891566" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.49964765" weight="0.32891566" />
-      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4989429" visible="true" weight="0.32891566" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.4989429" visible="true" weight="0.32891566" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5010571" side_tool="true" weight="0.32891566" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -497,16 +491,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/render/svg_builder.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
-          <caret line="353" column="44" lean-forward="true" selection-start-line="353" selection-start-column="44" selection-end-line="353" selection-end-column="44" />
-          <folding>
-            <element signature="e#71#96#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/js/render/templates.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -545,6 +529,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/styles/styles.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="189" selection-start-line="189" selection-end-line="189" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/render/svg_builder.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="131" column="25" selection-start-line="131" selection-start-column="25" selection-end-line="131" selection-end-column="25" />
+          <folding>
+            <element signature="e#71#96#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/js/render/color_manager.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-435">
@@ -554,27 +555,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/interactions/tippy_manager.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="205">
-          <caret line="77" column="56" selection-start-line="77" selection-start-column="56" selection-end-line="77" selection-end-column="56" />
+        <state relative-caret-position="317">
+          <caret line="116" column="8" selection-start-line="116" selection-start-column="4" selection-end-line="116" selection-end-column="8" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#21#46#0" expanded="true" />
-            <element signature="e#204#692#0" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/styles/styles.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="189" selection-start-line="189" selection-end-line="189" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/interactions/mouse.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="44" column="23" selection-start-line="44" selection-start-column="23" selection-end-line="44" selection-end-column="23" />
+        <state relative-caret-position="158">
+          <caret line="162" column="50" selection-start-line="162" selection-start-column="50" selection-end-line="162" selection-end-column="50" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="e#61#86#0" expanded="true" />

@@ -10,6 +10,7 @@ import {validSelectorFromString} from "../utils/helpers";
 export const hideTippy = (d) =>  {
     d.svg['rect']._tippy.enable();
     d.svg['rect']._tippy.hide();
+    d.opennedTippy = false;
 };
 
 export const makeNameTippy = (d) => {
@@ -60,6 +61,7 @@ export const makeTippy = (d, template, dir = "right-start") => {
     });
 
     showTippy(d);
+    d.opennedTippy = true;
 
     const closeBtn = document.querySelector(`#close_${validSelectorFromString(d.id)}`);
     console.log(closeBtn);
@@ -74,9 +76,7 @@ export const makeTippy = (d, template, dir = "right-start") => {
 
 
             if(!mouse.HIGHLIGHTED(d)){
-
-                d3.select(d.svg['rect']).transition(500)
-                    .attr('opacity', 0.1);
+                mouse.changeOpacityForNodesAndConnections(d, 0.1)
             }
         }
     }
@@ -114,6 +114,8 @@ const setContent = (d, c) => d.svg['rect']._tippy.setContent(c);
 export const showTippy = (d) =>  {
     d.svg['rect']._tippy.show();
     d.svg['rect']._tippy.disable()
+    d.opennedTippy = true;
+
 };
 
 

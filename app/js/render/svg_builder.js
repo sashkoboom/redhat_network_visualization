@@ -129,7 +129,7 @@ const SVGBuilder = class {
    // this.draw();
   }
 
-  setRestart(timeout = 50){
+  setRestart(timeout = 0){
       setTimeout(() => {
           this.simulation
               .alphaTarget(0)

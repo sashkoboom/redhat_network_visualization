@@ -17,7 +17,7 @@ const changeAllOpacityTo = (o) => d3
     .transition(500)
     .attr("opacity", o);
 
-const changeAllOpacityToExcept = (o, d) => {
+const changeAllOpacityToExcept = (d, o) => {
     let arr = [...Object.values(d.svg)] ;
     d.links.map(link => Object.values(link.svg)).forEach(a => arr = [...arr, ...a]);
     d.links.forEach(l => {arr = [...arr, ...Object.values(l.target.svg)]});
@@ -31,7 +31,6 @@ const changeAllOpacityToExcept = (o, d) => {
 };
 
 const changeLinksColorTo = (d, color, stroke) => {
-
     [d.source.svg['rect'], d.target.svg['rect'], ...Object.values(d.svg)]
         .forEach(svg => d3.select(svg)
         .attr('stroke', color)
@@ -49,7 +48,8 @@ export const mouseOverLinks =  (d) => {
 
 export const mouseOutLinks = (d) => {
     if(CLICKED_ON) return;
-    changeLinksColorTo(d, constants.STROKE_COLOR, constants.STROKE_WIDTH)};
+    changeLinksColorTo(d, constants.STROKE_COLOR, constants.STROKE_WIDTH)
+};
 
 const changeNodesStrokeTo = (d, color, stroke, linksAction) => {
 // get all the links comin from this node and for each do mouseOver
@@ -77,15 +77,28 @@ const outInterface = (d) => {
         constants.STROKE_COLOR, function(d) { return d.json.type === "internal" ? 70 : constants.STROKE_WIDTH}, mouseOutLinks )
 };
 
-const changeNodeOpacity = (d, o) =>
-    [...Object.values(d.svg)].forEach(s => d3.select(s).transition(500).attr("opacity", o))
+const nodesAndConnectionsFor = (d) => {
+    let arr = [d.svg['rect']] ;
+    d.links.map(link => Object.values(link.svg)).forEach(a => arr = [...arr, ...a]);
+    d.links.forEach(l => {arr = [...arr, l.target.svg['rect']]});
+    d.links.forEach(l => {arr = [...arr, l.source.svg['rect']]});
+    return arr;
+};
 
-export const mouseOverInterface =  (d) => {
+export const changeOpacityForNodesAndConnections = (d, o) =>
+    nodesAndConnectionsFor(d).forEach(n =>{ if(!except.includes(n)) d3.select(n).attr('opacity', o)});
+
+
+const changeNodeOpacity = (d, o) =>
+   {
+       nodesAndConnectionsFor(d).forEach(s => d3.select(s).transition(500).attr("opacity", o))
+   };
+
+export const mouseOverInterface = (d) => {
 
     if(CLICKED_ON) {
-        d3.select(d.svg['rect'])
-            .transition(500)
-            .attr('opacity', 1)
+
+        changeNodeOpacity(d, 1);
 
     }else{
 
@@ -94,7 +107,7 @@ export const mouseOverInterface =  (d) => {
 
     setTimeout(() => {
         if(MOUSE_ON === d) {
-            changeAllOpacityToExcept(0.1, d);
+            changeAllOpacityToExcept(d, 0.1);
             overInterface(d, true);
         }}, constants.FADE_OUT_DELAY);
 
@@ -128,32 +141,39 @@ export const clickOnInterface = (d) => {
 
 };
 
-export const clickOnNamespace = (ns) => {
-    console.log("eba", ns);
-
-    if(ns.hasTippy) {
-
-        ns.svg['rect']._tippy.state.isMounted ?  {} : tippyManager.showTippy(ns);
-
-    } else {
-        ns.hasTippy = true;
-        tippyManager.makeTippy(ns, templates.nameSpaceTemplate(ns), "top")
-    };
-};
+export const clickOnNamespace = (ns) =>
+{};
+// {
+//     console.log("eba", ns);
+//
+//     if(ns.hasTippy) {
+//         ns.svg['rect']._tippy.state.isMounted ?  {} : tippyManager.showTippy(ns);
+//
+//     } else {
+//         ns.hasTippy = true;
+//         tippyManager.makeTippy(ns, templates.nameSpaceTemplate(ns), "top")
+//     };
+// };
 
 export const mouseOutInterface = (d) => {
-    console.log(except);
-    console.log(except.includes(d.svg['rect']));
-
-    const openedTippy = d.hasTippy && d.svg['rect']._tippy.state.isMounted ;
 
     if(CLICKED_ON) {
-        if(CLICKED_ON !== d && !except.includes(d.svg['rect']) && !openedTippy)
-            d3.select(d.svg['rect']).transition(500).attr('opacity', 0.1);
+        if(CLICKED_ON !== d && !except.includes(d.svg['rect']))
+            {nodesAndConnectionsFor(d)
+                .forEach(n => !except.includes(n) ? d3.select(n).transition(500).attr('opacity', 0.1) : {}
+                );
+            }
+
     } else {
     MOUSE_ON = undefined;
     changeAllOpacityTo(1);
     outInterface(d, true);
+    }
+
+    console.log("hmmm");
+    if(d.opennedTippy) {
+        console.log("/???");
+        d3.select(d.svg['rect']).attr('opacity', 1);
     }
 
 };
