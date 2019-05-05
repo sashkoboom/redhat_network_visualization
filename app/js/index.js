@@ -9,8 +9,7 @@ import renderInputToTable from './render/input_table';
 import ColorManager from './render/color_manager';
 import NetworkDataManager from './handle_data/network_data_manager';
 import SVGBuilder from './render/svg_builder';
-import * as d3 from "d3";
-import * as constants from "./utils/constants";
+import { clearNsTables } from './render/ns_table'
 
 
 
@@ -41,7 +40,7 @@ const main = (input = null) => {
   closeBtn.classList.add("close-thin-corner");
 
   closeBtn.addEventListener('click', () => {
-
+    clearNsTables();
     mainEl.removeChild(closeBtn);
     const svg = document.querySelector('svg');
     svg.classList.add('low_opacity');
@@ -57,6 +56,7 @@ const main = (input = null) => {
       mainEl.appendChild(b);
       mainEl.appendChild(inp);
     }, 120);
+
 
 
 

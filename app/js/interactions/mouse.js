@@ -7,6 +7,7 @@ import * as tippyManager from "./tippy_manager";
 import * as templates from '../render/templates';
 import {makeTippy} from "./tippy_manager";
 import {makeNameTippy, destroyNameTippy} from "./tippy_manager";
+import NamespaceTable from "../render/ns_table";
 
 let CLICKED_ON = undefined;
 let except = undefined;
@@ -142,18 +143,13 @@ export const clickOnInterface = (d) => {
 };
 
 export const clickOnNamespace = (ns) =>
-{};
-// {
-//     console.log("eba", ns);
-//
-//     if(ns.hasTippy) {
-//         ns.svg['rect']._tippy.state.isMounted ?  {} : tippyManager.showTippy(ns);
-//
-//     } else {
-//         ns.hasTippy = true;
-//         tippyManager.makeTippy(ns, templates.nameSpaceTemplate(ns), "top")
-//     };
-// };
+{
+
+    console.log("click");
+    console.log("namespace", ns);
+    ns.table.toggle();
+
+};
 
 export const mouseOutInterface = (d) => {
 
@@ -170,17 +166,12 @@ export const mouseOutInterface = (d) => {
     outInterface(d, true);
     }
 
-    console.log("hmmm");
-    if(d.opennedTippy) {
-        console.log("/???");
-        d3.select(d.svg['rect']).attr('opacity', 1);
-    }
 
 };
 
 
 export const mouseOverNamespace = (d) => !CLICKED_ON ? d.interfaces.forEach(i => overInterface(i)) : {};
-export const mouseOutNamespace = (d) => !CLICKED_ON ? d.interfaces.forEach(i => outInterface(i)) : {};
+export const mouseOutNamespace = (d) => !CLICKED_ON && !d.table.shown ? d.interfaces.forEach(i => outInterface(i)) : {};
 
 export const TARGET = () => {
    return CLICKED_ON;

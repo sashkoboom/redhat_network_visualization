@@ -64,7 +64,7 @@ export const makeTippy = (d, template, dir = "right-start") => {
     d.opennedTippy = true;
 
     const closeBtn = document.querySelector(`#close_${validSelectorFromString(d.id)}`);
-    console.log(closeBtn);
+
     closeBtn.addEventListener("click", () => {
         hideTippy(d);
 

@@ -32,94 +32,42 @@ export const interfaceTemplate = (d) => `
 
 const plus = ' <div class="round-button" id="plus_${d.name}">&#43; </div>';
 
-export const nameSpaceTemplate = (d) => `<div class="tooltip_big">
-    <table class="routing" >
-    <th>destination</th>
-    <th>family</th>
-    <th>gateway</th>
-    <th>iif</th>
-    <th>metrics</th>
-    <th>oif</th>
-    <th>priority</th>
-    <th>protocol</th>
-    <th>scope</th>
-    <th>source</th>
-    <th>preferred-source</th>
-    <th>tos</th>
-    <th>type</th>
-        <tr>
-            <td>192.168.168.0/24</td>
-            <td>INET</td>
-            <td>192.168.168.1</td>
-            <td>my_ns1/</td>
-            <td>hoplimit :64</td>
-            <td>//eth0</td>
-            <td>100</td>
-            <td>kernel</td>
-            <td>link</td>
-            <td>///</td>
-            <td>192.168.168.9</td>
-            <td>0</td>
-            <td>unicast</td>
-        </tr><tr>
-            <td>192.168.168.0/24</td>
-            <td>INET</td>
-            <td>192.168.168.1</td>
-            <td>my_ns1/</td>
-            <td>hoplimit :64</td>
-            <td>//eth0</td>
-            <td>100</td>
-            <td>kernel</td>
-            <td>link</td>
-            <td>///</td>
-            <td>192.168.168.9</td>
-            <td>0</td>
-            <td>unicast</td>
-        </tr><tr>
-            <td>192.168.168.0/24</td>
-            <td>INET</td>
-            <td>192.168.168.1</td>
-            <td>my_ns1/</td>
-            <td>hoplimit :64</td>
-            <td>//eth0</td>
-            <td>100</td>
-            <td>kernel</td>
-            <td>link</td>
-            <td>///</td>
-            <td>192.168.168.9</td>
-            <td>0</td>
-            <td>unicast</td>
-        </tr><tr>
-            <td>192.168.168.0/24</td>
-            <td>INET</td>
-            <td>192.168.168.1</td>
-            <td>my_ns1/</td>
-            <td>hoplimit :64</td>
-            <td>//eth0</td>
-            <td>100</td>
-            <td>kernel</td>
-            <td>link</td>
-            <td>///</td>
-            <td>192.168.168.9</td>
-            <td>0</td>
-            <td>unicast</td>
-        </tr><tr>
-            <td>192.168.168.0/24</td>
-            <td>INET</td>
-            <td>192.168.168.1</td>
-            <td>my_ns1/</td>
-            <td>hoplimit :64</td>
-            <td>//eth0</td>
-            <td>100</td>
-            <td>kernel</td>
-            <td>link</td>
-            <td>///</td>
-            <td>192.168.168.9</td>
-            <td>0</td>
-            <td>unicast</td>
-        </tr>
-</table>
-</div>
-`;
+const th = ['family', 'gateway','iif','metrics', 'oif', 'priority',
+    'protocol', 'scope', 'source', 'preferred-source','tos', 'type'];
+
+export const nameSpaceTemplate = (ns) =>{
+    console.log(ns.json.routes);
+    const tables = [];
+
+
+    Object.keys(ns.json.routes).forEach(
+        k => {
+        let t = `<div class="routing-wrap" id="${validSelectorFromString(ns.id)}_${validSelectorFromString(ns.json.routes[k].name)}">
+<div class="routing-name">${k} : ${ns.json.routes[k].name}</div>
+<table class="routing hide">`;
+        th.forEach(h => t += `<th>${h}</th>`);
+
+
+            ns.json.routes[k].routes.forEach(route => {
+                let tr = '<tr>';
+                th.forEach( th =>
+                tr += `<td>${ route[th] ? route[th] : "" }</td>`
+                );
+                tr += '</tr>';
+                t += tr;
+            });
+
+            t += '</table></div>';
+
+            tables.push(t);
+        }
+    );
+
+
+    let r = '';
+    tables.forEach(t => r += t);
+
+    return r;
+};
 
 export const name = (d) => d.name ;

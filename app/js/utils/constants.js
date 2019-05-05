@@ -75,6 +75,7 @@ export const RED = '#f26768';
 export const YELLOW = '#FFC038';
 // export const YELLOW = '#FDC168';
 export const GREEN = '#9FDBD1';
+export const LIGHTER_GREEN = '#c8eae4';
 // export const GREEN = '#91d1be';
 export const BLUE = '#121259';
 // export const BLUE = '#768FDf';

@@ -1,5 +1,5 @@
 import * as constants from '../utils/constants';
-
+import { NamespaceTable, NS_TABLES } from './ns_table';
 /* eslint-disable */
 
 class Node {
@@ -45,6 +45,8 @@ export default class NamespaceNode extends Node {
     super();
     this.json = json;
     this.svg = {};
+    this.table = new NamespaceTable(this);
+    NS_TABLES.push(this.table);
     if (json !== null) {
       this.id = json.id;
       this.name = json.name;

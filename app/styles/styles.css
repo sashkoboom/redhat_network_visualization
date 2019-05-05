@@ -41,7 +41,53 @@ main{
     background-color: #a09f9f;
 }
 
-.routing { border: black;  }
+.hide{
+    display: none;
+    width: 100%;
+}
+
+[class*='routing-'] {
+    border-radius: 1em;
+    border: 1px solid #cccccc;
+    font-size: 12px;
+}
+.routing-wrap {
+
+    padding: 1em;
+
+    margin-bottom: 0.5em;
+}
+
+.routing-container {
+    position: fixed;
+    right: 2em;
+    bottom: 2em;
+
+    max-height: 45vh;
+    min-width: 80vh;
+    overflow: scroll;
+
+    background-color: white;
+
+    padding: 0.7em;
+}
+
+.routing-name {
+    border: none;
+    border-radius: 0;
+    padding: 0.5em;
+}
+
+.routing-name:hover {
+    background-color: #F5F5F5;
+}
+
+.routing {
+
+    border: black;
+
+
+}
 
 
 .routing th, .routing tr td {
@@ -51,8 +97,8 @@ main{
 
 .routing th{
     background-color: white;
-    padding-bottom: 0.7em;
-    padding: 0.6em;
+
+    padding: 0.6em 0.6em 0.7em;
 }
 
 .routing tr td {
