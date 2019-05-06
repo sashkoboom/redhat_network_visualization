@@ -41,10 +41,6 @@ main{
     background-color: #a09f9f;
 }
 
-.hide{
-    display: none;
-    width: 100%;
-}
 
 [class*='routing-'] {
     border-radius: 1em;
@@ -63,13 +59,24 @@ main{
     right: 2em;
     bottom: 2em;
 
+
+
+    display: flex;
+    flex-direction: column;
+
+
+    background-color: #F5F5F5;
+    padding: 0.7em;
+}
+
+.routing-container span {
     max-height: 45vh;
     min-width: 80vh;
     overflow: scroll;
 
+    border: 2px solid white;
     background-color: white;
-
-    padding: 0.7em;
+    border-radius: inherit;
 }
 
 .routing-name {
@@ -115,6 +122,11 @@ main{
     background-color: #F5F5F5;
 }
 
+
+.hide{
+    display: none;
+    width: 100%;
+}
 
 svg{
     background-color: white;
@@ -237,7 +249,22 @@ svg.low_opacity{
     margin: 0;
 }
 
-[class*='close-']:after {
+.close-thin-routing {
+    text-align: right;
+    height: 1em;
+    width: 1em;
+
+    position: fixed;
+    padding: 0.4em;
+
+    border-radius: 50%;
+
+
+
+
+}
+
+[class*='close-']:before {
     content: '×';
 }
 

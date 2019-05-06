@@ -47,7 +47,6 @@ export const nameSpaceTemplate = (ns) =>{
 <table class="routing hide">`;
         th.forEach(h => t += `<th>${h}</th>`);
 
-
             ns.json.routes[k].routes.forEach(route => {
                 let tr = '<tr>';
                 th.forEach( th =>

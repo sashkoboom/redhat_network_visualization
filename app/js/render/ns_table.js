@@ -22,8 +22,18 @@ export class NamespaceTable  {
     }
 
     render(){
-        this.div.innerHTML = templates.nameSpaceTemplate(this.ns);
+
+        const closeBtn = document.createElement('div');
+        closeBtn.classList.add('close-thin-routing');
+        closeBtn.addEventListener('click', () => this.hide());
+        this.div.appendChild(closeBtn);
+
+        const span = this.div.appendChild(document.createElement('span'));
+
+        span.innerHTML = templates.nameSpaceTemplate(this.ns);
         this.div.classList.add('routing-container');
+
+
         document.querySelector('body').appendChild(this.div);
 
         Object.keys(this.ns.json.routes).forEach(k => {
@@ -44,7 +54,8 @@ export class NamespaceTable  {
                     );
             this.tables.push(table)
         });
-        console.log('TABLEssss', this.tables);
+
+
 
         this.mounted = true;
     }

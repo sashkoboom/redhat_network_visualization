@@ -18,11 +18,16 @@ const changeAllOpacityTo = (o) => d3
     .transition(500)
     .attr("opacity", o);
 
-const changeAllOpacityToExcept = (d, o) => {
+const changeAllOpacityToExcept = (d, o, node = true) => {
     let arr = [...Object.values(d.svg)] ;
-    d.links.map(link => Object.values(link.svg)).forEach(a => arr = [...arr, ...a]);
+    if(node){
+        d.links.map(link => Object.values(link.svg)).forEach(a => arr = [...arr, ...a]);
     d.links.forEach(l => {arr = [...arr, ...Object.values(l.target.svg)]});
     d.links.forEach(l => {arr = [...arr, ...Object.values(l.source.svg)]});
+    }else{
+        arr.push(d.source.svg['rect']);
+        arr.push(d.target.svg['rect']);
+    }
     console.log("ARR", arr);
     except = arr ;
     d3.selectAll(".main_rect, .links, .end_marks, .start_marks")
@@ -42,14 +47,35 @@ const changeLinksColorTo = (d, color, stroke) => {
         .forEach((i) => d3.select(i).attr('fill', color).attr('opacity', 1));
 };
 
+const overLinks = (d) => {
+    if(CLICKED_ON) return;
+    changeLinksColorTo(d, constants.HIGHLIGHT_STROKE_COLOR,  constants.HIGHLIGHT_STROKE_WIDTH);
+}
+
 export const mouseOverLinks =  (d) => {
     if(CLICKED_ON) return;
-    changeLinksColorTo(d, constants.HIGHLIGHT_STROKE_COLOR,  constants.HIGHLIGHT_STROKE_WIDTH)
+
+    MOUSE_ON = d;
+
+
+    setTimeout(() => {
+        if(MOUSE_ON === d) {
+            changeAllOpacityToExcept(d, 0.1, false);
+            overLinks(d);
+        }}, constants.FADE_OUT_DELAY);
+
+
+   overLinks(d);
+
 };
+
+const outLinks = (d) => changeLinksColorTo(d, constants.STROKE_COLOR, constants.STROKE_WIDTH);
 
 export const mouseOutLinks = (d) => {
     if(CLICKED_ON) return;
-    changeLinksColorTo(d, constants.STROKE_COLOR, constants.STROKE_WIDTH)
+    MOUSE_ON = null;
+    changeAllOpacityTo(1);
+    outLinks(d);
 };
 
 const changeNodesStrokeTo = (d, color, stroke, linksAction) => {
@@ -58,9 +84,7 @@ const changeNodesStrokeTo = (d, color, stroke, linksAction) => {
 
          d3.select(d.svg["rect"])
              .attr('stroke', color).attr('stroke-width', stroke)
-            .attr("opacity", 1);
-
-
+             .attr("opacity", 1);
 
 };
 
@@ -69,13 +93,13 @@ const overInterface =  (d) => {
     if(CLICKED_ON) return;
 
     changeNodesStrokeTo(d,
-        constants.HIGHLIGHT_STROKE_COLOR, constants.HIGHLIGHT_STROKE_WIDTH, mouseOverLinks)
+        constants.HIGHLIGHT_STROKE_COLOR, constants.HIGHLIGHT_STROKE_WIDTH, overLinks)
 };
 
 const outInterface = (d) => {
     if(CLICKED_ON) return;
     changeNodesStrokeTo(d,
-        constants.STROKE_COLOR, function(d) { return d.json.type === "internal" ? 70 : constants.STROKE_WIDTH}, mouseOutLinks )
+        constants.STROKE_COLOR, function(d) { return d.json.type === "internal" ? 70 : constants.STROKE_WIDTH}, outLinks )
 };
 
 const nodesAndConnectionsFor = (d) => {
