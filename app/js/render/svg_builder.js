@@ -248,6 +248,24 @@ const SVGBuilder = class {
            })
        ;
 
+       this.pane
+           .append('text')
+           .attr('class', 'ns_text_2')
+           .attr('x', x_r + constants.NS_BOX.text.padding.left)
+           .attr('y', y_r + constants.NS_BOX.text.padding.top + constants.NS_BOX.text.size + 5)
+           .attr('font-size', constants.NS_BOX.text.secondary.size)
+           .text(() => {
+               if(!ns.json.routes || Object.keys(ns.json.routes).length < 1) {
+                   return `no routing tables loaded`
+               }else if (Object.keys(ns.json.routes).length === 1){
+                   return `1 routing table loaded`
+               } else{
+                   return `${Object.keys(ns.json.routes).length} routing tables loaded`
+               }
+           })
+
+       ;
+
        text.text(() => {
           const l = ns.svg['text'].getComputedTextLength();
           return (l <= w_r - 10) ? id : id.replace(id.slice(-1 * (id.length - 7)), '...');
@@ -359,7 +377,7 @@ const SVGBuilder = class {
         .attr('rx', 10)
         .attr('ry', 10)
         .on("mouseover", mouseInteractions.mouseOverInterface)
-        .on("mouseout", mouseInteractions.mouseOutInterface)
+        // .on("mouseout", mouseInteractions.mouseOutInterface)
         .on("click", mouseInteractions.clickOnInterface)
         .attr('fill', d => d.json.type === "internal" ? "white" : constants.GREY)
         .each(function(d){
@@ -378,7 +396,7 @@ const SVGBuilder = class {
           .attr('y', d => d.y + 50 )
         .on("click", mouseInteractions.clickOnInterface)
         .on("mouseover", mouseInteractions.mouseOverInterface)
-        .on("mouseout", mouseInteractions.mouseOutInterface)
+        // .on("mouseout", mouseInteractions.mouseOutInterface)
           .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])
           .text(d =>  d.name)
             .each(function(d){
@@ -394,7 +412,7 @@ const SVGBuilder = class {
         .attr("class", 'text_2')
         .on("click", mouseInteractions.clickOnInterface)
         .on("mouseover", mouseInteractions.mouseOverInterface)
-        .on("mouseout", mouseInteractions.mouseOutInterface)
+        // .on("mouseout", mouseInteractions.mouseOutInterface)
           .attr('x', d => d.x + 30)
           .attr('y', d=> d.y + 70 )
           .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])
@@ -413,7 +431,7 @@ const SVGBuilder = class {
         .attr("class", 'text_3')
         .on("click", mouseInteractions.clickOnInterface)
         .on("mouseover", mouseInteractions.mouseOverInterface)
-        .on("mouseout", mouseInteractions.mouseOutInterface)
+        // .on("mouseout", mouseInteractions.mouseOutInterface)
           .attr('x', d => d.x + 30)
           .attr('y', d=> d.y + 90 )
           .attr('font-size', constants.INTERFACE_BOX.fontsize[this.scale.scale])

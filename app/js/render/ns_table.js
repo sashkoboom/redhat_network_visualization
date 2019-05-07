@@ -22,7 +22,6 @@ export class NamespaceTable  {
     }
 
     render(){
-        console.log("THISSS", this);
         const nameDiv = document.createElement('div');
         nameDiv.innerHTML = this.ns.name || this.ns.name.length > 0 ? this.ns.name : "/";
         nameDiv.classList.add('routing-ns-name');
@@ -44,27 +43,29 @@ export class NamespaceTable  {
 
         document.querySelector('body').appendChild(this.div);
 
-        Object.keys(this.ns.json.routes).forEach(k => {
-            const table = this.ns.json.routes[k];
-            table.i = k;
-            table.display = false;
-            table.HTML = document.querySelector
+        if(this.ns.json.routes && Object.keys(this.ns.json.routes).length > 0 ) {
+
+            Object.keys(this.ns.json.routes).forEach(k => {
+                const table = this.ns.json.routes[k];
+                table.i = k;
+                table.display = false;
+                table.HTML = document.querySelector
                 (`#${validSelectorFromString(this.ns.id)}_${validSelectorFromString(this.ns.json.routes[k].name)}`);
-            table.HTML.querySelector('.routing-name')
-                .addEventListener("click", () => {
-                    table.display ?
-                            table.HTML.querySelector('table').classList.add('hide')
-                            :
-                            table.HTML.querySelector('table').classList.remove('hide')
-                        ;
-                    table.display = !table.display;
-                    }
+                table.HTML.querySelector('.routing-name')
+                    .addEventListener("click", () => {
+
+                            table.display ?
+                                table.HTML.querySelector('table').classList.add('hide')
+                                :
+                                table.HTML.querySelector('table').classList.remove('hide')
+                            ;
+                            table.display = !table.display;
+                        }
                     );
-            this.tables.push(table)
-        });
+                this.tables.push(table)
+            });
 
-
-
+        }
         this.mounted = true;
     }
 

@@ -83,6 +83,8 @@ main{
     border: 2px solid white;
     background-color: white;
     border-radius: inherit;
+
+    padding: 0.5em;
 }
 
 .routing-name {
@@ -164,7 +166,7 @@ svg.low_opacity{
 
 .dot_up{
     border: none;
-    background-color: #bbb;
+    background-color: #4dff4d;
 }
 .dot_none{
     border: none;

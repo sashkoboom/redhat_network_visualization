@@ -53,7 +53,7 @@ const overLinks = (d) => {
 }
 
 export const mouseOverLinks =  (d) => {
-    if(CLICKED_ON) return;
+    if(CLICKED_ON || MOUSE_ON === d) return;
 
     MOUSE_ON = d;
 

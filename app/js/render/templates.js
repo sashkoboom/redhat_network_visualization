@@ -55,7 +55,11 @@ export const nameSpaceTemplate = (ns) =>{
         return val;
     };
 
-    Object.keys(ns.json.routes).forEach(
+    if(!ns.json.routes || Object.keys(ns.json.routes).length < 1) {
+
+        return "no roating tables loaded"
+
+    } else {Object.keys(ns.json.routes).forEach(
         k => {
         let t = `<div class="routing-wrap" id="${validSelectorFromString(ns.id)}_${validSelectorFromString(ns.json.routes[k].name)}">
 <div class="routing-name">${k} : ${ns.json.routes[k].name}</div>
@@ -75,7 +79,7 @@ export const nameSpaceTemplate = (ns) =>{
 
             tables.push(t);
         }
-    );
+    );}
 
 
     let r = '';
