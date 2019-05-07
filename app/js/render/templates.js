@@ -39,6 +39,22 @@ export const nameSpaceTemplate = (ns) =>{
     console.log(ns.json.routes);
     const tables = [];
 
+    const value = (val) => {
+        if(!val) return '';
+
+        if (typeof val === 'string' || val instanceof String) return val ;
+
+        if(typeof val === 'object') {
+            let s = '';
+            Object.keys(val).forEach(key =>
+                s += `${key} : ${val[key]} \n`
+            );
+            return s ;
+        }
+
+        return val;
+    };
+
 
     Object.keys(ns.json.routes).forEach(
         k => {
@@ -50,7 +66,7 @@ export const nameSpaceTemplate = (ns) =>{
             ns.json.routes[k].routes.forEach(route => {
                 let tr = '<tr>';
                 th.forEach( th =>
-                tr += `<td>${ route[th] ? route[th] : "" }</td>`
+                tr += `<td>${ value(route[th]) }</td>`
                 );
                 tr += '</tr>';
                 t += tr;
