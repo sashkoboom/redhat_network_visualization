@@ -22,11 +22,19 @@ export class NamespaceTable  {
     }
 
     render(){
+        console.log("THISSS", this);
+        const nameDiv = document.createElement('div');
+        nameDiv.innerHTML = this.ns.name || this.ns.name.length > 0 ? this.ns.name : "/";
+        nameDiv.classList.add('routing-ns-name');
+
+        this.div.appendChild(nameDiv);
 
         const closeBtn = document.createElement('div');
         closeBtn.classList.add('close-thin-routing');
         closeBtn.addEventListener('click', () => this.hide());
         this.div.appendChild(closeBtn);
+
+
 
         const span = this.div.appendChild(document.createElement('span'));
 

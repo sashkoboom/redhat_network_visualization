@@ -236,13 +236,22 @@ const SVGBuilder = class {
               ns.svg["rect"] = this;
           });
 
-       this.pane
+       const text = this.pane
            .append('text')
            .attr('class', 'ns_text')
            .attr('x', x_r + constants.NS_BOX.text.padding.left)
            .attr('y', y_r + constants.NS_BOX.text.padding.top)
            .attr('font-size', constants.NS_BOX.text.size)
-           .text(id);
+           .text(id)
+           .each(function () {
+               ns.svg['text'] = this;
+           })
+       ;
+
+       text.text(() => {
+          const l = ns.svg['text'].getComputedTextLength();
+          return (l <= w_r - 10) ? id : id.replace(id.slice(-1 * (id.length - 7)), '...');
+       })
 
     });
 

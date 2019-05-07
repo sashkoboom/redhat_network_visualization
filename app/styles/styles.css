@@ -47,6 +47,12 @@ main{
     border: 1px solid #cccccc;
     font-size: 12px;
 }
+
+.routing-ns-name{
+    border: none;
+    font-size: 14px;
+    padding: 0.8em;
+}
 .routing-wrap {
 
     padding: 1em;

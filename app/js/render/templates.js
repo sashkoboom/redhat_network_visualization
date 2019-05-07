@@ -55,7 +55,6 @@ export const nameSpaceTemplate = (ns) =>{
         return val;
     };
 
-
     Object.keys(ns.json.routes).forEach(
         k => {
         let t = `<div class="routing-wrap" id="${validSelectorFromString(ns.id)}_${validSelectorFromString(ns.json.routes[k].name)}">
