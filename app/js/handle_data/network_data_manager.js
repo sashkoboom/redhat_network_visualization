@@ -8,6 +8,7 @@ import * as d3 from 'd3';
 import NamespaceNode from '../render/rect_node';
 import * as constants from "../utils/constants"
 import * as helpers from "../utils/helpers"
+import { Find } from  './find'
 
 const NetworkDataManager = class {
   constructor(input = {}) {
@@ -58,10 +59,19 @@ const NetworkDataManager = class {
 
     console.log("LINKS", this.links);
     console.log("OTHER LINKS", this.otherLinks);
+
+    const find = new Find(this);
   }
+
+
+
 
   getInterfaceByID(id){
       return this.interfaces.find(x => x.id === id);
+  }
+
+  getInterfaceByName(name){
+      return this.interfaces.find(x => x.name === name);
   }
 
   countLevel(interf){

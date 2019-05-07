@@ -323,10 +323,20 @@ text{
     cursor: pointer;
 }
 
-.box__dragndrop,
-.box__uploading,
-.box__success,
-.box__error {
-    display: none;
+.search {
+    position: fixed;
+    bottom: 2em;
+    left: 3em;
+
+    padding: 1em;
+
+    background: white;
+    border: 0.5px solid #cccccc;
+    border-radius: 1em;
 }
+
+.search input {
+    margin-left: 0.7em;
+}
+
 

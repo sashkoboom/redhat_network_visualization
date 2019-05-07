@@ -33,7 +33,7 @@ const main = (input = null) => {
   // remove button
   const b = document.querySelector(".custom-file-upload ");
   b.parentNode.removeChild(b);
-  const i = document.querySelector('input');
+  const i = document.querySelector('input[type="file"]');
   i.parentNode.removeChild(i);
 
   const closeBtn = document.createElement('span');
