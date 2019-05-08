@@ -12,6 +12,20 @@ const addr = (d) => {
     return r;
 }
 
+export const lineTemplate = (d) =>{
+
+
+    console.log('DDD', d);
+
+    if (d.info && d.info.length > 0 ) {
+       let ret = ``;
+        d.info.forEach(i => ret += `${i} \n`);
+        return ret;
+    }
+
+    return `
+   no other info
+    `};
 
 export const interfaceTemplate = (d) => `
 <div class="tooltip_small">

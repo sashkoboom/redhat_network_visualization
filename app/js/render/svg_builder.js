@@ -288,6 +288,7 @@ const SVGBuilder = class {
           .attr('stroke-width', constants.STROKE_WIDTH)
           .on("mouseover", mouseInteractions.mouseOverLinks)
           .on("mouseout", mouseInteractions.mouseOutLinks)
+          .on('click', mouseInteractions.clickOnLinks)
           .each(function(d){
               d.svg["link"] = this ;
           });

@@ -28,7 +28,8 @@ export class Find {
         this.input.addEventListener('input', () => {
             if(!this.input.value || this.input.value.length < 1 ) return ;
 
-            const interf = this.networkDataManager.getInterfaceByName(this.input.value);
+            let interf = this.networkDataManager.getInterfaceByName(this.input.value);
+            if(!interf) interf = this.networkDataManager.getInterfaceByID(this.input.value);
 
             if(interf) mouse.clickOnInterface(interf);
 

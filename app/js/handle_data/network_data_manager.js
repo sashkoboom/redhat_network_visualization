@@ -45,13 +45,13 @@ const NetworkDataManager = class {
           link.source = interf.json.id;
           link.svg = {};
           link.peer = false;
+          console.log('LINKKK', link);
           interf.links.push(link);
           this.links.push(link);
         });
       }
     });
     this.links.forEach(link => {
-       console.log("---->", link.target);
         const t = typeof link.target === "string" ? this.getInterfaceByID(link.target) : link.target ;
         t.links.push(link);
     })

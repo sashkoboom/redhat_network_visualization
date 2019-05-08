@@ -326,17 +326,26 @@ text{
 .search {
     position: fixed;
     bottom: 2em;
-    left: 3em;
+    left: 2.5em;
 
     padding: 1em;
 
     background: white;
     border: 0.5px solid #cccccc;
     border-radius: 1em;
+
+    z-index: 500;
 }
 
 .search input {
     margin-left: 0.7em;
+    padding: 5px;
+    border: none;
+    border-bottom: 2px solid black;
 }
 
+input[type=text]:focus {
+    border: none;
+    border-bottom: 2px solid black;
+}
 

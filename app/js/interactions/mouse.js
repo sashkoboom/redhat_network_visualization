@@ -54,19 +54,35 @@ const overLinks = (d) => {
 
 export const mouseOverLinks =  (d) => {
     if(CLICKED_ON || MOUSE_ON === d) return;
-
     MOUSE_ON = d;
-
-
+   tippyManager.makeLineTippy(d, templates.lineTemplate(d));
     setTimeout(() => {
         if(MOUSE_ON === d) {
+
             changeAllOpacityToExcept(d, 0.1, false);
             overLinks(d);
+
         }}, constants.FADE_OUT_DELAY);
 
 
    overLinks(d);
 
+};
+
+export const clickOnLinks = (d) => {
+    // console.log(d.svg['link']._tippy);
+    // console.log(d.svg['link']._tippy.state.isShown);
+    // if(d.svg['link']._tippy.state.isShown) {
+    //     console.log('hidin')
+    //
+    //     d.svg['link']._tippy.hide()
+    //
+    // } else {
+    //     console.log('showin')
+    //
+    //     d.svg['link']._tippy.show()
+    //
+    // };
 };
 
 const outLinks = (d) => changeLinksColorTo(d, constants.STROKE_COLOR, constants.STROKE_WIDTH);

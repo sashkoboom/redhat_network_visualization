@@ -25,7 +25,7 @@ export const makeNameTippy = (d) => {
         duration: 100,
         allowHTML: true,
         interactive: true,
-        placement: 'top',
+        placement: 'left',
         sticky: true,
         arrow: true,
         theme: "light-border",
@@ -102,6 +102,36 @@ export const makeTippy = (d, template, dir = "right-start") => {
     //     container.insertAdjacentHTML('beforeend', template);
     //     setContent(d, container);
     // });
+
+
+
+
+
+};
+
+export const makeLineTippy = (d, template) => {
+
+
+
+    const container = document.createElement('div');
+    container.insertAdjacentHTML('beforeend', template);
+
+    tippy(d.svg['link'], {
+        content: container.innerHTML,
+        followCursor: 'initial',
+        animation: 'scale',
+        duration: 100,
+        allowHTML: true,
+        interactive: true,
+        trigger: 'click',
+        lazy: 'false',
+        arrow: true,
+        theme: "light-border",
+        delay: 200,
+    });
+
+
+
 
 
 
