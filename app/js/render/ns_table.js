@@ -7,7 +7,10 @@ import { validSelectorFromString } from "../utils/helpers";
 
 export const NS_TABLES = [];
 
-export const clearNsTables = () => NS_TABLES.forEach(t => t.hide());
+export const clearNsTables = () => {
+    NS_TABLES.forEach(t => t.hide());
+     while(NS_TABLES.length > 0) NS_TABLES.pop();
+};
 
 
 

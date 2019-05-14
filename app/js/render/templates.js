@@ -14,9 +14,6 @@ const addr = (d) => {
 
 export const lineTemplate = (d) =>{
 
-
-    console.log('DDD', d);
-
     if (d.info && d.info.length > 0 ) {
        let ret = ``;
         d.info.forEach(i => ret += `${i} \n`);
@@ -50,7 +47,7 @@ const th = ['family', 'gateway','iif','metrics', 'oif', 'priority',
     'protocol', 'scope', 'source', 'preferred-source','tos', 'type'];
 
 export const nameSpaceTemplate = (ns) =>{
-    console.log(ns.json.routes);
+
     const tables = [];
 
     const value = (val) => {

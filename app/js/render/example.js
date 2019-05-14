@@ -50,7 +50,7 @@ export default function example() {
   ns_r3.setXYWH(980, 360, 170, 130);
 
 
-  console.log(ns_r1);
+  // console.log(ns_r1);
   const svg = new SVGBuilder();
   svg.draw([ns_r1, ns_r2, ns_r3], nodes, links);
 }

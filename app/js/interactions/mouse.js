@@ -28,7 +28,7 @@ const changeAllOpacityToExcept = (d, o, node = true) => {
         arr.push(d.source.svg['rect']);
         arr.push(d.target.svg['rect']);
     }
-    console.log("ARR", arr);
+    // console.log("ARR", arr);
     except = arr ;
     d3.selectAll(".main_rect, .links, .end_marks, .start_marks")
     .transition(500)
@@ -185,8 +185,6 @@ export const clickOnInterface = (d) => {
 export const clickOnNamespace = (ns) =>
 {
 
-    console.log("click");
-    console.log("namespace", ns);
     ns.table.toggle();
 
 };

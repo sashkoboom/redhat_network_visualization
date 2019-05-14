@@ -1,9 +1,9 @@
 /* eslint-disable */
 
 export const makeOverlay = () => {
-    console.log("MAKING OVERLAY");
+    // console.log("MAKING OVERLAY");
 };
 
 export const destroyOverlay = () => {
-    console.log("DESTROYING OVERLAY");
+    // console.log("DESTROYING OVERLAY");
 };

@@ -65,7 +65,7 @@ const SVGBuilder = class {
 
         if(this.scale.scale !== prevScale.scale){
             this.scale.handleScale();
-            console.log(this.simulation);
+            // console.log(this.simulation);
             this.simulation
                 .force("collide", d3.forceCollide(this.scale.collision))
                 .alphaTarget(1)
@@ -190,8 +190,8 @@ const SVGBuilder = class {
           .attr('width', 50)
           .attr('height', 50);
 
-    console.log("Making force simulation of nodes");
-    console.log(nodes);
+    // console.log("Making force simulation of nodes");
+    // console.log(nodes);
     this.simulation = d3.forceSimulation()
       .nodes(nodes)
         .alpha(1)
@@ -338,7 +338,7 @@ const SVGBuilder = class {
         .on("mouseout", mouseInteractions.mouseOutInterface)
         .on("click", d => {
             mouseInteractions.clickOnInterface(d);
-            console.log("CLICKED ON", d)
+            // console.log("CLICKED ON", d)
         })
         .attr('fill',
                  d => {

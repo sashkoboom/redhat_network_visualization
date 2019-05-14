@@ -7,7 +7,6 @@ export class Find {
     constructor(nm){
 
         this.networkDataManager = nm;
-
         this.input = document.querySelector('input[type="text"]');
         this.icon = document.querySelector('#find');
 
@@ -30,8 +29,10 @@ export class Find {
 
             let interf = this.networkDataManager.getInterfaceByName(this.input.value);
             if(!interf) interf = this.networkDataManager.getInterfaceByID(this.input.value);
+            if(!interf) interf = this.networkDataManager.getInterfaceByIPAddr(this.input.value);
 
             if(interf) mouse.clickOnInterface(interf);
+
 
         })
     }

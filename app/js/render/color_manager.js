@@ -41,8 +41,8 @@ const ColorManager = class{
             background-color : ${this.colors[namespace]} ;
             fill : ${this.colors[namespace]}}\n`
         });
-        console.log(sheet);
-        console.log(this.colors);
+        // console.log(sheet);
+        // console.log(this.colors);
         document.body.appendChild(sheet);
     }
 

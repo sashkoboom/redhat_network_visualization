@@ -10,8 +10,17 @@ import * as constants from "../utils/constants"
 import * as helpers from "../utils/helpers"
 import { Find } from  './find'
 
+let instance = null ;
+
+
 const NetworkDataManager = class {
   constructor(input = {}) {
+
+      if(instance) {
+          instance = null;
+      }
+
+      instance = this;
 
       this.levels = {};
       Object.keys(input.namespaces).forEach( ns => this.levels[ns] = { } );
@@ -27,14 +36,14 @@ const NetworkDataManager = class {
         accumulator.push(curr.calculateGraphics(index, X));
         return accumulator;
       }, []);
-    console.log("NAMESPACES", this.namespaces)
+    // console.log("NAMESPACES", this.namespaces)
     /*
         * Handle interfaces, harvest them as ready made objs from NSs
         * and manage their XYWHs
         * */
     this.interfaces = this.namespaces
       .reduce((accumulator, curr /* , index */) => [...accumulator, ...curr.interfaces], []);
-    console.log("RAW INTERFACES", this.interfaces);
+    // console.log("RAW INTERFACES", this.interfaces);
       this.links = [];
       this.otherLinks = [];
       this.handleNamespacePositions();
@@ -45,7 +54,6 @@ const NetworkDataManager = class {
           link.source = interf.json.id;
           link.svg = {};
           link.peer = false;
-          console.log('LINKKK', link);
           interf.links.push(link);
           this.links.push(link);
         });
@@ -57,8 +65,8 @@ const NetworkDataManager = class {
     })
     ;
 
-    console.log("LINKS", this.links);
-    console.log("OTHER LINKS", this.otherLinks);
+    // console.log("LINKS", this.links);
+    // console.log("OTHER LINKS", this.otherLinks);
 
     const find = new Find(this);
   }
@@ -68,6 +76,17 @@ const NetworkDataManager = class {
 
   getInterfaceByID(id){
       return this.interfaces.find(x => x.id === id);
+  }
+
+  getInterfaceByIPAddr (ip) {
+      return this.interfaces.filter(x => x.json.addresses && x.json.addresses.length > 0)
+          .find(x => {
+              let ret = false;
+              x.json.addresses.forEach(addr => {
+                  if (addr.address === ip.trim()) ret = true;
+              });
+              return ret;
+          });
   }
 
   getInterfaceByName(name){
@@ -139,7 +158,7 @@ const NetworkDataManager = class {
         });
 
 
-        console.log("LEVELS", this.levels);
+        // console.log("LEVELS", this.levels);
       let x = 0;
       let lastX = 0;
       this.namespaces.forEach(ns => {
@@ -149,7 +168,7 @@ const NetworkDataManager = class {
           x = this.handleInterfacePositions(ns.interfaces, x);
 
           // fix height based on the hierarchy height
-          console.log("tak", ns.interfaces.sort((i1, i2) => i2.level - i1.level )[0]);
+          // console.log("tak", ns.interfaces.sort((i1, i2) => i2.level - i1.level )[0]);
 
          // plocha w * h = n * iw * ih
 
@@ -157,8 +176,7 @@ const NetworkDataManager = class {
           // multiply by count of interfaces in ns
           ns.height = 2 * constants.NS_BOX.padding.top +  ns.interfaces.sort((i1, i2) => i2.level - i1.level )[0].level * constants.LEVEL_FACTOR * 2  + constants.INTERFACE_BOX.height;
            // fix width based on count of nodes of the wides level
-         console.log("last", lastX);
-         console.log("x", x);
+
           ns.width =  x - lastX + 200;
           // ns.width = 2 * constants.NS_BOX.padding.left + Math.max.apply(null, (Object.values(this.levels[ns.id]).map(x => x.count))) * constants.NS_BOX.width_factor;
           // ns.width = ns.interfaces.length * constants.INTERFACE_BOX.width * constants.INTERFACE_BOX.height * 9 / ns.height;
@@ -206,13 +224,13 @@ const NetworkDataManager = class {
       [],
     );
 
-    console.log("SMALL INTERFACES", smallInterfaces);
-    console.log("CHILDLESS PARENTLESS", childlessParentless);
+    // console.log("SMALL INTERFACES", smallInterfaces);
+    // console.log("CHILDLESS PARENTLESS", childlessParentless);
 
     const hierarchies = childlessParentless
       .map(x => d3.hierarchy(x));
 
-    console.log("HIERARCHIES", hierarchies);
+    // console.log("HIERARCHIES", hierarchies);
     // array of d3.hierarchies that lack parents they need to be linked to
     const childless = [];
     do {
