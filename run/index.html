@@ -2,52 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Visualize me, babe!</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Visualize me</title>
     <!--<link rel="stylesheet" type="text/css" href="app/styles/styles.css">-->
 </head>
 <body>
-<style>
-    html, body{  background-color: aliceblue;  }
-    table{ border: black;  }
-    svg{
-        background-color: white;
-        border-radius: 30px;
-        margin: 30px;
-        border: 1px solid rgb(209, 209, 224);
-    }
+<main>
 
-    .link {
-        stroke : black;
-    }
+    <label for="files" class="custom-file-upload">
+        Choose file...
+    </label>
+    <div class="search hide"><i id="find" class="fa fa-search"></i>  <input type="text" placeholder="fill in interf name\id\addr" class="hide"> </div>
+</main>
 
-
-    div{
-        padding: 2em;
-    }
-
-
-    .thumb {
-        height: 75px;
-        border: 1px solid #000;
-        margin: 10px 5px 0 0;
-    }
-</style>
-
-<input type="file" id="files" name="files[]" multiple />
-<span id="span">
-    <div id="info"></div>
-<table id="table">
-    <th>interface</th>
-    <th>children</th>
-    <th>parents</th>
-    <th>peer</th>
-    <th>namespace</th>
-    <th>#</th>
-</table>
-    <main></main>
-</span>
-
+<input type="file" id="files" name="files[]"  />
 
 <script type="text/javascript" src="bundle.js"></script>
+
 </body>
 </html>
